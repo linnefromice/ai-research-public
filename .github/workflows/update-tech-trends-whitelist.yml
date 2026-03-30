@@ -13,6 +13,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  id-token: write
 
 jobs:
   update-whitelist:
@@ -66,4 +67,5 @@ jobs:
             4. `tech-trends/whitelist.txt` を更新してください（1行1URL、#でコメント可）
 
             変更がある場合はPRを作成してください。PR本文には追加/除外の理由を記載してください。
-          allowed_tools: "Bash,Read,Write,Edit,WebSearch,WebFetch"
+          claude_args: |
+            --allowedTools "Bash,Read,Write,Edit,WebSearch,WebFetch"
