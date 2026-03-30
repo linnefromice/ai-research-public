@@ -1,5 +1,18 @@
+# 技術トレンド収集 ホワイトリスト
+# 選定基準: ペイウォールなし / スクレイピング容易 / 定期更新 / 技術的質が高い
+
+# 技術ニュース・コミュニティ
 https://news.ycombinator.com
+https://lobste.rs
+
+# 開発者向け技術ブログ・プラットフォーム
 https://dev.to
-https://github.com/trending
+https://zenn.dev
+https://www.infoq.com
+
+# 企業技術ブログ
+https://blog.cloudflare.com
 https://www.publickey1.jp
-https://zenn.dev/trending
+
+# OSS / GitHub
+https://github.com/trending
