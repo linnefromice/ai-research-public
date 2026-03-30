@@ -41,8 +41,7 @@ jobs:
       - name: Update whitelist with Claude Code
         uses: anthropics/claude-code-action@v1
         with:
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          oauth_token: ${{ secrets.CLAUDE_OAUTH_TOKEN }}
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           prompt: |
             あなたは技術トレンド収集のためのホワイトリスト管理者です。
 
