@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Lifehacker",
+    "url": "https://lifehacker.com",
+    "feed": "https://lifehacker.com/rss",
+    "category": "productivity"
+  },
+  {
+    "name": "HBR Work-Life",
+    "url": "https://hbr.org/topic/work-life-balance",
+    "feed": "https://hbr.org/feed/topic/work-life-balance",
+    "category": "worklife"
+  },
+  {
+    "name": "Fatherly",
+    "url": "https://www.fatherly.com",
+    "feed": "https://www.fatherly.com/feed",
+    "category": "parenting"
+  },
+  {
+    "name": "Remote.co Blog",
+    "url": "https://remote.co/blog",
+    "feed": "https://remote.co/feed/",
+    "category": "worklife"
+  },
+  {
+    "name": "Asian Efficiency",
+    "url": "https://www.asianefficiency.com",
+    "feed": "https://www.asianefficiency.com/feed/",
+    "category": "productivity"
+  },
+  {
+    "name": "日経DUAL",
+    "url": "https://dual.nikkei.com",
+    "feed": null,
+    "category": "parenting"
+  },
+  {
+    "name": "マイナビウーマン子育て",
+    "url": "https://woman.mynavi.jp/kosodate/",
+    "feed": "https://woman.mynavi.jp/kosodate/feed/",
+    "category": "parenting"
+  },
+  {
+    "name": "ベビーカレンダー",
+    "url": "https://baby-calendar.jp",
+    "feed": "https://baby-calendar.jp/feed/",
+    "category": "parenting"
+  },
+  {
+    "name": "PRESIDENT Online",
+    "url": "https://president.jp",
+    "feed": "https://president.jp/list/feed/rss",
+    "category": "productivity"
+  },
+  {
+    "name": "みんなの仕事Lab (リクルートスタッフィング)",
+    "url": "https://www.r-staffing.co.jp/lab/",
+    "feed": "https://www.r-staffing.co.jp/lab/feed",
+    "category": "worklife"
+  },
+  {
+    "name": "はたらくパパママ応援ブログ (リクナビNEXT)",
+    "url": "https://next.rikunabi.com/journal/category/life/",
+    "feed": "https://next.rikunabi.com/journal/feed/",
+    "category": "worklife"
+  },
+  {
+    "name": "ライフハッカー日本版",
+    "url": "https://www.lifehacker.jp",
+    "feed": "https://www.lifehacker.jp/feed/index.xml",
+    "category": "lifestyle"
+  }
+]
