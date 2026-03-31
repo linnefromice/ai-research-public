@@ -10,9 +10,25 @@ https://dev.to
 https://zenn.dev
 https://www.infoq.com
 
+# AI / LLM 特化
+# Hugging Face公式ブログ: OSS AIモデル・ツールの最前線
+https://huggingface.co/blog
+# Simon Willison: LLM実践・AIエージェント分野で最も影響力のある個人ブログ。Atom対応
+https://simonwillison.net
+# Lil'Log (Lilian Weng): OpenAI研究者による深い技術解説。RSS対応
+https://lilianweng.github.io
+# TLDR AI: AI/ML分野の要約ニュース。HTMLがシンプルでAI処理向き
+https://tldr.tech/ai/archives
+
 # 企業技術ブログ
 https://blog.cloudflare.com
 https://www.publickey1.jp
+
+# 日本の技術トレンド集約
+# はてなブックマーク テクノロジー: 日本語圏で「今バズっている技術記事」を横断的に拾える。RSS対応
+https://b.hatena.ne.jp/hotentry/it
+# DevelopersIO (クラスメソッド): AWS・生成AIの「実際にやってみた」系が豊富
+https://dev.classmethod.jp
 
 # OSS / GitHub
 https://github.com/trending
