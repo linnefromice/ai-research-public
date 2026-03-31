@@ -1,0 +1,86 @@
+[
+  {
+    "name": "Hacker News",
+    "url": "https://news.ycombinator.com",
+    "feed": "https://news.ycombinator.com/rss",
+    "category": "news"
+  },
+  {
+    "name": "Lobsters",
+    "url": "https://lobste.rs",
+    "feed": "https://lobste.rs/rss",
+    "category": "news"
+  },
+  {
+    "name": "dev.to",
+    "url": "https://dev.to",
+    "feed": "https://dev.to/feed",
+    "category": "blog"
+  },
+  {
+    "name": "Zenn",
+    "url": "https://zenn.dev",
+    "feed": "https://zenn.dev/feed",
+    "category": "blog"
+  },
+  {
+    "name": "InfoQ",
+    "url": "https://www.infoq.com",
+    "feed": "https://www.infoq.com/feed/",
+    "category": "blog"
+  },
+  {
+    "name": "Hugging Face Blog",
+    "url": "https://huggingface.co/blog",
+    "feed": "https://huggingface.co/blog/feed.xml",
+    "category": "blog"
+  },
+  {
+    "name": "Simon Willison",
+    "url": "https://simonwillison.net",
+    "feed": "https://simonwillison.net/atom/everything/",
+    "category": "blog"
+  },
+  {
+    "name": "Lil'Log",
+    "url": "https://lilianweng.github.io",
+    "feed": "https://lilianweng.github.io/index.xml",
+    "category": "blog"
+  },
+  {
+    "name": "TLDR AI",
+    "url": "https://tldr.tech/ai/archives",
+    "feed": null,
+    "category": "news"
+  },
+  {
+    "name": "Cloudflare Blog",
+    "url": "https://blog.cloudflare.com",
+    "feed": "https://blog.cloudflare.com/rss/",
+    "category": "enterprise"
+  },
+  {
+    "name": "Publickey",
+    "url": "https://www.publickey1.jp",
+    "feed": "https://www.publickey1.jp/atom.xml",
+    "category": "news"
+  },
+  {
+    "name": "はてなブックマーク IT",
+    "url": "https://b.hatena.ne.jp/hotentry/it",
+    "feed": "https://b.hatena.ne.jp/hotentry/it.rss",
+    "category": "news"
+  },
+  {
+    "name": "DevelopersIO",
+    "url": "https://dev.classmethod.jp",
+    "feed": "https://dev.classmethod.jp/feed/",
+    "category": "blog"
+  },
+  {
+    "name": "GitHub Trending",
+    "url": "https://github.com/trending",
+    "feed": null,
+    "category": "oss"
+  }
+]
