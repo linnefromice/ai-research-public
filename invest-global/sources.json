@@ -26,7 +26,7 @@
   {
     "name": "Kitco Gold",
     "url": "https://www.kitco.com",
-    "feed": "https://www.kitco.com/rss/kitco-news-rss.xml",
+    "feed": null,
     "category": "commodities"
   },
   {
@@ -38,13 +38,13 @@
   {
     "name": "Reuters Forex",
     "url": "https://www.reuters.com/markets/currencies/",
-    "feed": "https://feeds.reuters.com/reuters/businessNews",
+    "feed": null,
     "category": "forex"
   },
   {
     "name": "DailyFX",
     "url": "https://www.dailyfx.com",
-    "feed": "https://www.dailyfx.com/feeds/all",
+    "feed": null,
     "category": "forex"
   },
   {
@@ -56,13 +56,13 @@
   {
     "name": "トウシル 海外投資",
     "url": "https://media.rakuten-sec.net/category/us-stock/",
-    "feed": "https://media.rakuten-sec.net/rss/all",
+    "feed": "https://media.rakuten-sec.net/list/feed/rss4googlenews",
     "category": "analysis"
   },
   {
     "name": "ダイヤモンド ZAi オンライン",
     "url": "https://diamond.jp/zai",
-    "feed": "https://diamond.jp/rss/articles/category/zai.rss",
+    "feed": "https://diamond.jp/list/feed/rss/dol",
     "category": "analysis"
   }
 ]

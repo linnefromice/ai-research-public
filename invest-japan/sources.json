@@ -2,19 +2,19 @@
   {
     "name": "株探",
     "url": "https://kabutan.jp",
-    "feed": "https://kabutan.jp/rss/news.xml",
+    "feed": null,
     "category": "stocks"
   },
   {
     "name": "みんかぶ",
     "url": "https://minkabu.jp",
-    "feed": "https://minkabu.jp/news/feed",
+    "feed": null,
     "category": "stocks"
   },
   {
     "name": "トウシル (楽天証券)",
     "url": "https://media.rakuten-sec.net",
-    "feed": "https://media.rakuten-sec.net/rss/all",
+    "feed": "https://media.rakuten-sec.net/list/feed/rss4googlenews",
     "category": "analysis"
   },
   {
@@ -50,7 +50,7 @@
   {
     "name": "ロイター 外国為替",
     "url": "https://jp.reuters.com/markets/currencies/",
-    "feed": "https://feeds.reuters.com/reuters/JPBusinessNews",
+    "feed": null,
     "category": "fx-jpy"
   },
   {
@@ -62,7 +62,7 @@
   {
     "name": "健美家 不動産投資コラム",
     "url": "https://www.kenbiya.com/ar/",
-    "feed": "https://www.kenbiya.com/ar/rss/",
+    "feed": null,
     "category": "reit"
   },
   {
