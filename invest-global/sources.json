@@ -1,0 +1,68 @@
+[
+  {
+    "name": "Seeking Alpha",
+    "url": "https://seekingalpha.com",
+    "feed": "https://seekingalpha.com/feed.xml",
+    "category": "us-stocks"
+  },
+  {
+    "name": "MarketWatch",
+    "url": "https://www.marketwatch.com",
+    "feed": "https://feeds.marketwatch.com/marketwatch/topstories",
+    "category": "us-stocks"
+  },
+  {
+    "name": "Investing.com",
+    "url": "https://www.investing.com",
+    "feed": "https://www.investing.com/rss/news_25.rss",
+    "category": "global-index"
+  },
+  {
+    "name": "ETF Database",
+    "url": "https://etfdb.com",
+    "feed": "https://etfdb.com/feed/",
+    "category": "global-index"
+  },
+  {
+    "name": "Kitco Gold",
+    "url": "https://www.kitco.com",
+    "feed": "https://www.kitco.com/rss/kitco-news-rss.xml",
+    "category": "commodities"
+  },
+  {
+    "name": "Wolf Street",
+    "url": "https://wolfstreet.com",
+    "feed": "https://wolfstreet.com/feed/",
+    "category": "commodities"
+  },
+  {
+    "name": "Reuters Forex",
+    "url": "https://www.reuters.com/markets/currencies/",
+    "feed": "https://feeds.reuters.com/reuters/businessNews",
+    "category": "forex"
+  },
+  {
+    "name": "DailyFX",
+    "url": "https://www.dailyfx.com",
+    "feed": "https://www.dailyfx.com/feeds/all",
+    "category": "forex"
+  },
+  {
+    "name": "CoinDesk",
+    "url": "https://www.coindesk.com",
+    "feed": "https://www.coindesk.com/arc/outboundfeeds/rss/",
+    "category": "crypto"
+  },
+  {
+    "name": "トウシル 海外投資",
+    "url": "https://media.rakuten-sec.net/category/us-stock/",
+    "feed": "https://media.rakuten-sec.net/rss/all",
+    "category": "analysis"
+  },
+  {
+    "name": "ダイヤモンド ZAi オンライン",
+    "url": "https://diamond.jp/zai",
+    "feed": "https://diamond.jp/rss/articles/category/zai.rss",
+    "category": "analysis"
+  }
+]
