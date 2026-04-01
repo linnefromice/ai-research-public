@@ -1,0 +1,79 @@
+name: Update Life Hacks Sources
+
+on:
+  schedule:
+    - cron: '0 0 * * 1'  # 毎週月曜 00:00 UTC (09:00 JST)
+  workflow_dispatch:
+    inputs:
+      focus_category:
+        description: 'Focus category for new site discovery (e.g., "parenting", "productivity", "worklife")'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write
+
+jobs:
+  update-sources:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate existing feed URLs
+        id: validate
+        run: |
+          echo "## Feed Validation Report" > validation-report.txt
+          echo "" >> validation-report.txt
+          jq -r '.[] | select(.feed != null) | "\(.name)\t\(.feed)"' life-hacks/sources.json | while IFS=$'\t' read -r name feed; do
+            http_code=$(curl -s -o /dev/null -w "%{http_code}" -L --max-time 10 "$feed" 2>/dev/null || echo "000")
+            if [[ "$http_code" -ge 200 && "$http_code" -lt 400 ]]; then
+              echo "- ✅ $name: $feed (HTTP $http_code)" >> validation-report.txt
+            else
+              echo "- ❌ $name: $feed (HTTP $http_code)" >> validation-report.txt
+            fi
+          done
+          # Web URL も検証
+          jq -r '.[] | select(.feed == null) | "\(.name)\t\(.url)"' life-hacks/sources.json | while IFS=$'\t' read -r name url; do
+            http_code=$(curl -s -o /dev/null -w "%{http_code}" -L --max-time 10 "$url" 2>/dev/null || echo "000")
+            if [[ "$http_code" -ge 200 && "$http_code" -lt 400 ]]; then
+              echo "- ✅ $name (web only): $url (HTTP $http_code)" >> validation-report.txt
+            else
+              echo "- ❌ $name (web only): $url (HTTP $http_code)" >> validation-report.txt
+            fi
+          done
+          cat validation-report.txt
+
+      - name: Update sources with Claude Code
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            あなたはライフハック情報収集のためのソースリスト管理者です。
+
+            ## 現在のソースリスト
+            `life-hacks/sources.json` を読んでください。JSON 形式で、各エントリに name, url, feed, category があります。
+
+            ## Feed 検証結果
+            `validation-report.txt` を読んでください。❌マークのフィードは無効です。
+
+            ## タスク
+            1. 無効なフィード（❌マーク）があれば除外を検討してください
+            2. 以下のカテゴリから新規の優良サイトを調査し追加を検討してください:
+               - 子育て・ワークライフバランス系メディア (category: "parenting")
+               - 仕事術・生産性系メディア (category: "productivity")
+               - ワークライフバランス (category: "worklife")
+               - ライフスタイル (category: "lifestyle")
+               ${{ github.event.inputs.focus_category && format('- 特に重点カテゴリ: {0}', github.event.inputs.focus_category) || '' }}
+            3. 選定基準:
+               - ペイウォールがないこと
+               - RSS/Atom フィードがあること（なければ feed: null で Web URL のみ）
+               - 定期的に更新されていること
+               - 実践的・行動に移しやすいコンテンツであること
+            4. `life-hacks/sources.json` を更新してください（JSON 配列形式）
+
+            変更がある場合はPRを作成してください。PR本文には追加/除外の理由を記載してください。
+          claude_args: |
+            --allowedTools "Bash,Read,Write,Edit,WebSearch,WebFetch"
