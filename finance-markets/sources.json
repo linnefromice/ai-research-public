@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Reuters Markets",
+    "url": "https://www.reuters.com/finance/markets",
+    "feed": "https://feeds.reuters.com/reuters/businessNews",
+    "category": "markets"
+  },
+  {
+    "name": "CNBC Markets",
+    "url": "https://www.cnbc.com/markets/",
+    "feed": "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=20910258",
+    "category": "markets"
+  },
+  {
+    "name": "MarketWatch",
+    "url": "https://www.marketwatch.com",
+    "feed": "https://feeds.marketwatch.com/marketwatch/topstories",
+    "category": "markets"
+  },
+  {
+    "name": "Seeking Alpha Economy",
+    "url": "https://seekingalpha.com/market-news/economy",
+    "feed": "https://seekingalpha.com/feed.xml",
+    "category": "economy"
+  },
+  {
+    "name": "Calculated Risk",
+    "url": "https://www.calculatedriskblog.com",
+    "feed": "https://www.calculatedriskblog.com/feeds/posts/default",
+    "category": "economy"
+  },
+  {
+    "name": "CoinDesk",
+    "url": "https://www.coindesk.com",
+    "feed": "https://www.coindesk.com/arc/outboundfeeds/rss/",
+    "category": "fintech"
+  },
+  {
+    "name": "The Block",
+    "url": "https://www.theblock.co",
+    "feed": "https://www.theblock.co/rss.xml",
+    "category": "fintech"
+  },
+  {
+    "name": "ロイター 経済・ビジネス",
+    "url": "https://jp.reuters.com/business/finance/",
+    "feed": "https://feeds.reuters.com/reuters/JPBusinessNews",
+    "category": "markets"
+  },
+  {
+    "name": "Bloomberg Japan",
+    "url": "https://www.bloomberg.co.jp/markets",
+    "feed": null,
+    "category": "markets"
+  },
+  {
+    "name": "日本経済新聞 マーケット",
+    "url": "https://www.nikkei.com/markets/",
+    "feed": null,
+    "category": "markets"
+  },
+  {
+    "name": "東京証券取引所 ニュース",
+    "url": "https://www.jpx.co.jp/news/",
+    "feed": "https://www.jpx.co.jp/news/rss/index.xml",
+    "category": "economy"
+  },
+  {
+    "name": "金融庁 報道発表",
+    "url": "https://www.fsa.go.jp/news/",
+    "feed": "https://www.fsa.go.jp/news/rss.xml",
+    "category": "economy"
+  }
+]
