@@ -4,14 +4,14 @@
     "url": "https://kabutan.jp",
     "feed": null,
     "category": "stocks",
-    "sessions": ["open", "mid", "close", "daily"]
+    "sessions": ["daily"]
   },
   {
     "name": "みんかぶ",
     "url": "https://minkabu.jp",
     "feed": null,
     "category": "stocks",
-    "sessions": ["open", "mid", "close", "daily"]
+    "sessions": ["daily"]
   },
   {
     "name": "Yahoo!ファイナンス",
@@ -25,21 +25,21 @@
     "url": "https://www.nikkei.com/markets/",
     "feed": null,
     "category": "index",
-    "sessions": ["open", "mid", "close", "daily"]
+    "sessions": ["daily"]
   },
   {
     "name": "Bloomberg Japan マーケット",
     "url": "https://www.bloomberg.co.jp/markets",
     "feed": null,
     "category": "fx-jpy",
-    "sessions": ["open", "mid", "close", "daily"]
+    "sessions": ["daily"]
   },
   {
     "name": "ロイター 外国為替",
     "url": "https://jp.reuters.com/markets/currencies/",
     "feed": null,
     "category": "fx-jpy",
-    "sessions": ["open", "mid", "close", "daily"]
+    "sessions": ["daily"]
   },
   {
     "name": "ザイFX！ ニュース",

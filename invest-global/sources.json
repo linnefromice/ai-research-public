@@ -67,7 +67,7 @@
     "url": "https://www.reuters.com/markets/currencies/",
     "feed": null,
     "category": "forex",
-    "sessions": ["open", "mid", "close", "daily"]
+    "sessions": ["daily"]
   },
   {
     "name": "DailyFX",
@@ -81,7 +81,7 @@
     "url": "https://www.kitco.com",
     "feed": null,
     "category": "commodities",
-    "sessions": ["open", "close", "daily"]
+    "sessions": ["daily"]
   },
   {
     "name": "OilPrice.com",
