@@ -28,25 +28,11 @@
     "sessions": ["daily"]
   },
   {
-    "name": "Bloomberg Japan マーケット",
-    "url": "https://www.bloomberg.co.jp/markets",
-    "feed": null,
-    "category": "fx-jpy",
-    "sessions": ["daily"]
-  },
-  {
-    "name": "ロイター 外国為替",
-    "url": "https://jp.reuters.com/markets/currencies/",
-    "feed": null,
-    "category": "fx-jpy",
-    "sessions": ["daily"]
-  },
-  {
     "name": "ザイFX！ ニュース",
     "url": "https://zai.diamond.jp/list/fxnews",
     "feed": "https://zai.diamond.jp/list/fxnews/rss",
     "category": "fx-jpy",
-    "sessions": ["open", "mid", "close"]
+    "sessions": ["open", "mid", "close", "daily"]
   },
   {
     "name": "モーニングスター 日本",
@@ -59,13 +45,6 @@
     "name": "トウシル (楽天証券)",
     "url": "https://media.rakuten-sec.net",
     "feed": "https://media.rakuten-sec.net/list/feed/rss4googlenews",
-    "category": "analysis",
-    "sessions": ["daily"]
-  },
-  {
-    "name": "MONEY PLUS (マネーフォワード)",
-    "url": "https://moneyforward.com/media",
-    "feed": "https://moneyforward.com/media/feed/",
     "category": "analysis",
     "sessions": ["daily"]
   },
@@ -84,25 +63,11 @@
     "sessions": ["daily"]
   },
   {
-    "name": "健美家 不動産投資コラム",
-    "url": "https://www.kenbiya.com/ar/",
-    "feed": null,
-    "category": "reit",
-    "sessions": ["daily"]
-  },
-  {
     "name": "IR Bank",
     "url": "https://irbank.net",
     "feed": "https://irbank.net/rss",
     "category": "stocks",
     "sessions": ["close", "daily"]
-  },
-  {
-    "name": "PR TIMES (金融・マネー)",
-    "url": "https://prtimes.jp/topics/keywords/金融",
-    "feed": "https://prtimes.jp/rss/keyword/金融.rdf",
-    "category": "stocks",
-    "sessions": ["daily"]
   },
   {
     "name": "JAPAN-REIT.com",

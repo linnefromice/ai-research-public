@@ -11,7 +11,7 @@
     "url": "https://www.marketwatch.com",
     "feed": "https://feeds.marketwatch.com/marketwatch/topstories",
     "category": "us-stocks",
-    "sessions": ["open", "mid", "close", "daily"]
+    "sessions": ["daily"]
   },
   {
     "name": "CNBC",
@@ -35,13 +35,6 @@
     "sessions": ["open", "mid", "close", "daily"]
   },
   {
-    "name": "Yahoo Finance (US)",
-    "url": "https://finance.yahoo.com",
-    "feed": "https://finance.yahoo.com/news/rssindex",
-    "category": "global-index",
-    "sessions": ["open", "close"]
-  },
-  {
     "name": "CoinDesk",
     "url": "https://www.coindesk.com",
     "feed": "https://www.coindesk.com/arc/outboundfeeds/rss/",
@@ -49,39 +42,11 @@
     "sessions": ["open", "mid", "close", "daily"]
   },
   {
-    "name": "Cointelegraph",
-    "url": "https://cointelegraph.com",
-    "feed": "https://cointelegraph.com/rss",
-    "category": "crypto",
-    "sessions": ["open", "mid", "close"]
-  },
-  {
     "name": "FXStreet",
     "url": "https://www.fxstreet.com",
     "feed": "https://www.fxstreet.com/rss",
     "category": "forex",
-    "sessions": ["open", "mid"]
-  },
-  {
-    "name": "Reuters Forex",
-    "url": "https://www.reuters.com/markets/currencies/",
-    "feed": null,
-    "category": "forex",
-    "sessions": ["daily"]
-  },
-  {
-    "name": "DailyFX",
-    "url": "https://www.dailyfx.com",
-    "feed": null,
-    "category": "forex",
-    "sessions": ["daily"]
-  },
-  {
-    "name": "Kitco Gold",
-    "url": "https://www.kitco.com",
-    "feed": null,
-    "category": "commodities",
-    "sessions": ["daily"]
+    "sessions": ["open", "mid", "daily"]
   },
   {
     "name": "OilPrice.com",
@@ -108,13 +73,6 @@
     "name": "トウシル 海外投資",
     "url": "https://media.rakuten-sec.net/category/us-stock/",
     "feed": "https://media.rakuten-sec.net/list/feed/rss4googlenews",
-    "category": "analysis",
-    "sessions": ["daily"]
-  },
-  {
-    "name": "ダイヤモンド ZAi オンライン",
-    "url": "https://diamond.jp/zai",
-    "feed": "https://diamond.jp/list/feed/rss/dol",
     "category": "analysis",
     "sessions": ["daily"]
   }
