@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Fatherly",
+    "url": "https://www.fatherly.com",
+    "feed": "https://www.fatherly.com/feed",
+    "category": "parenting"
+  },
+  {
+    "name": "kufura (小学館)",
+    "url": "https://kufura.jp",
+    "feed": "https://kufura.jp/feed",
+    "category": "family"
+  },
+  {
+    "name": "はてなブックマーク 暮らし",
+    "url": "https://b.hatena.ne.jp/hotentry/life",
+    "feed": "https://b.hatena.ne.jp/hotentry/life.rss",
+    "category": "lifestyle"
+  },
+  {
+    "name": "たまひよ",
+    "url": "https://st.benesse.ne.jp/",
+    "feed": "https://st.benesse.ne.jp/rss/index.rdf",
+    "category": "parenting"
+  },
+  {
+    "name": "LITALICO発達ナビ",
+    "url": "https://h-navi.jp",
+    "feed": "https://h-navi.jp/column/feed",
+    "category": "parenting"
+  }
+]
