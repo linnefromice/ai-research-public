@@ -36,24 +36,6 @@
     "category": "blog"
   },
   {
-    "name": "Simon Willison",
-    "url": "https://simonwillison.net",
-    "feed": "https://simonwillison.net/atom/everything/",
-    "category": "blog"
-  },
-  {
-    "name": "Lil'Log",
-    "url": "https://lilianweng.github.io",
-    "feed": "https://lilianweng.github.io/index.xml",
-    "category": "blog"
-  },
-  {
-    "name": "TLDR AI",
-    "url": "https://tldr.tech/ai/archives",
-    "feed": null,
-    "category": "news"
-  },
-  {
     "name": "Cloudflare Blog",
     "url": "https://blog.cloudflare.com",
     "feed": "https://blog.cloudflare.com/rss/",
@@ -76,11 +58,5 @@
     "url": "https://dev.classmethod.jp",
     "feed": "https://dev.classmethod.jp/feed/",
     "category": "blog"
-  },
-  {
-    "name": "GitHub Trending",
-    "url": "https://github.com/trending",
-    "feed": null,
-    "category": "oss"
   }
 ]
