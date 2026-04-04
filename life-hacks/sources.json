@@ -6,28 +6,10 @@
     "category": "productivity"
   },
   {
-    "name": "HBR Work-Life",
-    "url": "https://hbr.org/topic/work-life-balance",
-    "feed": null,
-    "category": "worklife"
-  },
-  {
-    "name": "Fatherly",
-    "url": "https://www.fatherly.com",
-    "feed": "https://www.fatherly.com/feed",
-    "category": "parenting"
-  },
-  {
     "name": "Asian Efficiency",
     "url": "https://www.asianefficiency.com",
     "feed": "https://www.asianefficiency.com/feed/",
     "category": "productivity"
-  },
-  {
-    "name": "みんなの仕事Lab (リクルートスタッフィング)",
-    "url": "https://www.r-staffing.co.jp/lab/",
-    "feed": "https://www.r-staffing.co.jp/lab/feed",
-    "category": "worklife"
   },
   {
     "name": "ライフハッカー日本版",
@@ -36,27 +18,15 @@
     "category": "lifestyle"
   },
   {
-    "name": "kufura (小学館)",
-    "url": "https://kufura.jp",
-    "feed": "https://kufura.jp/feed",
-    "category": "lifestyle"
-  },
-  {
-    "name": "PRESIDENT Online",
-    "url": "https://president.jp",
-    "feed": null,
-    "category": "productivity"
-  },
-  {
-    "name": "日経DUAL",
-    "url": "https://dual.nikkei.com",
-    "feed": null,
-    "category": "parenting"
-  },
-  {
     "name": "はてなブックマーク 暮らし",
     "url": "https://b.hatena.ne.jp/hotentry/life",
     "feed": "https://b.hatena.ne.jp/hotentry/life.rss",
     "category": "lifestyle"
+  },
+  {
+    "name": "みんなの仕事Lab (リクルートスタッフィング)",
+    "url": "https://www.r-staffing.co.jp/lab/",
+    "feed": "https://www.r-staffing.co.jp/lab/feed",
+    "category": "worklife"
   }
 ]
