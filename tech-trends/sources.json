@@ -12,6 +12,30 @@
     "category": "news"
   },
   {
+    "name": "The New Stack",
+    "url": "https://thenewstack.io",
+    "feed": "https://thenewstack.io/feed/",
+    "category": "news"
+  },
+  {
+    "name": "Ars Technica",
+    "url": "https://arstechnica.com",
+    "feed": "https://feeds.arstechnica.com/arstechnica/index",
+    "category": "news"
+  },
+  {
+    "name": "Publickey",
+    "url": "https://www.publickey1.jp",
+    "feed": "https://www.publickey1.jp/atom.xml",
+    "category": "news"
+  },
+  {
+    "name": "はてなブックマーク IT",
+    "url": "https://b.hatena.ne.jp/hotentry/it",
+    "feed": "https://b.hatena.ne.jp/hotentry/it.rss",
+    "category": "news"
+  },
+  {
     "name": "dev.to",
     "url": "https://dev.to",
     "feed": "https://dev.to/feed",
@@ -36,27 +60,45 @@
     "category": "blog"
   },
   {
-    "name": "Cloudflare Blog",
-    "url": "https://blog.cloudflare.com",
-    "feed": "https://blog.cloudflare.com/rss/",
-    "category": "enterprise"
-  },
-  {
-    "name": "Publickey",
-    "url": "https://www.publickey1.jp",
-    "feed": "https://www.publickey1.jp/atom.xml",
-    "category": "news"
-  },
-  {
-    "name": "はてなブックマーク IT",
-    "url": "https://b.hatena.ne.jp/hotentry/it",
-    "feed": "https://b.hatena.ne.jp/hotentry/it.rss",
-    "category": "news"
+    "name": "Simon Willison's Weblog",
+    "url": "https://simonwillison.net",
+    "feed": "https://simonwillison.net/atom/everything/",
+    "category": "blog"
   },
   {
     "name": "DevelopersIO",
     "url": "https://dev.classmethod.jp",
     "feed": "https://dev.classmethod.jp/feed/",
     "category": "blog"
+  },
+  {
+    "name": "Cloudflare Blog",
+    "url": "https://blog.cloudflare.com",
+    "feed": "https://blog.cloudflare.com/rss/",
+    "category": "enterprise"
+  },
+  {
+    "name": "GitHub Blog",
+    "url": "https://github.blog",
+    "feed": "https://github.blog/feed/",
+    "category": "enterprise"
+  },
+  {
+    "name": "AWS Blog",
+    "url": "https://aws.amazon.com/blogs/aws/",
+    "feed": "https://aws.amazon.com/blogs/aws/feed/",
+    "category": "enterprise"
+  },
+  {
+    "name": "Netflix Tech Blog",
+    "url": "https://netflixtechblog.com",
+    "feed": null,
+    "category": "enterprise"
+  },
+  {
+    "name": "CNCF Blog",
+    "url": "https://www.cncf.io/blog/",
+    "feed": "https://www.cncf.io/blog/feed/",
+    "category": "oss"
   }
 ]
