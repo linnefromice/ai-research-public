@@ -35,9 +35,23 @@
     "sessions": ["open", "mid", "close", "daily"]
   },
   {
+    "name": "Dow Jones Markets",
+    "url": "https://www.wsj.com/market-data",
+    "feed": "https://feeds.a.dj.com/rss/RSSMarketsMain.xml",
+    "category": "global-index",
+    "sessions": ["open", "mid", "close", "daily"]
+  },
+  {
     "name": "CoinDesk",
     "url": "https://www.coindesk.com",
     "feed": "https://www.coindesk.com/arc/outboundfeeds/rss/",
+    "category": "crypto",
+    "sessions": ["open", "mid", "close", "daily"]
+  },
+  {
+    "name": "Cointelegraph",
+    "url": "https://cointelegraph.com",
+    "feed": "https://cointelegraph.com/rss",
     "category": "crypto",
     "sessions": ["open", "mid", "close", "daily"]
   },
@@ -47,6 +61,13 @@
     "feed": "https://www.fxstreet.com/rss",
     "category": "forex",
     "sessions": ["open", "mid", "daily"]
+  },
+  {
+    "name": "ForexLive",
+    "url": "https://www.forexlive.com",
+    "feed": "https://www.forexlive.com/feed/",
+    "category": "forex",
+    "sessions": ["open", "mid", "close", "daily"]
   },
   {
     "name": "OilPrice.com",
@@ -63,16 +84,30 @@
     "sessions": ["daily"]
   },
   {
-    "name": "ETF Database",
-    "url": "https://etfdb.com",
-    "feed": "https://etfdb.com/feed/",
-    "category": "global-index",
+    "name": "Kitco News",
+    "url": "https://www.kitco.com/news/",
+    "feed": "https://www.kitco.com/news/rss/",
+    "category": "commodities",
     "sessions": ["daily"]
   },
   {
     "name": "トウシル 海外投資",
     "url": "https://media.rakuten-sec.net/category/us-stock/",
     "feed": "https://media.rakuten-sec.net/list/feed/rss4googlenews",
+    "category": "analysis",
+    "sessions": ["daily"]
+  },
+  {
+    "name": "A Wealth of Common Sense",
+    "url": "https://awealthofcommonsense.com",
+    "feed": "https://awealthofcommonsense.com/feed/",
+    "category": "analysis",
+    "sessions": ["daily"]
+  },
+  {
+    "name": "Abnormal Returns",
+    "url": "https://abnormalreturns.com",
+    "feed": "https://abnormalreturns.com/feed/",
     "category": "analysis",
     "sessions": ["daily"]
   }
