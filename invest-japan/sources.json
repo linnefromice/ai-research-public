@@ -14,6 +14,20 @@
     "sessions": ["daily"]
   },
   {
+    "name": "財経新聞",
+    "url": "https://www.zaikei.co.jp",
+    "feed": "https://www.zaikei.co.jp/rss/latest.xml",
+    "category": "stocks",
+    "sessions": ["open", "mid", "close", "daily"]
+  },
+  {
+    "name": "Investing.com Japan 株式",
+    "url": "https://jp.investing.com/equities/japan",
+    "feed": "https://jp.investing.com/rss/news_25.rss",
+    "category": "stocks",
+    "sessions": ["open", "mid", "close", "daily"]
+  },
+  {
     "name": "Yahoo!ファイナンス",
     "url": "https://finance.yahoo.co.jp",
     "feed": "https://news.yahoo.co.jp/rss/topics/business.xml",
@@ -28,25 +42,11 @@
     "sessions": ["daily"]
   },
   {
-    "name": "ザイFX！ ニュース",
-    "url": "https://zai.diamond.jp/list/fxnews",
-    "feed": "https://zai.diamond.jp/list/fxnews/rss",
-    "category": "fx-jpy",
+    "name": "NHK経済ニュース",
+    "url": "https://www3.nhk.or.jp/news/cat5.html",
+    "feed": "https://www3.nhk.or.jp/rss/news/cat5.xml",
+    "category": "index",
     "sessions": ["open", "mid", "close", "daily"]
-  },
-  {
-    "name": "モーニングスター 日本",
-    "url": "https://www.morningstar.co.jp/news/",
-    "feed": "https://www.morningstar.co.jp/news/rss.xml",
-    "category": "analysis",
-    "sessions": ["open", "mid", "close", "daily"]
-  },
-  {
-    "name": "トウシル (楽天証券)",
-    "url": "https://media.rakuten-sec.net",
-    "feed": "https://media.rakuten-sec.net/list/feed/rss4googlenews",
-    "category": "analysis",
-    "sessions": ["daily"]
   },
   {
     "name": "東証マネ部",
@@ -56,24 +56,59 @@
     "sessions": ["daily"]
   },
   {
+    "name": "ザイFX！ ニュース",
+    "url": "https://zai.diamond.jp/list/fxnews",
+    "feed": "https://zai.diamond.jp/list/feed/rssfxnews",
+    "category": "fx-jpy",
+    "sessions": ["open", "mid", "close", "daily"]
+  },
+  {
+    "name": "Investing.com Japan 外為",
+    "url": "https://jp.investing.com/currencies/usd-jpy",
+    "feed": "https://jp.investing.com/rss/news_1.rss",
+    "category": "fx-jpy",
+    "sessions": ["open", "mid", "close", "daily"]
+  },
+  {
     "name": "楽待 (不動産投資)",
     "url": "https://www.rakumachi.jp",
-    "feed": "https://www.rakumachi.jp/news/feed/",
+    "feed": null,
     "category": "reit",
+    "sessions": ["daily"]
+  },
+  {
+    "name": "JAPAN-REIT.com",
+    "url": "https://www.japan-reit.com",
+    "feed": null,
+    "category": "reit",
+    "sessions": ["daily"]
+  },
+  {
+    "name": "モーニングスター 日本",
+    "url": "https://www.morningstar.co.jp/news/",
+    "feed": null,
+    "category": "analysis",
+    "sessions": ["daily"]
+  },
+  {
+    "name": "トウシル (楽天証券)",
+    "url": "https://media.rakuten-sec.net",
+    "feed": "https://media.rakuten-sec.net/list/feed/rss4googlenews",
+    "category": "analysis",
+    "sessions": ["daily"]
+  },
+  {
+    "name": "東洋経済オンライン",
+    "url": "https://toyokeizai.net",
+    "feed": "https://toyokeizai.net/list/feed/rss",
+    "category": "analysis",
     "sessions": ["daily"]
   },
   {
     "name": "IR Bank",
     "url": "https://irbank.net",
-    "feed": "https://irbank.net/rss",
+    "feed": null,
     "category": "stocks",
-    "sessions": ["close", "daily"]
-  },
-  {
-    "name": "JAPAN-REIT.com",
-    "url": "https://www.japan-reit.com",
-    "feed": "https://www.japan-reit.com/rss/news.xml",
-    "category": "reit",
     "sessions": ["daily"]
   }
 ]
