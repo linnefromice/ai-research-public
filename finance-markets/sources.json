@@ -2,7 +2,7 @@
   {
     "name": "Reuters Markets",
     "url": "https://www.reuters.com/finance/markets",
-    "feed": "https://feeds.reuters.com/reuters/businessNews",
+    "feed": null,
     "category": "markets"
   },
   {
@@ -18,6 +18,12 @@
     "category": "markets"
   },
   {
+    "name": "Bloomberg Markets",
+    "url": "https://www.bloomberg.com/markets",
+    "feed": "https://feeds.bloomberg.com/markets/news.rss",
+    "category": "markets"
+  },
+  {
     "name": "Seeking Alpha Economy",
     "url": "https://seekingalpha.com/market-news/economy",
     "feed": "https://seekingalpha.com/feed.xml",
@@ -27,6 +33,12 @@
     "name": "Calculated Risk",
     "url": "https://www.calculatedriskblog.com",
     "feed": "https://www.calculatedriskblog.com/feeds/posts/default",
+    "category": "economy"
+  },
+  {
+    "name": "Econbrowser",
+    "url": "https://econbrowser.com",
+    "feed": "https://econbrowser.com/feed",
     "category": "economy"
   },
   {
@@ -42,9 +54,15 @@
     "category": "fintech"
   },
   {
+    "name": "PYMNTS",
+    "url": "https://www.pymnts.com",
+    "feed": "https://www.pymnts.com/feed/",
+    "category": "fintech"
+  },
+  {
     "name": "ロイター 経済・ビジネス",
     "url": "https://jp.reuters.com/business/finance/",
-    "feed": "https://feeds.reuters.com/reuters/JPBusinessNews",
+    "feed": null,
     "category": "markets"
   }
 ]
