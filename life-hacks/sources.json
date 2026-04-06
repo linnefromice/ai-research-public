@@ -12,6 +12,12 @@
     "category": "productivity"
   },
   {
+    "name": "STUDY HACKER",
+    "url": "https://studyhacker.net",
+    "feed": "https://studyhacker.net/feed",
+    "category": "productivity"
+  },
+  {
     "name": "ライフハッカー日本版",
     "url": "https://www.lifehacker.jp",
     "feed": "https://www.lifehacker.jp/feed/index.xml",
@@ -28,5 +34,11 @@
     "url": "https://www.r-staffing.co.jp/lab/",
     "feed": "https://www.r-staffing.co.jp/lab/feed",
     "category": "worklife"
+  },
+  {
+    "name": "パパしるべ",
+    "url": "https://papashirube.com",
+    "feed": "https://papashirube.com/feed/",
+    "category": "parenting"
   }
 ]
