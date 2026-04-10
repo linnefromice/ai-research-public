@@ -1,0 +1,32 @@
+[
+  {
+    "name": "たまひよ",
+    "url": "https://st.benesse.ne.jp/",
+    "feed": null,
+    "category": "parenting"
+  },
+  {
+    "name": "kufura (小学館)",
+    "url": "https://kufura.jp",
+    "feed": "https://kufura.jp/feed",
+    "category": "family"
+  },
+  {
+    "name": "Fatherly",
+    "url": "https://www.fatherly.com",
+    "feed": "https://www.fatherly.com/feed",
+    "category": "parenting"
+  },
+  {
+    "name": "ベビーカレンダー",
+    "url": "https://baby-calendar.jp",
+    "feed": null,
+    "category": "parenting"
+  },
+  {
+    "name": "ままのて",
+    "url": "https://mamanoko.jp",
+    "feed": null,
+    "category": "parenting"
+  }
+]
