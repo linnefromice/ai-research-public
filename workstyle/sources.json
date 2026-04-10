@@ -1,0 +1,32 @@
+[
+  {
+    "name": "みんなの仕事Lab (リクルートスタッフィング)",
+    "url": "https://www.r-staffing.co.jp/lab/",
+    "feed": "https://www.r-staffing.co.jp/lab/feed",
+    "category": "worklife"
+  },
+  {
+    "name": "東洋経済オンライン",
+    "url": "https://toyokeizai.net",
+    "feed": "https://toyokeizai.net/list/feed/rss",
+    "category": "business"
+  },
+  {
+    "name": "はてなブックマーク 政治と経済",
+    "url": "https://b.hatena.ne.jp/hotentry/social",
+    "feed": "https://b.hatena.ne.jp/hotentry/social.rss",
+    "category": "economy"
+  },
+  {
+    "name": "BUSINESS INSIDER JAPAN",
+    "url": "https://www.businessinsider.jp",
+    "feed": "https://www.businessinsider.jp/feed/index.xml",
+    "category": "business"
+  },
+  {
+    "name": "ITmedia ビジネスオンライン",
+    "url": "https://www.itmedia.co.jp/business/",
+    "feed": "https://rss.itmedia.co.jp/rss/2.0/bizid.xml",
+    "category": "business"
+  }
+]

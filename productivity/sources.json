@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Lifehacker",
+    "url": "https://lifehacker.com",
+    "feed": "https://lifehacker.com/rss",
+    "category": "productivity"
+  },
+  {
+    "name": "Asian Efficiency",
+    "url": "https://www.asianefficiency.com",
+    "feed": "https://www.asianefficiency.com/feed/",
+    "category": "productivity"
+  },
+  {
+    "name": "ライフハッカー日本版",
+    "url": "https://www.lifehacker.jp",
+    "feed": "https://www.lifehacker.jp/feed/index.xml",
+    "category": "productivity"
+  },
+  {
+    "name": "Todoist Blog",
+    "url": "https://todoist.com/inspiration",
+    "feed": null,
+    "category": "tools"
+  },
+  {
+    "name": "はてなブックマーク テクノロジー",
+    "url": "https://b.hatena.ne.jp/hotentry/it",
+    "feed": "https://b.hatena.ne.jp/hotentry/it.rss",
+    "category": "technology"
+  }
+]
