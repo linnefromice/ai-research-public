@@ -75,5 +75,33 @@
     "feed": null,
     "category": "reit",
     "sessions": ["daily"]
+  },
+  {
+    "name": "HEDGE GUIDE 不動産",
+    "url": "https://hedge.guide/category/realestate",
+    "feed": "https://hedge.guide/category/realestate/feed",
+    "category": "reit",
+    "sessions": ["daily"]
+  },
+  {
+    "name": "HEDGE GUIDE 投資信託",
+    "url": "https://hedge.guide/category/fund",
+    "feed": "https://hedge.guide/category/fund/feed",
+    "category": "analysis",
+    "sessions": ["daily"]
+  },
+  {
+    "name": "OANDA Lab",
+    "url": "https://www.oanda.jp/lab-education/",
+    "feed": "https://www.oanda.jp/lab-education/feed/",
+    "category": "fx-jpy",
+    "sessions": ["daily"]
+  },
+  {
+    "name": "Investing.com Japan",
+    "url": "https://jp.investing.com",
+    "feed": "https://jp.investing.com/rss/news.rss",
+    "category": "analysis",
+    "sessions": ["open", "mid", "close", "daily"]
   }
 ]
