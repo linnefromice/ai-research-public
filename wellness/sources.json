@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Nerd Fitness",
+    "url": "https://www.nerdfitness.com",
+    "feed": "https://www.nerdfitness.com/blog/feed/",
+    "category": "fitness"
+  },
+  {
+    "name": "Zen Habits",
+    "url": "https://zenhabits.net",
+    "feed": null,
+    "category": "mindfulness"
+  },
+  {
+    "name": "はてなブックマーク 暮らし",
+    "url": "https://b.hatena.ne.jp/hotentry/life",
+    "feed": "https://b.hatena.ne.jp/hotentry/life.rss",
+    "category": "lifestyle"
+  },
+  {
+    "name": "Healthline",
+    "url": "https://www.healthline.com",
+    "feed": "https://www.healthline.com/rss/health-news",
+    "category": "health"
+  },
+  {
+    "name": "MYLOHAS",
+    "url": "https://www.mylohas.net",
+    "feed": null,
+    "category": "wellness"
+  }
+]

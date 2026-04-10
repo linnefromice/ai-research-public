@@ -1,0 +1,32 @@
+[
+  {
+    "name": "MONEY PLUS",
+    "url": "https://media.moneyforward.com",
+    "feed": null,
+    "category": "family-finance"
+  },
+  {
+    "name": "ZUU online",
+    "url": "https://zuuonline.com",
+    "feed": "https://zuuonline.com/feed",
+    "category": "finance"
+  },
+  {
+    "name": "はてなブックマーク 政治と経済",
+    "url": "https://b.hatena.ne.jp/hotentry/social",
+    "feed": "https://b.hatena.ne.jp/hotentry/social.rss",
+    "category": "economy"
+  },
+  {
+    "name": "マネーフォワード",
+    "url": "https://moneyforward.com",
+    "feed": null,
+    "category": "fintech"
+  },
+  {
+    "name": "日経マネー",
+    "url": "https://www.nikkei.com/money",
+    "feed": null,
+    "category": "finance"
+  }
+]
