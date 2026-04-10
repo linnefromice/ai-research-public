@@ -1,0 +1,32 @@
+[
+  {
+    "name": "LITALICO発達ナビ",
+    "url": "https://h-navi.jp",
+    "feed": null,
+    "category": "development"
+  },
+  {
+    "name": "リセマム",
+    "url": "https://resemom.jp",
+    "feed": "https://resemom.jp/rss/index.rdf",
+    "category": "education"
+  },
+  {
+    "name": "おうち教材の森",
+    "url": "https://naki-blog.com/study",
+    "feed": "https://naki-blog.com/study/feed",
+    "category": "education"
+  },
+  {
+    "name": "こどもまなびラボ",
+    "url": "https://kodomo-manabi-labo.net",
+    "feed": null,
+    "category": "education"
+  },
+  {
+    "name": "はてなブックマーク 暮らし",
+    "url": "https://b.hatena.ne.jp/hotentry/life",
+    "feed": "https://b.hatena.ne.jp/hotentry/life.rss",
+    "category": "lifestyle"
+  }
+]
