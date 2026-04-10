@@ -28,5 +28,17 @@
     "url": "https://mamanoko.jp",
     "feed": null,
     "category": "parenting"
+  },
+  {
+    "name": "Mamapress",
+    "url": "https://mamapress.jp",
+    "feed": "https://mamapress.jp/feed/",
+    "category": "parenting"
+  },
+  {
+    "name": "BRAVA (たまひよ)",
+    "url": "https://brava-mama.jp",
+    "feed": "https://brava-mama.jp/feed/",
+    "category": "parenting"
   }
 ]
