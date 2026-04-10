@@ -1,0 +1,62 @@
+[
+  {
+    "name": "Hacker News",
+    "url": "https://news.ycombinator.com",
+    "feed": "https://hnrss.org/frontpage",
+    "category": "general"
+  },
+  {
+    "name": "Lobsters",
+    "url": "https://lobste.rs",
+    "feed": "https://lobste.rs/rss",
+    "category": "general"
+  },
+  {
+    "name": "dev.to",
+    "url": "https://dev.to",
+    "feed": "https://dev.to/feed",
+    "category": "development"
+  },
+  {
+    "name": "InfoQ",
+    "url": "https://www.infoq.com",
+    "feed": "https://feed.infoq.com/",
+    "category": "architecture"
+  },
+  {
+    "name": "The Verge Tech",
+    "url": "https://www.theverge.com/tech",
+    "feed": "https://www.theverge.com/rss/index.xml",
+    "category": "general"
+  },
+  {
+    "name": "Ars Technica",
+    "url": "https://arstechnica.com",
+    "feed": "https://feeds.arstechnica.com/arstechnica/index",
+    "category": "general"
+  },
+  {
+    "name": "TechCrunch",
+    "url": "https://techcrunch.com",
+    "feed": "https://techcrunch.com/feed/",
+    "category": "startups"
+  },
+  {
+    "name": "GitHub Blog",
+    "url": "https://github.blog",
+    "feed": "https://github.blog/feed/",
+    "category": "development"
+  },
+  {
+    "name": "Cloudflare Blog",
+    "url": "https://blog.cloudflare.com",
+    "feed": "https://blog.cloudflare.com/rss/",
+    "category": "infrastructure"
+  },
+  {
+    "name": "OpenAI Blog",
+    "url": "https://openai.com/blog",
+    "feed": "https://openai.com/blog/rss.xml",
+    "category": "ai"
+  }
+]
