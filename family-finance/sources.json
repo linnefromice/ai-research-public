@@ -28,5 +28,17 @@
     "url": "https://www.nikkei.com/money",
     "feed": null,
     "category": "finance"
+  },
+  {
+    "name": "ファイナンシャルフィールド",
+    "url": "https://financial-field.com",
+    "feed": "https://financial-field.com/feed",
+    "category": "family-finance"
+  },
+  {
+    "name": "節約生活",
+    "url": "https://setuyaku-method.com",
+    "feed": "https://setuyaku-method.com/feed",
+    "category": "family-finance"
   }
 ]
