@@ -2,7 +2,7 @@
   {
     "name": "Reuters Markets",
     "url": "https://www.reuters.com/finance/markets",
-    "feed": "https://feeds.reuters.com/reuters/businessNews",
+    "feed": null,
     "category": "markets"
   },
   {
@@ -44,7 +44,7 @@
   {
     "name": "ロイター 経済・ビジネス",
     "url": "https://jp.reuters.com/business/finance/",
-    "feed": "https://feeds.reuters.com/reuters/JPBusinessNews",
+    "feed": null,
     "category": "markets"
   }
 ]

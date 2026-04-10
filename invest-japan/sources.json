@@ -30,9 +30,9 @@
   {
     "name": "ザイFX！ ニュース",
     "url": "https://zai.diamond.jp/list/fxnews",
-    "feed": "https://zai.diamond.jp/list/fxnews/rss",
+    "feed": null,
     "category": "fx-jpy",
-    "sessions": ["open", "mid", "close", "daily"]
+    "sessions": ["daily"]
   },
   {
     "name": "モーニングスター 日本",
@@ -58,21 +58,21 @@
   {
     "name": "楽待 (不動産投資)",
     "url": "https://www.rakumachi.jp",
-    "feed": "https://www.rakumachi.jp/news/feed/",
+    "feed": null,
     "category": "reit",
     "sessions": ["daily"]
   },
   {
     "name": "IR Bank",
     "url": "https://irbank.net",
-    "feed": "https://irbank.net/rss",
+    "feed": null,
     "category": "stocks",
-    "sessions": ["close", "daily"]
+    "sessions": ["daily"]
   },
   {
     "name": "JAPAN-REIT.com",
     "url": "https://www.japan-reit.com",
-    "feed": "https://www.japan-reit.com/rss/news.xml",
+    "feed": null,
     "category": "reit",
     "sessions": ["daily"]
   }
