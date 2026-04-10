@@ -1,0 +1,7 @@
+[
+  {"name": "NerdWallet", "url": "https://www.nerdwallet.com", "feed": "https://www.nerdwallet.com/blog/feed/", "category": "personal-finance"},
+  {"name": "Get Rich Slowly", "url": "https://www.getrichslowly.org", "feed": "https://www.getrichslowly.org/feed/", "category": "saving"},
+  {"name": "The Simple Dollar", "url": "https://www.thesimpledollar.com", "feed": "https://www.thesimpledollar.com/feed/", "category": "budgeting"},
+  {"name": "Money Under 30", "url": "https://www.moneyunder30.com", "feed": "https://www.moneyunder30.com/feed", "category": "personal-finance"},
+  {"name": "Budgets Are Sexy", "url": "https://budgetsaresexy.com", "feed": "https://budgetsaresexy.com/feed/", "category": "budgeting"}
+]

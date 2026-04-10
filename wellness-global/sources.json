@@ -1,0 +1,8 @@
+[
+  {"name": "Healthline", "url": "https://www.healthline.com", "feed": "https://www.healthline.com/rss/health-news", "category": "health"},
+  {"name": "Nerd Fitness", "url": "https://www.nerdfitness.com", "feed": "https://www.nerdfitness.com/blog/feed/", "category": "fitness"},
+  {"name": "Well+Good", "url": "https://www.wellandgood.com", "feed": "https://www.wellandgood.com/feed/", "category": "wellness"},
+  {"name": "Greatist", "url": "https://greatist.com", "feed": "https://greatist.com/feed", "category": "fitness"},
+  {"name": "Precision Nutrition", "url": "https://www.precisionnutrition.com", "feed": "https://www.precisionnutrition.com/feed", "category": "nutrition"},
+  {"name": "ScienceDaily Health", "url": "https://www.sciencedaily.com/news/health_medicine/", "feed": "https://www.sciencedaily.com/rss/health_medicine.xml", "category": "research"}
+]

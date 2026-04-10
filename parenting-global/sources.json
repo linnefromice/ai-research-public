@@ -1,0 +1,8 @@
+[
+  {"name": "Fatherly", "url": "https://www.fatherly.com", "feed": "https://www.fatherly.com/feed", "category": "parenting"},
+  {"name": "Scary Mommy", "url": "https://www.scarymommy.com", "feed": "https://www.scarymommy.com/feed", "category": "parenting"},
+  {"name": "Motherly", "url": "https://www.mother.ly", "feed": "https://www.mother.ly/feed/", "category": "parenting"},
+  {"name": "NPR Education", "url": "https://www.npr.org/sections/education/", "feed": "https://feeds.npr.org/1013/rss.xml", "category": "education"},
+  {"name": "Edutopia", "url": "https://www.edutopia.org", "feed": "https://www.edutopia.org/rss.xml", "category": "education"},
+  {"name": "MindShift KQED", "url": "https://www.kqed.org/mindshift", "feed": "https://www.kqed.org/mindshift/feed", "category": "education"}
+]

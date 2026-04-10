@@ -1,0 +1,10 @@
+[
+  {"name": "Fast Company Work", "url": "https://www.fastcompany.com/work-life", "feed": "https://www.fastcompany.com/work-life/rss", "category": "workstyle"},
+  {"name": "Cal Newport", "url": "https://calnewport.com", "feed": "https://calnewport.com/feed/", "category": "productivity"},
+  {"name": "Doist Blog", "url": "https://blog.doist.com", "feed": "https://blog.doist.com/feed/", "category": "productivity"},
+  {"name": "Buffer Blog", "url": "https://buffer.com/resources", "feed": "https://buffer.com/resources/feed/", "category": "remote-work"},
+  {"name": "Atlassian Blog", "url": "https://www.atlassian.com/blog", "feed": "https://www.atlassian.com/blog/feed", "category": "team-management"},
+  {"name": "Basecamp Blog", "url": "https://basecamp.com/articles", "feed": "https://basecamp.com/articles/feed", "category": "workstyle"},
+  {"name": "Asana Blog", "url": "https://blog.asana.com", "feed": "https://blog.asana.com/feed/", "category": "productivity"},
+  {"name": "Trello Blog", "url": "https://blog.trello.com", "feed": "https://blog.trello.com/feed", "category": "productivity"}
+]
