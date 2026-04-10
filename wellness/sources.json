@@ -28,5 +28,17 @@
     "url": "https://www.mylohas.net",
     "feed": null,
     "category": "wellness"
+  },
+  {
+    "name": "MELOS",
+    "url": "https://melos.media",
+    "feed": "https://melos.media/feed/",
+    "category": "fitness"
+  },
+  {
+    "name": "FYTTE web",
+    "url": "https://fytte.jp",
+    "feed": "https://fytte.jp/feed",
+    "category": "wellness"
   }
 ]
