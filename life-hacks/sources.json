@@ -12,6 +12,12 @@
     "category": "productivity"
   },
   {
+    "name": "RescueTime Blog",
+    "url": "https://blog.rescuetime.com",
+    "feed": "https://blog.rescuetime.com/feed/",
+    "category": "productivity"
+  },
+  {
     "name": "ライフハッカー日本版",
     "url": "https://www.lifehacker.jp",
     "feed": "https://www.lifehacker.jp/feed/index.xml",
@@ -28,5 +34,23 @@
     "url": "https://www.r-staffing.co.jp/lab/",
     "feed": "https://www.r-staffing.co.jp/lab/feed",
     "category": "worklife"
+  },
+  {
+    "name": "東洋経済オンライン",
+    "url": "https://toyokeizai.net",
+    "feed": "https://toyokeizai.net/list/feed/rss",
+    "category": "worklife"
+  },
+  {
+    "name": "Chiik!",
+    "url": "https://chiik.jp",
+    "feed": "https://chiik.jp/feed/",
+    "category": "parenting"
+  },
+  {
+    "name": "東京すくすく",
+    "url": "https://sukusuku.tokyo-np.co.jp",
+    "feed": "https://sukusuku.tokyo-np.co.jp/feed/",
+    "category": "parenting"
   }
 ]
