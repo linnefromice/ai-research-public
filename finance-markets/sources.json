@@ -1,11 +1,5 @@
 [
   {
-    "name": "Reuters Markets",
-    "url": "https://www.reuters.com/finance/markets",
-    "feed": null,
-    "category": "markets"
-  },
-  {
     "name": "CNBC Markets",
     "url": "https://www.cnbc.com/markets/",
     "feed": "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=20910258",
@@ -15,6 +9,24 @@
     "name": "MarketWatch",
     "url": "https://www.marketwatch.com",
     "feed": "https://feeds.marketwatch.com/marketwatch/topstories",
+    "category": "markets"
+  },
+  {
+    "name": "Bloomberg Markets",
+    "url": "https://www.bloomberg.com/markets",
+    "feed": "https://feeds.bloomberg.com/markets/news.rss",
+    "category": "markets"
+  },
+  {
+    "name": "WSJ Markets",
+    "url": "https://www.wsj.com/markets",
+    "feed": "https://feeds.a.dj.com/rss/RSSMarketsMain.xml",
+    "category": "markets"
+  },
+  {
+    "name": "ロイター 経済・ビジネス",
+    "url": "https://jp.reuters.com/markets/",
+    "feed": null,
     "category": "markets"
   },
   {
@@ -30,6 +42,18 @@
     "category": "economy"
   },
   {
+    "name": "Federal Reserve",
+    "url": "https://www.federalreserve.gov/newsevents.htm",
+    "feed": "https://www.federalreserve.gov/feeds/press_all.xml",
+    "category": "economy"
+  },
+  {
+    "name": "Naked Capitalism",
+    "url": "https://www.nakedcapitalism.com",
+    "feed": "https://www.nakedcapitalism.com/feed",
+    "category": "economy"
+  },
+  {
     "name": "CoinDesk",
     "url": "https://www.coindesk.com",
     "feed": "https://www.coindesk.com/arc/outboundfeeds/rss/",
@@ -42,9 +66,15 @@
     "category": "fintech"
   },
   {
-    "name": "ロイター 経済・ビジネス",
-    "url": "https://jp.reuters.com/business/finance/",
-    "feed": null,
-    "category": "markets"
+    "name": "Finextra",
+    "url": "https://www.finextra.com",
+    "feed": "https://www.finextra.com/rss/rss.aspx",
+    "category": "fintech"
+  },
+  {
+    "name": "PYMNTS",
+    "url": "https://www.pymnts.com",
+    "feed": "https://www.pymnts.com/feed/",
+    "category": "fintech"
   }
 ]
