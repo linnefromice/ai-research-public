@@ -1,17 +1,17 @@
 [
   {
-    "name": "株探",
-    "url": "https://kabutan.jp",
-    "feed": null,
-    "category": "stocks",
-    "sessions": ["daily"]
-  },
-  {
     "name": "みんかぶ",
     "url": "https://minkabu.jp",
     "feed": null,
     "category": "stocks",
     "sessions": ["daily"]
+  },
+  {
+    "name": "東洋経済オンライン",
+    "url": "https://toyokeizai.net",
+    "feed": "https://toyokeizai.net/list/feed/rss",
+    "category": "stocks",
+    "sessions": ["open", "mid", "close", "daily"]
   },
   {
     "name": "Yahoo!ファイナンス",
@@ -28,27 +28,6 @@
     "sessions": ["daily"]
   },
   {
-    "name": "ザイFX！ ニュース",
-    "url": "https://zai.diamond.jp/list/fxnews",
-    "feed": null,
-    "category": "fx-jpy",
-    "sessions": ["daily"]
-  },
-  {
-    "name": "モーニングスター 日本",
-    "url": "https://www.morningstar.co.jp/news/",
-    "feed": "https://www.morningstar.co.jp/news/rss.xml",
-    "category": "analysis",
-    "sessions": ["open", "mid", "close", "daily"]
-  },
-  {
-    "name": "トウシル (楽天証券)",
-    "url": "https://media.rakuten-sec.net",
-    "feed": "https://media.rakuten-sec.net/list/feed/rss4googlenews",
-    "category": "analysis",
-    "sessions": ["daily"]
-  },
-  {
     "name": "東証マネ部",
     "url": "https://money-bu-jpx.com",
     "feed": "https://money-bu-jpx.com/feed/",
@@ -56,17 +35,17 @@
     "sessions": ["daily"]
   },
   {
-    "name": "楽待 (不動産投資)",
-    "url": "https://www.rakumachi.jp",
-    "feed": null,
-    "category": "reit",
+    "name": "OANDA Lab",
+    "url": "https://www.oanda.jp/lab-education/",
+    "feed": "https://www.oanda.jp/lab-education/feed/",
+    "category": "fx-jpy",
     "sessions": ["daily"]
   },
   {
-    "name": "IR Bank",
-    "url": "https://irbank.net",
+    "name": "外為どっとコム",
+    "url": "https://www.gaitame.com/market/",
     "feed": null,
-    "category": "stocks",
+    "category": "fx-jpy",
     "sessions": ["daily"]
   },
   {
@@ -84,17 +63,31 @@
     "sessions": ["daily"]
   },
   {
-    "name": "HEDGE GUIDE 投資信託",
-    "url": "https://hedge.guide/category/fund",
-    "feed": "https://hedge.guide/category/fund/feed",
+    "name": "HEDGE GUIDE REIT",
+    "url": "https://hedge.guide/category/reit",
+    "feed": "https://hedge.guide/category/reit/feed",
+    "category": "reit",
+    "sessions": ["daily"]
+  },
+  {
+    "name": "モーニングスター 日本",
+    "url": "https://www.morningstar.co.jp/news/",
+    "feed": "https://www.morningstar.co.jp/news/rss.xml",
+    "category": "analysis",
+    "sessions": ["open", "mid", "close", "daily"]
+  },
+  {
+    "name": "トウシル (楽天証券)",
+    "url": "https://media.rakuten-sec.net",
+    "feed": "https://media.rakuten-sec.net/list/feed/rss4googlenews",
     "category": "analysis",
     "sessions": ["daily"]
   },
   {
-    "name": "OANDA Lab",
-    "url": "https://www.oanda.jp/lab-education/",
-    "feed": "https://www.oanda.jp/lab-education/feed/",
-    "category": "fx-jpy",
+    "name": "HEDGE GUIDE 投資信託",
+    "url": "https://hedge.guide/category/fund",
+    "feed": "https://hedge.guide/category/fund/feed",
+    "category": "analysis",
     "sessions": ["daily"]
   },
   {
