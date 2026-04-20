@@ -12,6 +12,18 @@
     "category": "productivity"
   },
   {
+    "name": "Zapier Blog",
+    "url": "https://zapier.com/blog",
+    "feed": "https://zapier.com/blog/feeds/latest/",
+    "category": "productivity"
+  },
+  {
+    "name": "できるネット",
+    "url": "https://dekiru.net",
+    "feed": "https://dekiru.net/feed/",
+    "category": "productivity"
+  },
+  {
     "name": "ライフハッカー日本版",
     "url": "https://www.lifehacker.jp",
     "feed": "https://www.lifehacker.jp/feed/index.xml",
@@ -28,5 +40,17 @@
     "url": "https://www.r-staffing.co.jp/lab/",
     "feed": "https://www.r-staffing.co.jp/lab/feed",
     "category": "worklife"
+  },
+  {
+    "name": "HR NOTE",
+    "url": "https://hrnote.jp",
+    "feed": "https://hrnote.jp/feed/",
+    "category": "worklife"
+  },
+  {
+    "name": "FQ JAPAN",
+    "url": "https://fqmagazine.jp",
+    "feed": "https://fqmagazine.jp/feed",
+    "category": "parenting"
   }
 ]
