@@ -1,17 +1,10 @@
 [
   {
-    "name": "株探",
-    "url": "https://kabutan.jp",
-    "feed": null,
+    "name": "財経新聞",
+    "url": "https://www.zaikei.co.jp/news/",
+    "feed": "https://www.zaikei.co.jp/rss/sections/market.xml",
     "category": "stocks",
-    "sessions": ["daily"]
-  },
-  {
-    "name": "みんかぶ",
-    "url": "https://minkabu.jp",
-    "feed": null,
-    "category": "stocks",
-    "sessions": ["daily"]
+    "sessions": ["open", "mid", "close", "daily"]
   },
   {
     "name": "Yahoo!ファイナンス",
@@ -29,10 +22,10 @@
   },
   {
     "name": "ザイFX！ ニュース",
-    "url": "https://zai.diamond.jp/list/fxnews",
-    "feed": null,
+    "url": "https://zai.diamond.jp/category/zaifxnews",
+    "feed": "https://zai.diamond.jp/list/feed/rss4newssitemap",
     "category": "fx-jpy",
-    "sessions": ["daily"]
+    "sessions": ["open", "mid", "close", "daily"]
   },
   {
     "name": "モーニングスター 日本",
@@ -53,20 +46,6 @@
     "url": "https://money-bu-jpx.com",
     "feed": "https://money-bu-jpx.com/feed/",
     "category": "index",
-    "sessions": ["daily"]
-  },
-  {
-    "name": "楽待 (不動産投資)",
-    "url": "https://www.rakumachi.jp",
-    "feed": null,
-    "category": "reit",
-    "sessions": ["daily"]
-  },
-  {
-    "name": "IR Bank",
-    "url": "https://irbank.net",
-    "feed": null,
-    "category": "stocks",
     "sessions": ["daily"]
   },
   {
@@ -103,5 +82,12 @@
     "feed": "https://jp.investing.com/rss/news.rss",
     "category": "analysis",
     "sessions": ["open", "mid", "close", "daily"]
+  },
+  {
+    "name": "大和総研",
+    "url": "https://www.dir.co.jp/report/",
+    "feed": "https://www.dir.co.jp/feed/japan.atom",
+    "category": "analysis",
+    "sessions": ["daily"]
   }
 ]
