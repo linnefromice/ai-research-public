@@ -28,11 +28,25 @@
     "sessions": ["open", "mid"]
   },
   {
+    "name": "The Motley Fool",
+    "url": "https://www.fool.com",
+    "feed": "https://www.fool.com/feeds/index.aspx",
+    "category": "us-stocks",
+    "sessions": ["daily"]
+  },
+  {
     "name": "Investing.com",
     "url": "https://www.investing.com",
     "feed": "https://www.investing.com/rss/news_25.rss",
     "category": "global-index",
     "sessions": ["open", "mid", "close", "daily"]
+  },
+  {
+    "name": "ETF Database",
+    "url": "https://etfdb.com",
+    "feed": null,
+    "category": "global-index",
+    "sessions": ["daily"]
   },
   {
     "name": "CoinDesk",
@@ -42,11 +56,32 @@
     "sessions": ["open", "mid", "close", "daily"]
   },
   {
+    "name": "Cointelegraph",
+    "url": "https://cointelegraph.com",
+    "feed": "https://cointelegraph.com/rss",
+    "category": "crypto",
+    "sessions": ["open", "mid", "close", "daily"]
+  },
+  {
+    "name": "Decrypt",
+    "url": "https://decrypt.co",
+    "feed": "https://decrypt.co/feed",
+    "category": "crypto",
+    "sessions": ["daily"]
+  },
+  {
     "name": "FXStreet",
     "url": "https://www.fxstreet.com",
     "feed": "https://www.fxstreet.com/rss",
     "category": "forex",
     "sessions": ["open", "mid", "daily"]
+  },
+  {
+    "name": "ForexLive",
+    "url": "https://www.forexlive.com",
+    "feed": "https://www.forexlive.com/feed/",
+    "category": "forex",
+    "sessions": ["open", "mid", "close", "daily"]
   },
   {
     "name": "OilPrice.com",
@@ -63,16 +98,16 @@
     "sessions": ["daily"]
   },
   {
-    "name": "ETF Database",
-    "url": "https://etfdb.com",
-    "feed": "https://etfdb.com/feed/",
-    "category": "global-index",
-    "sessions": ["daily"]
-  },
-  {
     "name": "トウシル 海外投資",
     "url": "https://media.rakuten-sec.net/category/us-stock/",
     "feed": "https://media.rakuten-sec.net/list/feed/rss4googlenews",
+    "category": "analysis",
+    "sessions": ["daily"]
+  },
+  {
+    "name": "A Wealth of Common Sense",
+    "url": "https://awealthofcommonsense.com",
+    "feed": "https://awealthofcommonsense.com/feed/",
     "category": "analysis",
     "sessions": ["daily"]
   }
