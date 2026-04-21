@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCfEnv } from '../lib/api-helpers';
+export const prerender = false;
+
+interface EntityCo {
+  entity_a: string;
+  entity_b: string;
+  cooccurrence: number;
+}
+
+const cfEnv = getCfEnv();
+const db = cfEnv?.DB;
+
+let coOccurrences: EntityCo[] = [];
+if (db) {
+  try {
+    const r = await db.prepare(`
+      SELECT a.entity_id AS entity_a, b.entity_id AS entity_b, COUNT(*) AS cooccurrence
+      FROM report_entities a
+      JOIN report_entities b ON a.report_id = b.report_id AND a.entity_id < b.entity_id
+      GROUP BY a.entity_id, b.entity_id
+      HAVING cooccurrence >= 2
+      ORDER BY cooccurrence DESC
+      LIMIT 50
+    `).all<EntityCo>();
+    coOccurrences = r.results ?? [];
+  } catch { /* entities テーブル未作成 or データなし */ }
+}
+---
+
+<BaseLayout title="Knowledge Graph" activeFeature="_graph">
+  <h1>🕸 Knowledge Graph (POC)</h1>
+  <p style="color: var(--color-text-muted); margin-bottom: 1.5rem;">
+    Entity 共起ペア (top 50 — 2 回以上同じレポートに登場)
+  </p>
+
+  {coOccurrences.length === 0 ? (
+    <p style="color: var(--color-text-muted);">
+      No entity co-occurrences yet. Entity extraction pipeline (#64) pending.
+    </p>
+  ) : (
+    <div class="table-container">
+      <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+          <tr>
+            <th style="text-align: left; padding: 0.5rem;">Entity A</th>
+            <th style="text-align: left; padding: 0.5rem;">Entity B</th>
+            <th style="text-align: right; padding: 0.5rem;">Co-mentions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {coOccurrences.map(c => (
+            <tr style="border-top: 1px solid var(--color-border);">
+              <td style="padding: 0.5rem;">{c.entity_a}</td>
+              <td style="padding: 0.5rem;">{c.entity_b}</td>
+              <td style="padding: 0.5rem; text-align: right; font-weight: 600;">{c.cooccurrence}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )}
+
+  <p style="color: var(--color-text-muted); font-size: 0.85rem; margin-top: 2rem;">
+    将来: d3-force で force-directed graph として可視化予定 (#66 POC → full impl)
+  </p>
+</BaseLayout>

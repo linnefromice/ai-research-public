@@ -1,0 +1,165 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ReportCard from '../../components/ReportCard.astro';
+import { getCollection } from 'astro:content';
+import { dailyFeatures, getFeatureLabel } from '../../features';
+import { getUnpublishedIds, getReportMeta, toD1Id } from '../../lib/d1-client';
+import { getExcerpt } from '../../lib/excerpt';
+import { dedupByLang } from '../../lib/multilingual';
+
+export function getStaticPaths() {
+  // deep-research は dedicated SSR ページ (src/pages/deep-research/index.astro) が
+  // publish 状態を即時反映するため、ここでは生成しない (URL 衝突すると SSG 側が優先され固定化される)
+  return dailyFeatures.map(f => ({ params: { feature: f.slug } }));
+}
+
+const unpublished = await getUnpublishedIds();
+const reportMeta = await getReportMeta();
+
+const { feature } = Astro.params;
+const reports = await getCollection(feature as any);
+// 多言語 feature (languages: [en, ja]) は 1 日につき 2 ファイル生成するため
+// (feature, date, session) 単位で重複排除し、JA を優先表示する。
+const filtered = reports
+  .filter(r => !unpublished.has(toD1Id(feature!, r.id)))
+  .map(r => ({ ...r, feature: feature! }));
+const sorted = dedupByLang(filtered)
+  .sort((a, b) => b.data.date.localeCompare(a.data.date));
+const label = getFeatureLabel(feature!);
+
+// セッション / weekly 対応 Feature かどうか判定
+const hasWeekly = sorted.some(r => r.data.session === 'weekly');
+const hasMarketSession = sorted.some(r =>
+  r.data.session && r.data.session !== 'daily' && r.data.session !== 'weekly'
+);
+const hasSessions = hasWeekly || hasMarketSession;
+
+// daily / weekly / (open/mid/close) に分離
+const dailyReports = sorted.filter(r => !r.data.session || r.data.session === 'daily');
+const weeklyReports = sorted.filter(r => r.data.session === 'weekly');
+const sessionReports = sorted.filter(
+  r => r.data.session && r.data.session !== 'daily' && r.data.session !== 'weekly'
+);
+
+// getExcerpt は lib/excerpt.ts から import 済み
+---
+
+<BaseLayout title={label} activeFeature={feature}>
+  <h1>{label} Reports</h1>
+
+  {hasSessions ? (
+    <>
+      <div class="tab-bar" id="tab-bar">
+        <button class="tab-btn active" data-tab="all">All</button>
+        <button class="tab-btn" data-tab="daily">Daily</button>
+        {hasWeekly && <button class="tab-btn" data-tab="weekly">📅 Weekly</button>}
+        {hasMarketSession && <button class="tab-btn" data-tab="session">Session</button>}
+      </div>
+
+      <div class="tab-panel" id="panel-all">
+        <div class="report-grid">
+          {sorted.map((report) => (
+            <ReportCard
+              title={report.data.title}
+              date={report.data.date}
+              feature={feature!}
+              slug={report.id}
+              excerpt={getExcerpt(reportMeta.get(toD1Id(feature!, report.id)), report.body ?? '')}
+              session={report.data.session}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div class="tab-panel hidden" id="panel-daily">
+        <div class="report-grid">
+          {dailyReports.map((report) => (
+            <ReportCard
+              title={report.data.title}
+              date={report.data.date}
+              feature={feature!}
+              slug={report.id}
+              excerpt={getExcerpt(reportMeta.get(toD1Id(feature!, report.id)), report.body ?? '')}
+              session={report.data.session}
+            />
+          ))}
+        </div>
+      </div>
+
+      {hasWeekly && (
+        <div class="tab-panel hidden" id="panel-weekly">
+          <div class="report-grid">
+            {weeklyReports.map((report) => (
+              <ReportCard
+                title={report.data.title}
+                date={report.data.date}
+                feature={feature!}
+                slug={report.id}
+                excerpt={getExcerpt(reportMeta.get(toD1Id(feature!, report.id)), report.body ?? '')}
+                session={report.data.session}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {hasMarketSession && (
+        <div class="tab-panel hidden" id="panel-session">
+          <div class="report-grid">
+            {sessionReports.map((report) => (
+              <ReportCard
+                title={report.data.title}
+                date={report.data.date}
+                feature={feature!}
+                slug={report.id}
+                excerpt={getExcerpt(reportMeta.get(toD1Id(feature!, report.id)), report.body ?? '')}
+                session={report.data.session}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+    </>
+  ) : (
+    <div class="report-grid">
+      {sorted.map((report) => (
+        <ReportCard
+          title={report.data.title}
+          date={report.data.date}
+          feature={feature!}
+          slug={report.id}
+          excerpt={getExcerpt(reportMeta.get(toD1Id(feature!, report.id)), report.body ?? '')}
+          session={report.data.session}
+        />
+      ))}
+    </div>
+  )}
+</BaseLayout>
+
+<script>
+  const tabBar = document.getElementById('tab-bar');
+  if (tabBar) {
+    const buttons = tabBar.querySelectorAll('.tab-btn');
+    const panels = document.querySelectorAll('.tab-panel');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tab = btn.getAttribute('data-tab')!;
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        panels.forEach(p => {
+          if (p.id === `panel-${tab}`) {
+            p.classList.remove('hidden');
+          } else {
+            p.classList.add('hidden');
+          }
+        });
+      });
+    });
+  }
+</script>
+
+<style>
+  /* report-grid, tab-bar, tab-btn, load-more は global.css で定義 */
+  h1 { font-size: 1.5rem; margin-bottom: 1rem; }
+  .hidden { display: none; }
+</style>

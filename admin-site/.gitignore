@@ -1,0 +1,10 @@
+node_modules
+dist
+.wrangler
+
+# Generated at build time from admin-site/templates-src/ (SoT in public-src repo).
+# Do not commit — prebuild script regenerates on each dev/build.
+src/assets/research-templates/
+
+# NOTE: screenshots/*.png は git 管理下に置き、PR で UI diff を可視化する。
+# drift 鮮度は screenshots/manifest.json の source_tree_sha で追跡される。

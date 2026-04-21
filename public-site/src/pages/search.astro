@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCfEnv } from '../lib/api-helpers';
+export const prerender = false;
+
+const url = new URL(Astro.request.url);
+const q = (url.searchParams.get('q') ?? '').trim();
+
+interface SearchHit {
+  id: string; feature: string; date: string; title: string | null;
+  summary: string | null; tldr: string | null;
+}
+
+let results: SearchHit[] = [];
+let error = '';
+
+if (q.length >= 2) {
+  const cfEnv = getCfEnv();
+  const db = cfEnv?.DB;
+  if (db) {
+    try {
+      const ftsQuery = q.replace(/"/g, ' ');
+      const r = await db.prepare(`
+        SELECT r.id, r.feature, r.date, r.title, r.summary, r.tldr
+        FROM reports_fts
+        JOIN reports r ON r.rowid = reports_fts.rowid
+        WHERE reports_fts MATCH ? AND r.published = 1
+        ORDER BY bm25(reports_fts)
+        LIMIT 30
+      `).bind(ftsQuery).all<SearchHit>();
+      results = r.results ?? [];
+    } catch (e) { error = String(e); }
+  } else {
+    error = 'Search unavailable (D1 not bound)';
+  }
+}
+---
+
+<BaseLayout title="Search" activeFeature="_search">
+  <h1>🔍 Search</h1>
+  <form method="get" style="margin: 1rem 0;">
+    <input type="search" name="q" value={q} placeholder="Search reports..." autofocus
+      style="width: 100%; padding: 0.75rem 1rem; font-size: 1rem; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px; color: var(--color-text);" />
+  </form>
+
+  {error && <p style="color: var(--color-danger);">{error}</p>}
+
+  {q.length >= 2 && results.length === 0 && !error && (
+    <p style="color: var(--color-text-muted);">No results for "{q}"</p>
+  )}
+
+  {results.length > 0 && (
+    <>
+      <p style="color: var(--color-text-muted); margin-bottom: 1rem;">{results.length} results</p>
+      <div style="display: grid; gap: 0.75rem;">
+        {results.map(r => (
+          <a href={`/${r.feature}/${r.date}/`} style="display: block; padding: 0.75rem 1rem; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px; text-decoration: none; color: var(--color-text);">
+            <div style="font-weight: 600;">{r.title ?? `${r.feature} ${r.date}`}</div>
+            <div style="font-size: 0.8rem; color: var(--color-text-muted); margin-top: 0.25rem;">{r.feature} · {r.date}</div>
+            {r.tldr && <div style="margin-top: 0.5rem; font-size: 0.85rem;">{r.tldr}</div>}
+          </a>
+        ))}
+      </div>
+    </>
+  )}
+</BaseLayout>

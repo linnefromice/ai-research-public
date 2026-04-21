@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="My Badges" activeFeature="_my_badges">
+  <h1>🏅 My Badges</h1>
+  <p style="color: var(--color-text-muted); margin-bottom: 1.5rem;">
+    localStorage の読書履歴から獲得条件を判定します
+  </p>
+
+  <div id="badges-grid" style="display: grid; gap: 0.75rem; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));">
+    <!-- JS で populate -->
+  </div>
+</BaseLayout>
+
+<script>
+  const BOOKMARKS_KEY = 'openclaw_bookmarks';
+  const VIEWS_KEY = 'openclaw_view_history';
+
+  interface Badge {
+    id: string;
+    emoji: string;
+    title: string;
+    description: string;
+    earned: boolean;
+  }
+
+  const bookmarks = (() => { try { return JSON.parse(localStorage.getItem(BOOKMARKS_KEY) || '[]'); } catch { return []; } })();
+  const views = (() => { try { return JSON.parse(localStorage.getItem(VIEWS_KEY) || '[]'); } catch { return []; } })();
+
+  // streak 計算
+  const dates = [...new Set(views.map((v: any) => v.date))].sort().reverse() as string[];
+  let streak = 0;
+  const today = new Date().toISOString().slice(0, 10);
+  let cursor = new Date(today);
+  for (const d of dates) {
+    const curStr = cursor.toISOString().slice(0, 10);
+    if (d === curStr) { streak++; cursor.setDate(cursor.getDate() - 1); } else break;
+  }
+
+  // feature 別カウント
+  const featureCounts: Record<string, number> = {};
+  views.forEach((v: any) => v.feature && (featureCounts[v.feature] = (featureCounts[v.feature] || 0) + 1));
+
+  const badges: Badge[] = [
+    { id: 'first-read',    emoji: '🥇', title: 'First Read',       description: '最初のレポートを読んだ',              earned: views.length >= 1 },
+    { id: 'read-10',       emoji: '📖', title: 'Reader (10)',      description: '10 本読了',                           earned: views.length >= 10 },
+    { id: 'read-100',      emoji: '📚', title: 'Avid Reader (100)',description: '100 本読了',                          earned: views.length >= 100 },
+    { id: 'streak-7',      emoji: '🔥', title: 'Week Streak',      description: '7 日連続読了',                        earned: streak >= 7 },
+    { id: 'streak-30',     emoji: '🏆', title: 'Month Streak',     description: '30 日連続読了',                       earned: streak >= 30 },
+    { id: 'bookmark-10',   emoji: '⭐', title: 'Curator (10)',     description: '10 本ブックマーク',                   earned: bookmarks.length >= 10 },
+    { id: 'tech-fan',      emoji: '💻', title: 'Tech Fan',         description: 'tech-trends を 20 本読了',            earned: (featureCounts['tech-trends'] || 0) >= 20 },
+    { id: 'invest-fan',    emoji: '💰', title: 'Invest Fan',       description: 'invest 系を 20 本読了',               earned: ((featureCounts['invest-japan'] || 0) + (featureCounts['invest-global'] || 0)) >= 20 },
+    { id: 'globetrotter',  emoji: '🌐', title: 'Globetrotter',     description: '5 以上の異なる feature を読了',       earned: Object.keys(featureCounts).length >= 5 },
+  ];
+
+  const grid = document.getElementById('badges-grid');
+  if (grid) {
+    grid.innerHTML = badges.map(b => `
+      <div style="padding: 1rem; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px; ${b.earned ? '' : 'opacity: 0.3;'}">
+        <div style="font-size: 2rem;">${b.emoji}</div>
+        <div style="font-weight: 600; margin-top: 0.25rem;">${b.title}</div>
+        <div style="color: var(--color-text-muted); font-size: 0.85rem; margin-top: 0.25rem;">${b.description}</div>
+        <div style="font-size: 0.75rem; margin-top: 0.5rem; color: ${b.earned ? 'var(--color-success)' : 'var(--color-text-muted)'};">
+          ${b.earned ? '✓ Earned' : '未獲得'}
+        </div>
+      </div>
+    `).join('');
+  }
+</script>

@@ -1,0 +1,510 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { ReactionBar } from '../../components/ReactionBar';
+import { NoteEditor } from '../../components/NoteEditor';
+import { getCollection, render } from 'astro:content';
+import { buildReportCardTitle, features, getFeatureLabel } from '../../features';
+import { getUnpublishedIds, getAllReportTags, toD1Id } from '../../lib/d1-client';
+import { getFeatureColor } from '../../features';
+
+interface RelatedReport {
+  report_id: string;
+  feature: string;
+  date: string;
+  title: string;
+  shared_tags: string[];
+  shared_count: number;
+}
+
+export async function getStaticPaths() {
+  const unpublished = await getUnpublishedIds();
+  const paths = [];
+  for (const f of features) {
+    const reports = await getCollection(f.slug as any);
+    const published = reports.filter(r => !unpublished.has(toD1Id(f.slug, r.id)));
+    const sorted = published.sort((a, b) => a.data.date.localeCompare(b.data.date));
+    for (let i = 0; i < sorted.length; i++) {
+      paths.push({
+        params: { feature: f.slug, slug: sorted[i].id },
+        props: {
+          report: sorted[i],
+          feature: f.slug,
+          prev: i > 0 ? sorted[i - 1] : null,
+          next: i < sorted.length - 1 ? sorted[i + 1] : null,
+        },
+      });
+    }
+  }
+  return paths;
+}
+
+const { report, feature, prev, next } = Astro.props;
+const { Content, headings } = await render(report);
+const featureLabel = getFeatureLabel(feature);
+const articleCount = headings.filter(h => h.depth === 3).length;
+
+// タグ取得（キャッシュ済み）
+const allReportTags = await getAllReportTags();
+const reportTags = allReportTags.get(toD1Id(feature, report.id)) ?? [];
+const keywordTags = reportTags.filter(t => t.tag_type === 'keyword').map(t => t.tag);
+const themeTags = reportTags.filter(t => t.tag_type === 'theme').map(t => t.tag);
+
+// 関連レポート取得（D1 API、ベストエフォート）
+let relatedReports: RelatedReport[] = [];
+const apiUrl = import.meta.env.D1_API_URL || process.env.D1_API_URL;
+const apiKey = import.meta.env.D1_API_KEY || process.env.D1_API_KEY;
+if (apiUrl && apiKey) {
+  try {
+    const d1Id = toD1Id(feature, report.id);
+    const res = await fetch(
+      `${apiUrl}/api/reports/${encodeURIComponent(d1Id)}/related?limit=5`,
+      { headers: { Authorization: `Bearer ${apiKey}` }, signal: AbortSignal.timeout(3000) }
+    );
+    if (res.ok) {
+      const data = await res.json() as { data: RelatedReport[] };
+      relatedReports = data.data;
+    }
+  } catch { /* ベストエフォート */ }
+}
+
+// マークダウン生データ（Copy / Download 用）
+const rawMarkdown = report.body ?? '';
+const filename = `${report.id}.md`;
+
+// TOC: Sources, Metadata を除外
+const excludedSections = ['sources', 'metadata'];
+const tocHeadings = headings.filter(h =>
+  h.depth === 2 && !excludedSections.includes(h.slug)
+);
+---
+
+<BaseLayout title={buildReportCardTitle(feature, report.data.date)} activeFeature={feature}>
+  {tocHeadings.length > 1 && (
+    <details class="toc">
+      <summary>目次</summary>
+      <ol>
+        {tocHeadings.map((h) => (
+          <li><a href={`#${h.slug}`}>{h.text}</a></li>
+        ))}
+      </ol>
+    </details>
+  )}
+
+  <div class="report-meta-bar">
+    <span class="reading-time">📖 {Math.max(1, Math.ceil(rawMarkdown.length / 600))} min read</span>
+    <span class="article-count">{articleCount} articles</span>
+  </div>
+
+  <div class="report-actions">
+    <button class="action-btn" id="bookmark-btn" title="Bookmark this report">
+      <span class="action-icon" id="bookmark-icon">🔖</span> <span id="bookmark-label">Bookmark</span>
+    </button>
+    <button class="action-btn" id="copy-md-btn" title="Copy as Markdown">
+      <span class="action-icon">📋</span> Copy MD
+    </button>
+    <button class="action-btn" id="download-md-btn" title="Download as .md file">
+      <span class="action-icon">⬇️</span> Download
+    </button>
+    <a class="action-btn" href={`${report.id}.md`} title="View raw markdown (.md)">
+      <span class="action-icon">📄</span> .md
+    </a>
+    <a class="action-btn" href={`https://x.com/intent/tweet?text=${encodeURIComponent(buildReportCardTitle(feature, report.data.date))}&url=${encodeURIComponent(`https://openclaw-public.pages.dev/${feature}/${report.id}/`)}`} target="_blank" rel="noopener" title="Share on X">
+      <span class="action-icon">𝕏</span> Share
+    </a>
+  </div>
+
+  <script type="application/json" id="raw-markdown" set:html={JSON.stringify({ content: rawMarkdown, filename })} />
+  <script type="application/json" id="report-meta" set:html={JSON.stringify({ id: toD1Id(feature, report.id), feature, slug: report.id })} />
+
+  <article class="report-content">
+    <Content />
+  </article>
+
+  <ReactionBar reportId={toD1Id(feature, report.id)} client:load />
+  <NoteEditor reportId={toD1Id(feature, report.id)} client:load />
+
+  {(themeTags.length > 0 || keywordTags.length > 0) && (
+    <div class="report-tags">
+      {themeTags.length > 0 && (
+        <div class="tag-group">
+          <span class="tag-group-label">Themes</span>
+          {themeTags.map(tag => <span class="tag theme-tag">{tag}</span>)}
+        </div>
+      )}
+      {keywordTags.length > 0 && (
+        <div class="tag-group">
+          <span class="tag-group-label">Keywords</span>
+          {keywordTags.map(tag => <span class="tag keyword-tag">{tag}</span>)}
+        </div>
+      )}
+    </div>
+  )}
+
+  <div class="report-meta">
+    {report.data.engine && <span>Engine: {report.data.engine}</span>}
+    {articleCount > 0 && <span>記事数: {articleCount}</span>}
+    {report.data.session && report.data.session !== 'daily' && <span>Session: {report.data.session}</span>}
+    <span>Feature: {featureLabel}</span>
+  </div>
+
+  {relatedReports.length > 0 && (
+    <section class="related-reports">
+      <h2>Related Reports</h2>
+      <div class="related-list">
+        {relatedReports.map((r) => (
+          <a href={`/${r.feature}/${r.report_id.split('/')[1]}`} class="related-item">
+            <span class="related-dot" style={`background: ${getFeatureColor(r.feature)}`} />
+            <div class="related-info">
+              <span class="related-title">{r.title}</span>
+              <span class="related-meta">{r.date} · {r.shared_count} shared tags</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <nav class="report-nav">
+    <div class="nav-prev">
+      {prev && (
+        <a href={`/${feature}/${prev.id}`}>
+          <span class="nav-label">&larr; 前日</span>
+          <span class="nav-date">{prev.data.date}</span>
+        </a>
+      )}
+    </div>
+    <div class="nav-center">
+      <a href={`/${feature}/`}>{featureLabel} 一覧</a>
+    </div>
+    <div class="nav-next">
+      {next && (
+        <a href={`/${feature}/${next.id}`}>
+          <span class="nav-label">翌日 &rarr;</span>
+          <span class="nav-date">{next.data.date}</span>
+        </a>
+      )}
+    </div>
+  </nav>
+</BaseLayout>
+
+<script>
+  // Desktop: open by default, Mobile: closed by default
+  const toc = document.querySelector('.toc');
+  if (toc && window.innerWidth > 768) {
+    toc.setAttribute('open', '');
+  }
+
+  // Bookmark + Read tracking
+  const meta = JSON.parse(document.getElementById('report-meta')?.textContent || '{}');
+  if (meta.id) {
+    // Mark as read
+    const READ_KEY = 'openclaw_read';
+    try {
+      const read = JSON.parse(localStorage.getItem(READ_KEY) || '[]');
+      if (!read.includes(meta.id)) {
+        read.push(meta.id);
+        if (read.length > 500) read.splice(0, read.length - 500);
+        localStorage.setItem(READ_KEY, JSON.stringify(read));
+      }
+    } catch {}
+
+    // Bookmark toggle
+    const BOOKMARKS_KEY = 'openclaw_bookmarks';
+    const bookmarkBtn = document.getElementById('bookmark-btn');
+    const bookmarkIcon = document.getElementById('bookmark-icon');
+    const bookmarkLabel = document.getElementById('bookmark-label');
+
+    function updateBookmarkUI() {
+      try {
+        const bookmarks = JSON.parse(localStorage.getItem(BOOKMARKS_KEY) || '[]');
+        const isMarked = bookmarks.includes(meta.id);
+        if (bookmarkIcon) bookmarkIcon.textContent = isMarked ? '⭐' : '🔖';
+        if (bookmarkLabel) bookmarkLabel.textContent = isMarked ? 'Bookmarked' : 'Bookmark';
+        if (bookmarkBtn) bookmarkBtn.classList.toggle('bookmarked', isMarked);
+      } catch {}
+    }
+
+    updateBookmarkUI();
+
+    bookmarkBtn?.addEventListener('click', () => {
+      try {
+        const bookmarks = JSON.parse(localStorage.getItem(BOOKMARKS_KEY) || '[]');
+        const idx = bookmarks.indexOf(meta.id);
+        if (idx >= 0) bookmarks.splice(idx, 1);
+        else bookmarks.push(meta.id);
+        localStorage.setItem(BOOKMARKS_KEY, JSON.stringify(bookmarks));
+        updateBookmarkUI();
+      } catch {}
+    });
+  }
+
+  // Copy / Download Markdown
+  const rawData = JSON.parse(document.getElementById('raw-markdown')?.textContent || '{}');
+
+  const copyBtn = document.getElementById('copy-md-btn');
+  if (copyBtn && rawData.content) {
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(rawData.content);
+        const original = copyBtn.innerHTML;
+        copyBtn.innerHTML = '<span class="action-icon">✅</span> Copied!';
+        setTimeout(() => { copyBtn.innerHTML = original; }, 2000);
+      } catch {
+        // fallback
+        const ta = document.createElement('textarea');
+        ta.value = rawData.content;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        const original = copyBtn.innerHTML;
+        copyBtn.innerHTML = '<span class="action-icon">✅</span> Copied!';
+        setTimeout(() => { copyBtn.innerHTML = original; }, 2000);
+      }
+    });
+  }
+
+  const downloadBtn = document.getElementById('download-md-btn');
+  if (downloadBtn && rawData.content) {
+    downloadBtn.addEventListener('click', () => {
+      const blob = new Blob([rawData.content], { type: 'text/markdown;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = rawData.filename || 'report.md';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+  }
+</script>
+
+<style>
+  .report-meta-bar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+  .reading-time, .article-count {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .report-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    justify-content: flex-end;
+  }
+  .action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.4rem 0.8rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .action-btn:hover {
+    border-color: var(--color-primary);
+    color: var(--color-text);
+  }
+  .action-btn.bookmarked {
+    border-color: var(--color-warning);
+    color: var(--color-warning);
+  }
+  .action-icon {
+    font-size: 0.85rem;
+  }
+
+  .toc {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .toc summary {
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    color: var(--color-text);
+  }
+  .toc ol {
+    margin: 0.5rem 0 0;
+    padding-left: 1.25rem;
+    list-style: decimal;
+  }
+  .toc li {
+    margin: 0.25rem 0;
+  }
+  .toc a {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .toc a:hover {
+    color: var(--color-primary);
+  }
+
+  .report-tags {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .tag-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .tag-group-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-right: 0.3rem;
+  }
+  .tag {
+    font-size: 0.7rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    color: var(--color-text-muted);
+  }
+  .theme-tag {
+    background: var(--color-primary);
+    color: var(--color-bg);
+    opacity: 0.8;
+  }
+  .keyword-tag {
+    background: var(--color-border);
+  }
+
+  .report-meta {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 2rem;
+    padding: 0.5rem 1rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+  .report-meta span:not(:last-child)::after {
+    content: '|';
+    margin-left: 0.75rem;
+    color: var(--color-border);
+  }
+
+  .related-reports {
+    margin-top: 2rem;
+    padding: 1rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+  }
+  .related-reports h2 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .related-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .related-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem;
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--color-text);
+    transition: background 0.15s;
+  }
+  .related-item:hover {
+    background: var(--color-bg);
+    text-decoration: none;
+  }
+  .related-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .related-info {
+    display: flex;
+    flex-direction: column;
+  }
+  .related-title {
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+  .related-meta {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+
+  .report-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+    gap: 0.5rem;
+  }
+  .nav-prev, .nav-next {
+    flex: 1;
+  }
+  .nav-next {
+    text-align: right;
+  }
+  .nav-center {
+    flex-shrink: 0;
+  }
+  .nav-center a {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+  .nav-center a:hover {
+    color: var(--color-primary);
+  }
+  .report-nav a {
+    text-decoration: none;
+    color: var(--color-text);
+    transition: color 0.15s;
+  }
+  .report-nav a:hover {
+    color: var(--color-primary);
+  }
+  .nav-label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+  }
+  .nav-date {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+</style>

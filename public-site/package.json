@@ -1,0 +1,43 @@
+{
+  "name": "public-site",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "predev": "node scripts/copy-fixtures-to-content.mjs",
+    "dev": "astro dev",
+    "prebuild": "node scripts/copy-fixtures-to-content.mjs",
+    "build": "astro build",
+    "preview": "astro preview",
+    "prescreenshot": "node scripts/copy-fixtures-to-content.mjs",
+    "screenshot": "node scripts/screenshot.mjs",
+    "screenshot:desktop": "node scripts/screenshot.mjs --viewport=desktop",
+    "screenshot:mobile": "node scripts/screenshot.mjs --viewport=mobile"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@astrojs/cloudflare": "^13.1.7",
+    "@astrojs/react": "^5.0.3",
+    "@better-auth/kysely-adapter": "^1.6.0",
+    "@opentelemetry/api": "^1.9.1",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "astro": "^6.1.2",
+    "better-auth": "^1.6.0",
+    "kysely": "^0.28.15",
+    "kysely-d1": "^0.4.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.8",
+    "playwright": "^1.59.1",
+    "typescript": "^5.9.3"
+  }
+}

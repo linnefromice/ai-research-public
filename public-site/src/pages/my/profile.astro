@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="My Profile" activeFeature="_my_profile">
+  <h1>👤 My Profile</h1>
+  <div id="profile-stats" style="display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));">
+    <!-- JS で動的に populate -->
+  </div>
+
+  <p style="color: var(--color-text-muted); font-size: 0.85rem; margin-top: 2rem;">
+    統計は localStorage (bookmarks, 閲覧数) + D1 (reactions, notes) から集計されます。
+    ログインするとデバイス間で同期されます。
+  </p>
+</BaseLayout>
+
+<script>
+  // localStorage ベースの統計
+  const BOOKMARKS_KEY = 'openclaw_bookmarks';
+  const VIEWS_KEY = 'openclaw_view_history';
+
+  const stats = {
+    bookmarks: 0,
+    views: 0,
+    streak: 0,
+    favFeature: '—',
+  };
+
+  try {
+    const bm = JSON.parse(localStorage.getItem(BOOKMARKS_KEY) || '[]');
+    stats.bookmarks = Array.isArray(bm) ? bm.length : 0;
+  } catch {}
+
+  try {
+    const vh = JSON.parse(localStorage.getItem(VIEWS_KEY) || '[]');
+    if (Array.isArray(vh)) {
+      stats.views = vh.length;
+      // 連続日数
+      const dates = [...new Set(vh.map((v: any) => v.date))].sort().reverse();
+      let streak = 0;
+      const today = new Date().toISOString().slice(0, 10);
+      let cursor = new Date(today);
+      for (const d of dates) {
+        const curStr = cursor.toISOString().slice(0, 10);
+        if (d === curStr) {
+          streak++;
+          cursor.setDate(cursor.getDate() - 1);
+        } else break;
+      }
+      stats.streak = streak;
+      // 最頻 feature
+      const counts: Record<string, number> = {};
+      vh.forEach((v: any) => v.feature && (counts[v.feature] = (counts[v.feature] || 0) + 1));
+      const top = Object.entries(counts).sort((a, b) => b[1] - a[1])[0];
+      if (top) stats.favFeature = top[0];
+    }
+  } catch {}
+
+  const container = document.getElementById('profile-stats');
+  if (container) {
+    const card = (label: string, value: string | number) =>
+      `<div style="padding: 1rem; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px;">
+        <div style="font-size: 0.85rem; color: var(--color-text-muted);">${label}</div>
+        <div style="font-size: 1.5rem; font-weight: 600; margin-top: 0.25rem;">${value}</div>
+      </div>`;
+    container.innerHTML = [
+      card('📖 Reports Read', stats.views),
+      card('⭐ Bookmarks', stats.bookmarks),
+      card('🔥 Streak (days)', stats.streak),
+      card('🎯 Fav Feature', stats.favFeature),
+    ].join('');
+  }
+</script>

@@ -1,0 +1,163 @@
+{
+  "reports": {
+    "success": true,
+    "data": [
+      { "id": "tech-trends/2026-04-20", "feature": "tech-trends", "date": "2026-04-20", "session": "daily", "title": "Daily Tech Trends — Claude 4.7 リリース、OpenAI 新モデル", "engine": "claude", "article_count": 12, "published": 1, "summary": "Anthropic が Claude 4.7 を発表、1M コンテキストに対応。OpenAI は GPT-5 mini をリリース。", "content": null, "created_at": "2026-04-20T01:15:00Z", "updated_at": "2026-04-20T01:15:00Z" },
+      { "id": "invest-japan/2026-04-20", "feature": "invest-japan", "date": "2026-04-20", "session": "daily", "title": "日経平均 +312円、半導体セクター主導で堅調", "engine": "claude", "article_count": 9, "published": 1, "summary": "日経平均は半導体セクター主導で 312 円高。東京エレクトロンが 2.4% 高。", "content": null, "created_at": "2026-04-20T00:45:00Z", "updated_at": "2026-04-20T00:45:00Z" },
+      { "id": "finance-markets/2026-04-20", "feature": "finance-markets", "date": "2026-04-20", "session": "daily", "title": "米国債 10 年利回り 4.32%、FOMC 6 月利下げ織込み進む", "engine": "claude", "article_count": 11, "published": 1, "summary": "FOMC 議事要旨で 6 月利下げに慎重な見方が優勢だが、市場は 58% の織込みを維持。", "content": null, "created_at": "2026-04-20T02:00:00Z", "updated_at": "2026-04-20T02:00:00Z" },
+      { "id": "productivity/2026-04-20", "feature": "productivity", "date": "2026-04-20", "session": "daily", "title": "Obsidian v1.8 リリース、Canvas 2.0 で階層タスク対応", "engine": "claude", "article_count": 7, "published": 1, "summary": "Obsidian v1.8 で Canvas に階層構造が追加。Sunsama が Google Calendar 双方向同期を強化。", "content": null, "created_at": "2026-04-20T01:00:00Z", "updated_at": "2026-04-20T01:00:00Z" },
+      { "id": "tech-trends/2026-04-19", "feature": "tech-trends", "date": "2026-04-19", "session": "daily", "title": "Daily Tech Trends — Vercel AI SDK v5 GA、Next.js 16 RC", "engine": "claude", "article_count": 14, "published": 1, "summary": "Vercel AI SDK v5 が GA、ツール呼び出しの型推論が強化。Next.js 16 RC で Turbopack がデフォルト。", "content": "# Daily Tech Trends\n\n## Today's Highlights\n\n**Vercel AI SDK v5 GA**。ツール呼び出しの戻り値型推論が TypeScript strict モードで破綻なく動作するようになった。\n\n**Next.js 16 RC** で Turbopack がデフォルト化、cold start が 40% 改善。\n\n## 主要記事\n\n### Vercel AI SDK v5 の目玉は type inference\n\n...", "created_at": "2026-04-19T01:10:00Z", "updated_at": "2026-04-19T01:10:00Z" },
+      { "id": "invest-global/2026-04-19", "feature": "invest-global", "date": "2026-04-19", "session": "daily", "title": "NVIDIA +3.2%、AI データセンター受注が想定超過", "engine": "claude", "article_count": 10, "published": 1, "summary": "NVIDIA が AI データセンター向け GPU で 1200 億ドルのバックログを報告。", "content": null, "created_at": "2026-04-19T06:00:00Z", "updated_at": "2026-04-19T06:00:00Z" },
+      { "id": "wellness/2026-04-19-weekly", "feature": "wellness", "date": "2026-04-19", "session": "weekly", "title": "Weekly Wellness — HIIT 研究、睡眠スコアアプリ比較", "engine": "claude", "article_count": 18, "published": 1, "summary": "HIIT の心血管効果に関する 2026 年メタ分析。Whoop / Oura / Apple Watch Ultra 2 の睡眠精度比較。", "content": null, "created_at": "2026-04-19T04:15:00Z", "updated_at": "2026-04-19T04:15:00Z" },
+      { "id": "parenting-baby/2026-04-19", "feature": "parenting-baby", "date": "2026-04-19", "session": "daily", "title": "乳児の rapid eye movement 睡眠と認知発達の関係 (2026 Nature 研究)", "engine": "claude", "article_count": 6, "published": 1, "summary": "Nature に掲載された新研究で、生後 6 ヶ月の REM 睡眠時間と 24 ヶ月時点の言語発達の相関が示された。", "content": null, "created_at": "2026-04-19T03:30:00Z", "updated_at": "2026-04-19T03:30:00Z" },
+      { "id": "deep-research/agentic-browser-testing-cycle", "feature": "deep-research", "date": "2026-04-18", "session": "deep-research", "title": "Agentic Browser Testing Cycle — 調査レポート", "engine": "claude", "article_count": 0, "published": 1, "summary": "AI エージェントによるブラウザテスト自動化の現状と Playwright MCP, Browserbase, Stagehand 等の比較。", "content": null, "created_at": "2026-04-18T10:00:00Z", "updated_at": "2026-04-18T10:00:00Z" },
+      { "id": "deep-research/supabase-vs-firebase", "feature": "deep-research", "date": "2026-04-15", "session": "deep-research", "title": "Supabase vs Firebase — 2026 年 B2C アプリでの選定比較", "engine": "claude", "article_count": 0, "published": 1, "summary": "Supabase と Firebase を 2026 年時点の B2C アプリ視点で比較。Supabase は Postgres + pgvector で AI 用途に強く、Firebase は引き続き Auth + Analytics の統合で優位。", "content": null, "created_at": "2026-04-15T12:00:00Z", "updated_at": "2026-04-16T08:00:00Z" },
+      { "id": "deep-research/diffs-ai-tool-for-browser", "feature": "deep-research", "date": "2026-04-17", "session": "deep-research", "title": "Diffs: AI Tools for Browser", "engine": "claude", "article_count": 0, "published": 0, "summary": "ブラウザ上で diff を AI が理解して指示するツール群 (Diffs, Code Review AI, Browser Copilot 等) の現状。", "content": null, "created_at": "2026-04-17T09:00:00Z", "updated_at": "2026-04-17T09:00:00Z" },
+      { "id": "tech-trends-global/2026-04-19", "feature": "tech-trends-global", "date": "2026-04-19", "session": "daily", "title": "Global Tech Trends — Cloudflare Workflows GA, Fly.io Machines v3", "engine": "claude", "article_count": 13, "published": 1, "summary": "Cloudflare Workflows が GA。Fly.io が Machines v3 を発表し cold start を 200ms 以下に短縮。", "content": null, "created_at": "2026-04-19T05:00:00Z", "updated_at": "2026-04-19T05:00:00Z" },
+      { "id": "family-finance/2026-04-19-weekly", "feature": "family-finance", "date": "2026-04-19", "session": "weekly", "title": "Weekly Family Finance — 新 NISA 2 年目、扶養控除改正", "engine": "claude", "article_count": 15, "published": 0, "summary": "新 NISA 2 年目の残枠活用戦略。2026 年度扶養控除改正で高校生の控除額が変化。", "content": null, "created_at": "2026-04-19T04:40:00Z", "updated_at": "2026-04-19T04:40:00Z" },
+      { "id": "workstyle-global/2026-04-19", "feature": "workstyle-global", "date": "2026-04-19", "session": "daily", "title": "Global Workstyle — 欧州 AI 倫理法 2026 年施行、在宅勤務規制動向", "engine": "claude", "article_count": 9, "published": 1, "summary": "EU AI Act が 2026 年 5 月施行。英国では在宅勤務に関する雇用主の配慮義務が法制化へ。", "content": null, "created_at": "2026-04-19T05:15:00Z", "updated_at": "2026-04-19T05:15:00Z" },
+      { "id": "parenting-edu/2026-04-19-weekly", "feature": "parenting-edu", "date": "2026-04-19", "session": "weekly", "title": "Weekly Parenting Edu — 中学受験新型試験、小学校英語評価改訂", "engine": "claude", "article_count": 16, "published": 1, "summary": "都内私立中の 2 割が思考力型試験を導入。公立小学校の英語評価が 5 段階に変更。", "content": null, "created_at": "2026-04-19T04:00:00Z", "updated_at": "2026-04-19T04:00:00Z" }
+    ],
+    "meta": { "total": 15, "limit": 50, "offset": 0 }
+  },
+
+  "reports_detail_tech": {
+    "success": true,
+    "data": {
+      "id": "tech-trends/2026-04-19",
+      "feature": "tech-trends",
+      "date": "2026-04-19",
+      "session": "daily",
+      "title": "Daily Tech Trends — Vercel AI SDK v5 GA、Next.js 16 RC",
+      "engine": "claude",
+      "article_count": 14,
+      "published": 1,
+      "summary": "Vercel AI SDK v5 が GA、ツール呼び出しの型推論が強化。Next.js 16 RC で Turbopack がデフォルト。",
+      "content": "# Daily Tech Trends\n\n## Today's Highlights\n\n**Vercel AI SDK v5 GA**。ツール呼び出しの戻り値型推論が TypeScript strict モードで破綻なく動作するようになった。関数シグネチャから Zod schema を自動生成する `tool()` ヘルパーが追加され、既存の Node.js プロジェクトから移行しやすい。\n\n**Next.js 16 RC** で Turbopack がデフォルト化、cold start が 40% 改善。ただし一部の webpack 依存プラグインとの互換性問題が未解決で、production 採用にはまだ様子見の声も。\n\n**Anthropic Claude Agent SDK v2** がリリース、マルチエージェント orchestration の API が大きく刷新された。\n\n## 主要記事\n\n### Vercel AI SDK v5 の目玉は type inference\n\n従来の v4 では tool の戻り値に対する型が `unknown` になり、呼び出し側で手動キャストが必要だった。v5 では Zod schema を経由して戻り値まで型推論が通る。\n\n```ts\nconst weather = tool({\n  description: 'Get weather',\n  parameters: z.object({ city: z.string() }),\n  execute: async ({ city }) => ({ temp: 22, condition: 'sunny' }),\n});\n```\n\n### Next.js 16 RC: Turbopack デフォルト化のインパクト\n\n開発環境での cold start 時間を 3 つのサンプル project で比較:\n\n- Marketing site (50 pages): 4.2s → 1.8s\n- Dashboard (120 routes): 8.7s → 4.1s  \n- E-commerce (300 pages): 14.2s → 9.8s\n\n一方で、SVG import に独自 loader を使っている project では 2-3 個のプラグインが動かなかった。解決策として Turbopack 用の SVG loader への切替が推奨されている。\n\n### Anthropic Claude Agent SDK v2\n\nマルチエージェント orchestration の主要な API が `MultiAgentCoordinator` に統一された。従来の `SubagentPool` + `TaskDispatcher` は deprecated。\n",
+      "created_at": "2026-04-19T01:10:00Z",
+      "updated_at": "2026-04-19T01:10:00Z"
+    }
+  },
+
+  "reports_detail_deepresearch": {
+    "success": true,
+    "data": {
+      "id": "deep-research/supabase-vs-firebase",
+      "feature": "deep-research",
+      "date": "2026-04-15",
+      "session": "deep-research",
+      "title": "Supabase vs Firebase — 2026 年 B2C アプリでの選定比較",
+      "engine": "claude",
+      "article_count": 0,
+      "published": 1,
+      "summary": "Supabase と Firebase を 2026 年時点の B2C アプリ視点で比較。Supabase は Postgres + pgvector で AI 用途に強く、Firebase は引き続き Auth + Analytics の統合で優位。",
+      "content": "# Supabase vs Firebase — 2026 年 B2C アプリでの選定比較\n\n## Executive Summary\n\n**推奨**: AI/RAG 機能が中核なら Supabase、モバイルアプリの迅速な立ち上げと Google 広告連携重視なら Firebase。\n\n## 1. データベース\n\n- **Supabase**: Postgres 16 ベース、pgvector 拡張で埋め込み検索がネイティブ。Row Level Security が柔軟。\n- **Firebase Firestore**: NoSQL、リアルタイム同期に特化。トランザクションは限定的。\n\n### コスト比較 (100k MAU)\n\n- Supabase Pro: $25/月 + overage (DB 8GB 無料枠内)\n- Firebase Blaze: Reads 1M 超過から $0.036/100k、実測で $40-80/月\n\n## 2. 認証\n\n- **Supabase Auth**: OTP / Magic Link / OAuth 18 provider。Custom SMTP 必須で設定が少し煩雑。\n- **Firebase Auth**: Google の恩恵で OAuth 信頼性が高い。iOS/Android SDK が成熟。\n\n## 3. AI 連携 (2026 年で重要度増)\n\n- **Supabase + pgvector**: Postgres 内で vector search、同一 DB で source row と一緒に JOIN 可能 → RAG で大きなアドバンテージ\n- **Firebase + Vertex AI**: Firebase Genkit で Vertex AI 連携は滑らかだが、ベクトル DB は別サービス (Vertex AI Vector Search or Pinecone) が必要\n\n## 4. エコシステム\n\n- Supabase: 活発な OSS community、self-host 可能。MCP server も公式提供\n- Firebase: Google Cloud 全体との統合、Analytics が強力\n\n## 5. 推奨ケース\n\n| ケース | 推奨 |\n|---|---|\n| モバイル FIRST、Google 広告連携 | Firebase |\n| AI/RAG が中核、SQL が使える | Supabase |\n| self-host オプションが欲しい | Supabase |\n| データが複雑、JOIN 多用 | Supabase |\n| オフライン対応が必須 | Firebase |\n",
+      "created_at": "2026-04-15T12:00:00Z",
+      "updated_at": "2026-04-16T08:00:00Z"
+    }
+  },
+
+  "report_tags": {
+    "success": true,
+    "data": [
+      { "id": 1, "report_id": "tech-trends/2026-04-19", "tag": "AI", "tag_type": "theme", "created_at": "2026-04-19T01:15:00Z" },
+      { "id": 2, "report_id": "tech-trends/2026-04-19", "tag": "開発ツール", "tag_type": "theme", "created_at": "2026-04-19T01:15:00Z" },
+      { "id": 3, "report_id": "tech-trends/2026-04-19", "tag": "Vercel", "tag_type": "keyword", "created_at": "2026-04-19T01:15:00Z" },
+      { "id": 4, "report_id": "tech-trends/2026-04-19", "tag": "Next.js", "tag_type": "keyword", "created_at": "2026-04-19T01:15:00Z" },
+      { "id": 5, "report_id": "tech-trends/2026-04-19", "tag": "Turbopack", "tag_type": "keyword", "created_at": "2026-04-19T01:15:00Z" },
+      { "id": 6, "report_id": "tech-trends/2026-04-19", "tag": "Claude", "tag_type": "keyword", "created_at": "2026-04-19T01:15:00Z" }
+    ]
+  },
+
+  "related_reports": {
+    "success": true,
+    "data": [
+      { "report_id": "tech-trends/2026-04-18", "feature": "tech-trends", "date": "2026-04-18", "title": "Daily Tech Trends — Bun 1.3, Deno 2.4", "shared_tags": ["vercel", "next.js", "frontend"], "shared_count": 3 },
+      { "report_id": "tech-trends-global/2026-04-19", "feature": "tech-trends-global", "date": "2026-04-19", "title": "Global Tech Trends — Cloudflare Workflows GA, Fly.io Machines v3", "shared_tags": ["cloudflare", "frontend"], "shared_count": 2 },
+      { "report_id": "productivity/2026-04-18", "feature": "productivity", "date": "2026-04-18", "title": "Productivity — Raycast AI v2, Arc Search 2.0", "shared_tags": ["ai", "tools"], "shared_count": 2 }
+    ]
+  },
+
+  "trends": {
+    "success": true,
+    "data": [
+      { "tag": "AI エージェント", "tag_type": "theme", "report_count": 18 },
+      { "tag": "金融政策", "tag_type": "theme", "report_count": 14 },
+      { "tag": "半導体", "tag_type": "theme", "report_count": 12 },
+      { "tag": "生成 AI", "tag_type": "theme", "report_count": 11 },
+      { "tag": "サプライチェーン", "tag_type": "theme", "report_count": 8 },
+      { "tag": "Claude", "tag_type": "keyword", "report_count": 22 },
+      { "tag": "OpenAI", "tag_type": "keyword", "report_count": 19 },
+      { "tag": "Vercel", "tag_type": "keyword", "report_count": 9 },
+      { "tag": "Next.js", "tag_type": "keyword", "report_count": 8 },
+      { "tag": "Cloudflare", "tag_type": "keyword", "report_count": 7 },
+      { "tag": "日経平均", "tag_type": "keyword", "report_count": 14 },
+      { "tag": "FOMC", "tag_type": "keyword", "report_count": 11 },
+      { "tag": "円相場", "tag_type": "keyword", "report_count": 10 },
+      { "tag": "NVIDIA", "tag_type": "keyword", "report_count": 8 },
+      { "tag": "Anthropic", "tag_type": "keyword", "report_count": 6 },
+      { "tag": "Obsidian", "tag_type": "keyword", "report_count": 5 },
+      { "tag": "Turbopack", "tag_type": "keyword", "report_count": 4 },
+      { "tag": "ニュース", "tag_type": "other", "report_count": 45 },
+      { "tag": "解説", "tag_type": "other", "report_count": 28 },
+      { "tag": "その他", "tag_type": "other", "report_count": 17 }
+    ]
+  },
+
+  "research_requests": {
+    "success": true,
+    "data": [
+      { "id": "01HXRESEARCH001", "topic": "nextjs-16-turbopack-prod", "goal_content": "# Goal: Next.js 16 の Turbopack を本番採用できるか\n\n## Scope\n\nNext.js 16 の Turbopack をプロダクション採用する際の互換性リスクを洗い出す。\n\n## Expected Output\n\n- webpack plugin 互換性の現状\n- 動作実績のある企業事例\n- 移行手順\n", "engine": "claude", "status": "pending", "channel": "admin", "channel_metadata": null, "report_url": null, "error_message": null, "started_at": null, "completed_at": null, "created_at": "2026-04-20T08:30:00Z", "updated_at": "2026-04-20T08:30:00Z" },
+      { "id": "01HXRESEARCH002", "topic": "claude-agent-sdk-v2-migration", "goal_content": "# Goal: Claude Agent SDK v2 への移行ガイド\n\n...", "engine": "claude", "status": "running", "channel": "admin", "channel_metadata": null, "report_url": null, "error_message": null, "started_at": "2026-04-20T08:15:00Z", "completed_at": null, "created_at": "2026-04-20T08:10:00Z", "updated_at": "2026-04-20T08:15:00Z" },
+      { "id": "01HXRESEARCH003", "topic": "rust-web-frameworks-2026", "goal_content": "# Goal\n\nRust 製 Web フレームワーク (Axum, Actix, Leptos, Loco) の 2026 年時点での比較。", "engine": "claude", "status": "completed", "channel": "telegram", "channel_metadata": { "chat_id": "5123456789" }, "report_url": "https://openclaw.pages.dev/deep-research/rust-web-frameworks-2026", "error_message": null, "started_at": "2026-04-19T22:10:00Z", "completed_at": "2026-04-19T22:42:00Z", "created_at": "2026-04-19T22:08:00Z", "updated_at": "2026-04-19T22:42:00Z" },
+      { "id": "01HXRESEARCH004", "topic": "supabase-vs-firebase", "goal_content": "# Goal: Supabase vs Firebase\n\n2026 年 B2C アプリでの選定比較。", "engine": "claude", "status": "completed", "channel": "admin", "channel_metadata": null, "report_url": "https://openclaw.pages.dev/deep-research/supabase-vs-firebase", "error_message": null, "started_at": "2026-04-15T11:30:00Z", "completed_at": "2026-04-15T12:02:00Z", "created_at": "2026-04-15T11:25:00Z", "updated_at": "2026-04-15T12:02:00Z" },
+      { "id": "01HXRESEARCH005", "topic": "agentic-browser-testing-cycle", "goal_content": "# Goal: AI エージェントによるブラウザテスト自動化\n\n...", "engine": "claude", "status": "completed", "channel": "admin", "channel_metadata": null, "report_url": "https://openclaw.pages.dev/deep-research/agentic-browser-testing-cycle", "error_message": null, "started_at": "2026-04-18T09:30:00Z", "completed_at": "2026-04-18T10:08:00Z", "created_at": "2026-04-18T09:25:00Z", "updated_at": "2026-04-18T10:08:00Z" },
+      { "id": "01HXRESEARCH006", "topic": "webrtc-edge-sfu", "goal_content": "# Goal\n\nCloudflare Workers 上で SFU を実装する選択肢 (Calls API, 自前 WebRTC)。", "engine": "claude", "status": "failed", "channel": "api", "channel_metadata": null, "report_url": null, "error_message": "Claude rate limit exceeded. Retry after 2h.\nhttps://docs.anthropic.com/api/rate-limits", "started_at": "2026-04-19T18:00:00Z", "completed_at": "2026-04-19T18:02:00Z", "created_at": "2026-04-19T17:55:00Z", "updated_at": "2026-04-19T18:02:00Z" },
+      { "id": "01HXRESEARCH007", "topic": "tauri-vs-electron-2026", "goal_content": "# Goal\n\nTauri と Electron を 2026 年時点で比較。", "engine": "claude", "status": "failed", "channel": "telegram", "channel_metadata": { "chat_id": "5123456789" }, "report_url": null, "error_message": "Network timeout during Phase 2", "started_at": "2026-04-18T14:00:00Z", "completed_at": "2026-04-18T14:15:00Z", "created_at": "2026-04-18T13:55:00Z", "updated_at": "2026-04-18T14:15:00Z" },
+      { "id": "01HXRESEARCH008", "topic": "diffs-ai-tool-for-browser", "goal_content": "# Goal\n\nブラウザ上で diff を AI に渡すツール群。", "engine": "claude", "status": "completed", "channel": "admin", "channel_metadata": null, "report_url": "https://openclaw.pages.dev/deep-research/diffs-ai-tool-for-browser", "error_message": null, "started_at": "2026-04-17T08:40:00Z", "completed_at": "2026-04-17T09:15:00Z", "created_at": "2026-04-17T08:35:00Z", "updated_at": "2026-04-17T09:15:00Z" }
+    ],
+    "meta": { "total": 8, "limit": 50, "offset": 0 }
+  },
+
+  "events": {
+    "success": true,
+    "data": [
+      { "id": "01HXEV0001", "feature": "tech-trends", "event_type": "feed_stale", "severity": "warning", "title": "Feed stale: hacker-news (7 days no update)", "details": "Feed hacker-news has not updated in 7 days.\nLast item: 2026-04-13\nURL: https://news.ycombinator.com/rss\nAction: check feed URL validity", "resolved": 0, "created_at": "2026-04-20T09:00:00Z" },
+      { "id": "01HXEV0002", "feature": "invest-japan", "event_type": "quality_gate_phase1", "severity": "error", "title": "Phase 1 JSON parse failed on line 12", "details": "Phase 1 output contained invalid JSON:\n\nLine 12: unexpected character '\\n' in string value\n\nRaw output saved to: /tmp/phase1-output-01HXEV0002.json\nPipeline aborted.", "resolved": 0, "created_at": "2026-04-20T08:45:00Z" },
+      { "id": "01HXEV0003", "feature": null, "event_type": "branch_guard", "severity": "warning", "title": "Pipeline worktree not on main branch", "details": "Current branch: feature/admin-ui-improvements\nExpected: main or detached HEAD\nCommit + push skipped to avoid leaking report to feature branch.", "resolved": 0, "created_at": "2026-04-20T08:30:00Z" },
+      { "id": "01HXEV0004", "feature": "finance-markets", "event_type": "ollama_http_error", "severity": "error", "title": "Ollama API HTTP 500 during Phase 2", "details": "curl: HTTP 500 from http://127.0.0.1:11434/api/chat\nModel: qwen3.5:122b\nPrompt size: 42 KB\nRetry 1/1 also failed.", "resolved": 0, "created_at": "2026-04-20T08:15:00Z" },
+      { "id": "01HXEV0005", "feature": "productivity", "event_type": "rss_fetch_failed", "severity": "warning", "title": "2 feeds failed: sunsama, notion-blog", "details": "Feed fetch results:\n- sunsama: HTTP 503\n- notion-blog: timeout after 30s\n\nOther feeds succeeded.", "resolved": 0, "created_at": "2026-04-20T07:45:00Z" },
+      { "id": "01HXEV0006", "feature": "tech-trends-global", "event_type": "translation_check", "severity": "info", "title": "JA translation generated (2200 chars)", "details": "English report translated to Japanese.\nChars: EN 3400, JA 2200\nRatio: 0.65 (expected 0.6-0.8)", "resolved": 0, "created_at": "2026-04-20T07:30:00Z" },
+      { "id": "01HXEV0007", "feature": "wellness-global", "event_type": "feed_stale", "severity": "warning", "title": "Feed stale: healthline (5 days)", "details": "Feed healthline has not updated in 5 days.\nThreshold: 4 days", "resolved": 0, "created_at": "2026-04-20T07:00:00Z" },
+      { "id": "01HXEV0008", "feature": "invest-global", "event_type": "phase2_size_warning", "severity": "warning", "title": "Phase 2 output smaller than threshold (800B)", "details": "Phase 2 output: 800 bytes\nExpected minimum: 1500 bytes\nQuality gate passed but flagged for review.", "resolved": 0, "created_at": "2026-04-20T06:30:00Z" },
+      { "id": "01HXEV0009", "feature": "parenting-baby", "event_type": "git_push_failed", "severity": "error", "title": "git push failed: rejected (non-fast-forward)", "details": "git push origin HEAD:main\nremote rejected: non-fast-forward\nLocal is behind origin by 2 commits.\nReport committed locally but not pushed.", "resolved": 0, "created_at": "2026-04-20T06:00:00Z" },
+      { "id": "01HXEV0010", "feature": null, "event_type": "pipeline_worktree_sync", "severity": "info", "title": "Worktree synced to origin/main (abc1234)", "details": "git fetch origin main\ngit reset --hard origin/main\nHEAD is now at abc1234 report: tech-trends 2026-04-20", "resolved": 0, "created_at": "2026-04-20T05:30:00Z" },
+      { "id": "01HXEV0011", "feature": "tech-trends", "event_type": "feed_stale", "severity": "warning", "title": "Feed stale: devto-rss (4 days)", "details": "Feed devto-rss has not updated in 4 days.", "resolved": 0, "created_at": "2026-04-20T05:00:00Z" },
+      { "id": "01HXEV0012", "feature": "family-finance-global", "event_type": "rss_fetch_failed", "severity": "warning", "title": "Bankrate feed timeout", "details": "bankrate: timeout after 30s (5 retries failed)", "resolved": 0, "created_at": "2026-04-20T04:30:00Z" },
+      { "id": "01HXEV0013", "feature": "research-poller", "event_type": "deep_research_started", "severity": "info", "title": "Deep Research started: claude-agent-sdk-v2-migration", "details": "Topic: claude-agent-sdk-v2-migration\nEngine: claude\nChannel: admin\nRequest ID: 01HXRESEARCH002", "resolved": 0, "created_at": "2026-04-20T04:00:00Z" },
+      { "id": "01HXEV0014", "feature": "parenting-edu", "event_type": "quality_gate_phase0", "severity": "warning", "title": "Phase 0: only 3 feeds returned data (expected 5+)", "details": "Feeds with data: eic-ministry, nikkei-kyoiku, shinagaku\nFeeds empty: benesse, allabout-kids\n\nContinuing with available data.", "resolved": 0, "created_at": "2026-04-20T03:30:00Z" },
+      { "id": "01HXEV0015", "feature": "workstyle", "event_type": "feed_stale", "severity": "warning", "title": "Feed stale: ryuhonkakusitajoho (6 days)", "details": "Feed has not updated in 6 days.", "resolved": 0, "created_at": "2026-04-20T03:00:00Z" },
+      { "id": "01HXEV0016", "feature": null, "event_type": "weekly_register_completed", "severity": "info", "title": "Weekly wellness/parenting-edu/family-finance registered", "details": "Registered 3 Weekly features to launchd.", "resolved": 0, "created_at": "2026-04-20T02:30:00Z" },
+      { "id": "01HXEV0017", "feature": "deep-research", "event_type": "d1_upsert_failed", "severity": "error", "title": "D1 report upsert failed: 500 Internal Server Error", "details": "POST /api/reports\nStatus: 500\nBody: { error: { message: 'DB write timeout' } }\nRetry after 30s succeeded.", "resolved": 0, "created_at": "2026-04-20T02:00:00Z" },
+      { "id": "01HXEV0018", "feature": "tech-trends", "event_type": "claude_timeout", "severity": "warning", "title": "Claude Phase 1 took 8m 32s (warning threshold: 5m)", "details": "Phase 1 duration: 8m 32s\nThreshold: 5m\nSuccess status: completed\nConsider reducing source count or using haiku model.", "resolved": 0, "created_at": "2026-04-20T01:30:00Z" },
+      { "id": "01HXEV0019", "feature": "invest-japan", "event_type": "rss_encoding_error", "severity": "warning", "title": "nikkei feed: invalid UTF-8 bytes ignored", "details": "nikkei feed contained 3 items with invalid UTF-8 sequences. Items were skipped.", "resolved": 0, "created_at": "2026-04-20T01:00:00Z" },
+      { "id": "01HXEV0020", "feature": null, "event_type": "cost_report", "severity": "info", "title": "Daily cost: Claude $0.42 / Ollama $0.00", "details": "Claude API calls: 14 (in-tokens 120K, out-tokens 18K)\nEstimated cost: $0.42\nOllama calls: 0", "resolved": 0, "created_at": "2026-04-20T00:30:00Z" },
+      { "id": "01HXEV0021", "feature": "tech-trends", "event_type": "feed_stale", "severity": "warning", "title": "Feed stale: techcrunch-ai (resolved)", "details": "Feed recovered on 2026-04-19.", "resolved": 1, "created_at": "2026-04-19T10:00:00Z" },
+      { "id": "01HXEV0022", "feature": "invest-japan", "event_type": "quality_gate_phase1", "severity": "error", "title": "Phase 1 JSON parse (resolved, regex fix applied)", "details": "Resolved by regex-based JSON repair added to report-pipeline.sh.", "resolved": 1, "created_at": "2026-04-19T09:00:00Z" },
+      { "id": "01HXEV0023", "feature": null, "event_type": "branch_guard", "severity": "warning", "title": "Branch guard triggered (resolved via worktree)", "details": "Permanently resolved by introducing pipeline worktree.", "resolved": 1, "created_at": "2026-04-19T08:00:00Z" },
+      { "id": "01HXEV0024", "feature": "productivity", "event_type": "ollama_http_error", "severity": "error", "title": "Ollama 500 (resolved by model restart)", "details": "Resolved after qwen3.5:122b reload.", "resolved": 1, "created_at": "2026-04-19T07:00:00Z" },
+      { "id": "01HXEV0025", "feature": "wellness", "event_type": "rss_fetch_failed", "severity": "warning", "title": "healthline 503 (resolved)", "details": "Resolved on 2026-04-19.", "resolved": 1, "created_at": "2026-04-19T06:00:00Z" },
+      { "id": "01HXEV0026", "feature": "tech-trends-global", "event_type": "translation_check", "severity": "info", "title": "JA translation (resolved)", "details": "auto-resolved, ratio fine.", "resolved": 1, "created_at": "2026-04-19T05:00:00Z" },
+      { "id": "01HXEV0027", "feature": "invest-global", "event_type": "phase2_size_warning", "severity": "warning", "title": "Phase 2 size warning (resolved)", "details": "Resolved, template fix applied.", "resolved": 1, "created_at": "2026-04-19T04:00:00Z" },
+      { "id": "01HXEV0028", "feature": "parenting-baby", "event_type": "git_push_failed", "severity": "error", "title": "git push failed (resolved manually)", "details": "Resolved by manual rebase + push.", "resolved": 1, "created_at": "2026-04-19T03:00:00Z" },
+      { "id": "01HXEV0029", "feature": null, "event_type": "pipeline_worktree_sync", "severity": "info", "title": "Worktree sync (resolved)", "details": "Resolved, all daily runs proceeded normally.", "resolved": 1, "created_at": "2026-04-19T02:00:00Z" },
+      { "id": "01HXEV0030", "feature": "tech-trends", "event_type": "feed_stale", "severity": "warning", "title": "devto feed stale (resolved)", "details": "Resolved, feed recovered.", "resolved": 1, "created_at": "2026-04-19T01:00:00Z" },
+      { "id": "01HXEV0031", "feature": "family-finance-global", "event_type": "rss_fetch_failed", "severity": "warning", "title": "bankrate timeout (resolved)", "details": "Resolved on 2026-04-19.", "resolved": 1, "created_at": "2026-04-19T00:00:00Z" },
+      { "id": "01HXEV0032", "feature": "research-poller", "event_type": "deep_research_completed", "severity": "info", "title": "Deep Research completed: rust-web-frameworks-2026", "details": "Topic: rust-web-frameworks-2026\nDuration: 32m\nReport URL: https://openclaw.pages.dev/deep-research/rust-web-frameworks-2026", "resolved": 1, "created_at": "2026-04-18T23:00:00Z" },
+      { "id": "01HXEV0033", "feature": "parenting-edu", "event_type": "quality_gate_phase0", "severity": "warning", "title": "Phase 0 feed coverage warning (resolved)", "details": "Resolved on 2026-04-19.", "resolved": 1, "created_at": "2026-04-18T22:00:00Z" },
+      { "id": "01HXEV0034", "feature": "workstyle", "event_type": "feed_stale", "severity": "warning", "title": "ryuhonkaku feed stale (resolved)", "details": "Resolved on 2026-04-19.", "resolved": 1, "created_at": "2026-04-18T21:00:00Z" },
+      { "id": "01HXEV0035", "feature": null, "event_type": "cost_report", "severity": "info", "title": "Daily cost report (resolved)", "details": "Claude $0.38 / Ollama $0.00\nWithin budget.", "resolved": 1, "created_at": "2026-04-18T20:00:00Z" }
+    ],
+    "meta": { "total": 35, "limit": 30, "offset": 0 }
+  }
+}

@@ -1,0 +1,208 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ReportCard from '../../components/ReportCard.astro';
+import { getCollection } from 'astro:content';
+import { featureGroups, getFeatureLabel } from '../../features';
+import { getUnpublishedIds, getReportMeta, getAllReportTags, toD1Id } from '../../lib/d1-client';
+import { getExcerpt } from '../../lib/excerpt';
+import { dedupByLang } from '../../lib/multilingual';
+
+export function getStaticPaths() {
+  return featureGroups.map(g => ({
+    params: { group: g.slug },
+    props: { group: g },
+  }));
+}
+
+const { group } = Astro.props;
+const unpublished = await getUnpublishedIds();
+const reportMeta = await getReportMeta();
+const reportTags = await getAllReportTags();
+
+// グループ内の全 Feature からレポートを収集
+const rawReports = [];
+for (const f of group.features) {
+  const reports = await getCollection(f.slug as any);
+  rawReports.push(...reports
+    .filter(r => !unpublished.has(toD1Id(f.slug, r.id)))
+    .map(r => ({ ...r, feature: f.slug })));
+}
+// 多言語 feature の EN/JA 重複を排除 (JA > EN > 非多言語)
+const allReports = dedupByLang(rawReports);
+allReports.sort((a, b) => b.data.date.localeCompare(a.data.date));
+
+// セッションレポートがあるか判定
+const hasWeekly = allReports.some(r => r.data.session === 'weekly');
+const hasMarketSession = allReports.some(
+  r => r.data.session && r.data.session !== 'daily' && r.data.session !== 'weekly'
+);
+const hasSessions = hasWeekly || hasMarketSession;
+
+// 日付グループ
+const groupedByDate = new Map<string, typeof allReports>();
+for (const report of allReports) {
+  const date = report.data.date;
+  if (!groupedByDate.has(date)) {
+    groupedByDate.set(date, []);
+  }
+  groupedByDate.get(date)!.push(report);
+}
+const dateEntries = [...groupedByDate.entries()];
+const PAGE_SIZE = 7;
+
+// getExcerpt は lib/excerpt.ts から import 済み
+---
+
+<BaseLayout title={group.label}>
+  <h1>{group.label}</h1>
+
+  <div class="feature-chips">
+    {group.features.map(f => (
+      <a href={`/${f.slug}/`} class="chip" style={`--chip-color: ${f.color}`}>
+        <span class="chip-dot" style={`background: ${f.color}`} />
+        {f.label}
+      </a>
+    ))}
+  </div>
+
+  {hasSessions && (
+    <div class="tab-bar" id="type-tab-bar">
+      <button class="tab-btn active" data-filter="all">All</button>
+      <button class="tab-btn" data-filter="daily">Daily</button>
+      {hasWeekly && <button class="tab-btn" data-filter="weekly">📅 Weekly</button>}
+      {hasMarketSession && <button class="tab-btn" data-filter="session">Session</button>}
+    </div>
+  )}
+
+  <div id="report-grid">
+    {dateEntries.map(([date, reports], idx) => (
+      <section class="date-group" data-date-idx={idx} style={idx >= PAGE_SIZE ? 'display:none' : undefined}>
+        <h2 class="date-heading">{date}</h2>
+        <div class="report-grid">
+          {reports.map((report) => {
+            const sessionValue = report.data.session;
+            const reportType =
+              sessionValue === 'weekly'
+                ? 'weekly'
+                : sessionValue && sessionValue !== 'daily'
+                  ? 'session'
+                  : 'daily';
+            return (
+              <div data-report-type={reportType}>
+                <ReportCard
+                  title={report.data.title}
+                  date={report.data.date}
+                  feature={report.feature}
+                  slug={report.id}
+                  excerpt={getExcerpt(reportMeta.get(toD1Id(report.feature, report.id)), report.body ?? '')}
+                  session={report.data.session}
+                  tags={(reportTags.get(toD1Id(report.feature, report.id)) ?? []).map(t => t.tag)}
+                />
+              </div>
+            );
+          })}
+        </div>
+      </section>
+    ))}
+  </div>
+
+  {dateEntries.length > PAGE_SIZE && (
+    <div class="load-more-container" id="load-more-container">
+      <button id="load-more-btn" class="load-more-btn">もっと見る</button>
+    </div>
+  )}
+</BaseLayout>
+
+<script>
+  // Type filter
+  const typeTabBar = document.getElementById('type-tab-bar');
+  if (typeTabBar) {
+    const buttons = typeTabBar.querySelectorAll('.tab-btn');
+    const reportItems = document.querySelectorAll<HTMLElement>('[data-report-type]');
+    const dateGroups = document.querySelectorAll<HTMLElement>('.date-group');
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.getAttribute('data-filter')!;
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        reportItems.forEach(item => {
+          const type = item.getAttribute('data-report-type');
+          item.style.display = (filter === 'all' || type === filter) ? '' : 'none';
+        });
+
+        dateGroups.forEach(group => {
+          const cards = group.querySelectorAll<HTMLElement>('[data-report-type]');
+          const hasVisible = Array.from(cards).some(c => c.style.display !== 'none');
+          group.style.display = hasVisible ? '' : 'none';
+        });
+      });
+    });
+  }
+
+  // Load more
+  const PAGE_SIZE = 7;
+  let visibleCount = PAGE_SIZE;
+  const loadMoreBtn = document.getElementById('load-more-btn');
+  const loadMoreContainer = document.getElementById('load-more-container');
+  const allGroups = document.querySelectorAll<HTMLElement>('[data-date-idx]');
+
+  if (loadMoreBtn) {
+    loadMoreBtn.addEventListener('click', () => {
+      const nextCount = Math.min(visibleCount + PAGE_SIZE, allGroups.length);
+      for (let i = visibleCount; i < nextCount; i++) {
+        allGroups[i].style.display = '';
+      }
+      visibleCount = nextCount;
+      if (visibleCount >= allGroups.length && loadMoreContainer) {
+        loadMoreContainer.style.display = 'none';
+      }
+    });
+  }
+</script>
+
+<style>
+  h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .feature-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.7rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: var(--color-text);
+    text-decoration: none;
+    transition: border-color 0.2s;
+  }
+  .chip:hover {
+    border-color: var(--chip-color);
+    text-decoration: none;
+  }
+  .chip-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+  /* report-grid, tab-bar, tab-btn, load-more は global.css で定義 */
+  .date-group { margin-bottom: 2rem; }
+  .date-heading {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+</style>

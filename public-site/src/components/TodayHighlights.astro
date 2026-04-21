@@ -1,0 +1,61 @@
+---
+// 今日のハイライトカルーセル (#53)
+// 各 feature の最新レポートから TL;DR を集めて表示
+import { dailyFeatures } from '../features';
+import { getCollection } from 'astro:content';
+
+const today = new Date().toISOString().slice(0, 10);
+
+interface Highlight {
+  feature: string;
+  label: string;
+  color: string;
+  tldr: string;
+  href: string;
+}
+
+const highlights: Highlight[] = [];
+
+for (const f of dailyFeatures.slice(0, 8)) {
+  try {
+    const reports = await getCollection(f.slug as any);
+    const todayReport = (reports as any[]).find(r => (r.id || '').startsWith(today));
+    if (!todayReport) continue;
+
+    // body に ### TL;DR セクションがあれば抽出
+    const body = todayReport.body || '';
+    const tldrMatch = body.match(/### TL;DR\s*\n([^\n#]+)/);
+    const tldr = tldrMatch ? tldrMatch[1].trim() : (body.slice(0, 120) + '...');
+
+    highlights.push({
+      feature: f.slug,
+      label: f.label,
+      color: f.color,
+      tldr: tldr.slice(0, 120),
+      href: `/${f.slug}/${today}/`,
+    });
+  } catch { /* skip */ }
+}
+---
+
+{highlights.length > 0 && (
+  <section style="margin-bottom: 2rem;">
+    <h2 style="font-size: 1rem; color: var(--color-text-muted); margin-bottom: 0.75rem;">🌟 Today's Highlights</h2>
+    <div style="display: grid; gap: 0.5rem; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+      {highlights.slice(0, 6).map(h => (
+        <a href={h.href} style="display: block; padding: 0.75rem 1rem; background: var(--color-surface); border-left: 3px solid; border-color: var(--color-border); border-radius: 6px; text-decoration: none; color: var(--color-text);" data-color={h.color}>
+          <div style="font-size: 0.75rem; color: var(--color-text-muted); font-weight: 600;">{h.label}</div>
+          <div style="font-size: 0.9rem; margin-top: 0.25rem; line-height: 1.4;">{h.tldr}</div>
+        </a>
+      ))}
+    </div>
+  </section>
+)}
+
+<script>
+  // border-left-color を data-color から設定
+  document.querySelectorAll('[data-color]').forEach(el => {
+    const c = (el as HTMLElement).dataset.color;
+    if (c) (el as HTMLElement).style.borderLeftColor = c;
+  });
+</script>

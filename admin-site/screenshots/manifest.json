@@ -1,0 +1,53 @@
+{
+  "generated_at": "2026-04-21T07:01:59.035Z",
+  "generated_commit": "50b2ef065e58f99f41a4cff8d236eba73b80fe2a",
+  "watched_paths": [
+    "admin-site/src",
+    "admin-site/package.json"
+  ],
+  "source_tree_sha": "2d76501ddd1beabd78fb61f84096ef6ccee43aee",
+  "files": {
+    "events--desktop.png": {
+      "bytes": 381010
+    },
+    "events--mobile.png": {
+      "bytes": 66820
+    },
+    "report-detail--desktop.png": {
+      "bytes": 113067
+    },
+    "report-detail--mobile.png": {
+      "bytes": 61526
+    },
+    "reports--desktop.png": {
+      "bytes": 237428
+    },
+    "reports--mobile.png": {
+      "bytes": 70439
+    },
+    "research--desktop.png": {
+      "bytes": 185016
+    },
+    "research--mobile.png": {
+      "bytes": 65390
+    },
+    "research-detail--desktop.png": {
+      "bytes": 120214
+    },
+    "research-detail--mobile.png": {
+      "bytes": 66365
+    },
+    "research-form-open--desktop.png": {
+      "bytes": 235427
+    },
+    "research-form-open--mobile.png": {
+      "bytes": 70011
+    },
+    "trends--desktop.png": {
+      "bytes": 95623
+    },
+    "trends--mobile.png": {
+      "bytes": 64407
+    }
+  }
+}

@@ -1,0 +1,395 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ReportCard from '../components/ReportCard.astro';
+import { getCollection } from 'astro:content';
+import { dailyFeatures, featureGroups, getFeatureGroup, getFeatureRegion } from '../features';
+import { getUnpublishedIds, getReportMeta, getAllReportTags, toD1Id } from '../lib/d1-client';
+import { getExcerpt } from '../lib/excerpt';
+import { dedupByLang } from '../lib/multilingual';
+
+const unpublished = await getUnpublishedIds();
+const reportMeta = await getReportMeta();
+const reportTags = await getAllReportTags();
+
+// トレンドタグ取得（D1 API）
+interface TrendTag { tag: string; tag_type: string; report_count: number; }
+let trendingTags: TrendTag[] = [];
+const apiUrl = import.meta.env.D1_API_URL || process.env.D1_API_URL;
+const apiKey = import.meta.env.D1_API_KEY || process.env.D1_API_KEY;
+if (apiUrl && apiKey) {
+  try {
+    const res = await fetch(`${apiUrl}/api/trends/tags?days=7&tag_type=keyword&limit=12`, {
+      headers: { Authorization: `Bearer ${apiKey}` },
+      signal: AbortSignal.timeout(5000),
+    });
+    if (res.ok) {
+      const data = await res.json() as { data: TrendTag[] };
+      trendingTags = data.data;
+    }
+  } catch (e) { console.warn('[trending-tags] fetch failed:', e instanceof Error ? e.message : e); }
+}
+
+const allReports = [];
+for (const f of dailyFeatures) {
+  const reports = await getCollection(f.slug as any);
+  allReports.push(...reports
+    .filter(r => !unpublished.has(toD1Id(f.slug, r.id)))
+    .map(r => ({ ...r, feature: f.slug })));
+}
+// Multilingual features produce <date>.en.md and <date>.ja.md for every
+// report; without dedup we would render two cards per date. Collapse to one
+// per (feature, date, session) preferring JA.
+const dedupedReports = dedupByLang(allReports);
+dedupedReports.sort((a, b) => b.data.date.localeCompare(a.data.date));
+
+// Group by date
+const groupedByDate = new Map<string, typeof dedupedReports>();
+for (const report of dedupedReports) {
+  const date = report.data.date;
+  if (!groupedByDate.has(date)) {
+    groupedByDate.set(date, []);
+  }
+  groupedByDate.get(date)!.push(report);
+}
+
+const dateEntries = [...groupedByDate.entries()];
+const PAGE_SIZE = 7;
+
+// getExcerpt は lib/excerpt.ts から import 済み
+---
+
+<BaseLayout title="Dashboard">
+  <div class="dashboard-header">
+    <h1>Latest Reports</h1>
+  </div>
+
+  {trendingTags.length > 0 && (
+    <div class="trending-tags">
+      <span class="trending-label">Trending</span>
+      <div class="trending-scroll">
+        {trendingTags.map(t => (
+          <a href={`/tags/?tag=${encodeURIComponent(t.tag)}`} class="trending-pill">#{t.tag}</a>
+        ))}
+      </div>
+    </div>
+  )}
+
+  <div class="tab-bar" id="type-tab-bar">
+    <button class="tab-btn active" data-filter="all">All</button>
+    <button class="tab-btn" data-filter="daily">Daily</button>
+    <button class="tab-btn" data-filter="weekly">📅 Weekly</button>
+    <button class="tab-btn" data-filter="session">Session</button>
+    <button class="tab-btn auth-only-tab" data-filter="bookmarked" style="display:none">⭐ Bookmarks</button>
+    <button class="tab-btn auth-only-tab" data-filter="unread" style="display:none">Unread</button>
+  </div>
+
+  <div class="filter-row">
+    <div class="tab-bar region-tab-bar" id="region-tab-bar" aria-label="Region filter">
+      <span class="tab-label">Region</span>
+      <button class="tab-btn active" data-region="all">All</button>
+      <button class="tab-btn" data-region="jp">🇯🇵</button>
+      <button class="tab-btn" data-region="global">🌐</button>
+    </div>
+
+    <div class="tab-bar region-tab-bar" id="group-tab-bar" aria-label="Group filter">
+      <span class="tab-label">Group</span>
+      <button class="tab-btn active" data-group="all">All</button>
+      {featureGroups.map(g => (
+        <button class="tab-btn" data-group={g.slug}>{g.label}</button>
+      ))}
+    </div>
+  </div>
+
+  <div id="report-grid">
+    {dateEntries.map(([date, reports], idx) => (
+      <section class="date-group" data-date-idx={idx} style={idx >= PAGE_SIZE ? 'display:none' : undefined}>
+        <h2 class="date-heading">{date}</h2>
+        <div class="report-grid">
+          {reports.map((report) => {
+            const sessionValue = report.data.session;
+            const reportType =
+              sessionValue === 'weekly'
+                ? 'weekly'
+                : sessionValue && sessionValue !== 'daily'
+                  ? 'session'
+                  : 'daily';
+            return (
+              <div
+                data-report-type={reportType}
+                data-report-region={getFeatureRegion(report.feature)}
+                data-report-group={getFeatureGroup(report.feature)}
+                data-report-id={toD1Id(report.feature, report.id)}
+              >
+                <ReportCard
+                  title={report.data.title}
+                  date={report.data.date}
+                  feature={report.feature}
+                  slug={report.id}
+                  excerpt={getExcerpt(reportMeta.get(toD1Id(report.feature, report.id)), report.body ?? '')}
+                  session={report.data.session}
+                  tags={(reportTags.get(toD1Id(report.feature, report.id)) ?? []).map(t => t.tag)}
+                />
+              </div>
+            );
+          })}
+        </div>
+      </section>
+    ))}
+  </div>
+
+  {dateEntries.length > PAGE_SIZE && (
+    <div class="load-more-container" id="load-more-container">
+      <button id="load-more-btn" class="load-more-btn">もっと見る</button>
+    </div>
+  )}
+</BaseLayout>
+
+<style>
+  .dashboard-header {
+    margin-bottom: 1.5rem;
+  }
+  h1 {
+    font-size: 1.5rem;
+  }
+  .date-group {
+    margin-bottom: 2rem;
+  }
+  .date-heading {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  /* report-grid, load-more-*, tab-bar, tab-btn は global.css で定義 */
+  /*
+   * Region と Group は secondary フィルタ。デスクトップでは横並び、モバイル
+   * では自然 wrap させて header の縦占有を抑える。Type bar (primary) は
+   * 上段で独立。
+   */
+  .filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  .filter-row .tab-bar {
+    margin: 0;
+  }
+  .region-tab-bar {
+    align-items: center;
+  }
+  .region-tab-bar .tab-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-right: 0.25rem;
+  }
+  /* Region/Group は secondary なのでボタンを少し小さく */
+  .filter-row .tab-btn {
+    padding: 0.25rem 0.6rem;
+    font-size: 0.78rem;
+  }
+  .trending-tags {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    overflow: hidden;
+  }
+  .trending-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-text);
+    white-space: nowrap;
+  }
+  .trending-scroll {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 0.15rem 0;
+  }
+  .trending-scroll::-webkit-scrollbar { display: none; }
+  .trending-pill {
+    display: inline-block;
+    padding: 0.35rem 0.85rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: var(--color-text);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .trending-pill:hover {
+    border-color: var(--color-primary);
+    text-decoration: none;
+  }
+</style>
+
+<script>
+  // Auth-only tabs: ログイン中のみ表示
+  fetch('/api/auth/get-session', { credentials: 'include' })
+    .then(r => r.ok ? r.json() : null)
+    .then(data => {
+      if (data?.session) {
+        document.querySelectorAll<HTMLElement>('.auth-only-tab').forEach(el => {
+          el.style.display = '';
+        });
+      }
+    })
+    .catch(() => {});
+
+  // Combined Type + Region + Group filtering. Each tab bar independently sets
+  // its active state; `applyFilters()` then AND-combines all three to decide
+  // which cards are visible. Date groups collapse when all their cards are
+  // hidden. Active selections are persisted to localStorage so returning
+  // visitors keep their preferred view.
+  const typeTabBar = document.getElementById('type-tab-bar');
+  const regionTabBar = document.getElementById('region-tab-bar');
+  const groupTabBar = document.getElementById('group-tab-bar');
+  const reportItems = document.querySelectorAll<HTMLElement>('[data-report-type]');
+  const dateGroups = document.querySelectorAll<HTMLElement>('.date-group');
+
+  const LS_KEYS = {
+    type: 'openclaw_filter_type',
+    region: 'openclaw_filter_region',
+    group: 'openclaw_filter_group',
+  } as const;
+
+  // Auth-required type filters that should not be restored when the user is
+  // signed out (the buttons themselves stay hidden).
+  const AUTH_ONLY_TYPES = new Set(['bookmarked', 'unread']);
+
+  let currentType = localStorage.getItem(LS_KEYS.type) || 'all';
+  let currentRegion = localStorage.getItem(LS_KEYS.region) || 'all';
+  let currentGroup = localStorage.getItem(LS_KEYS.group) || 'all';
+  if (AUTH_ONLY_TYPES.has(currentType)) currentType = 'all';
+
+  function applyFilters() {
+    const bookmarks = JSON.parse(localStorage.getItem('openclaw_bookmarks') || '[]');
+    const readReports = JSON.parse(localStorage.getItem('openclaw_read') || '[]');
+
+    reportItems.forEach(item => {
+      const type = item.getAttribute('data-report-type');
+      const itemRegion = item.getAttribute('data-report-region');
+      const itemGroup = item.getAttribute('data-report-group');
+      const reportId = item.getAttribute('data-report-id') || '';
+
+      // Type dimension
+      let typeMatch = false;
+      if (currentType === 'all') typeMatch = true;
+      else if (currentType === 'daily' || currentType === 'session' || currentType === 'weekly') typeMatch = type === currentType;
+      else if (currentType === 'bookmarked') typeMatch = bookmarks.includes(reportId);
+      else if (currentType === 'unread') typeMatch = !readReports.includes(reportId);
+
+      const regionMatch = currentRegion === 'all' || itemRegion === currentRegion;
+      const groupMatch = currentGroup === 'all' || itemGroup === currentGroup;
+
+      item.style.display = typeMatch && regionMatch && groupMatch ? '' : 'none';
+    });
+
+    dateGroups.forEach(group => {
+      const visibleCards = group.querySelectorAll<HTMLElement>('[data-report-type]');
+      const hasVisible = Array.from(visibleCards).some(c => c.style.display !== 'none');
+      group.style.display = hasVisible ? '' : 'none';
+    });
+  }
+
+  // Mark the button whose data-attribute matches `value` as active. Returns
+  // true if a matching button existed (so callers can fall back to "all").
+  function syncActive(
+    bar: HTMLElement,
+    attr: string,
+    value: string
+  ): boolean {
+    const buttons = bar.querySelectorAll<HTMLElement>('.tab-btn');
+    let matched = false;
+    buttons.forEach(b => {
+      const v = b.getAttribute(attr);
+      const isMatch = v === value;
+      b.classList.toggle('active', isMatch);
+      if (isMatch) matched = true;
+    });
+    return matched;
+  }
+
+  function bindTabBar(
+    bar: HTMLElement | null,
+    attr: string,
+    onSelect: (value: string) => void
+  ) {
+    if (!bar) return;
+    bar.querySelectorAll<HTMLElement>('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const value = btn.getAttribute(attr)!;
+        onSelect(value);
+        syncActive(bar, attr, value);
+        applyFilters();
+      });
+    });
+  }
+
+  // Restore active state from localStorage on load. Fall back to 'all' when
+  // the persisted value no longer maps to a button (e.g. a group was removed).
+  if (typeTabBar && !syncActive(typeTabBar, 'data-filter', currentType)) {
+    currentType = 'all';
+    syncActive(typeTabBar, 'data-filter', 'all');
+  }
+  if (regionTabBar && !syncActive(regionTabBar, 'data-region', currentRegion)) {
+    currentRegion = 'all';
+    syncActive(regionTabBar, 'data-region', 'all');
+  }
+  if (groupTabBar && !syncActive(groupTabBar, 'data-group', currentGroup)) {
+    currentGroup = 'all';
+    syncActive(groupTabBar, 'data-group', 'all');
+  }
+
+  bindTabBar(typeTabBar, 'data-filter', v => {
+    currentType = v;
+    localStorage.setItem(LS_KEYS.type, v);
+  });
+  bindTabBar(regionTabBar, 'data-region', v => {
+    currentRegion = v;
+    localStorage.setItem(LS_KEYS.region, v);
+  });
+  bindTabBar(groupTabBar, 'data-group', v => {
+    currentGroup = v;
+    localStorage.setItem(LS_KEYS.group, v);
+  });
+
+  // Apply the restored filter combination immediately so the initial paint
+  // already reflects the saved preferences (no flash of unfiltered content
+  // beyond what SSG delivered).
+  applyFilters();
+
+  const PAGE_SIZE = 7;
+  let visibleCount = PAGE_SIZE;
+
+  const loadMoreBtn = document.getElementById('load-more-btn');
+  const loadMoreContainer = document.getElementById('load-more-container');
+  const allGroups = document.querySelectorAll<HTMLElement>('[data-date-idx]');
+  const totalGroups = allGroups.length;
+
+  function showMore() {
+    const nextCount = Math.min(visibleCount + PAGE_SIZE, totalGroups);
+    for (let i = visibleCount; i < nextCount; i++) {
+      allGroups[i].style.display = '';
+    }
+    visibleCount = nextCount;
+    if (visibleCount >= totalGroups && loadMoreContainer) {
+      loadMoreContainer.style.display = 'none';
+    }
+  }
+
+  if (loadMoreBtn) {
+    loadMoreBtn.addEventListener('click', showMore);
+  }
+</script>

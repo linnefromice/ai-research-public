@@ -1,0 +1,112 @@
+name: ui-ci
+
+# admin-site / public-site に対する PR gate。
+#
+# 目的: 本番マージ前に以下を検知する:
+#   - TypeScript 型エラー (tsc --noEmit 等)
+#   - Astro silent render failure (.astro テンプレート内の未定義参照で空 fragment)
+#   - ビルド成果物の崩壊 (dashboard / status / calendar / tags に要素が含まれているか)
+
+on:
+  pull_request:
+    paths:
+      - 'admin-site/**'
+      - 'public-site/**'
+      - 'test-fixtures/**'
+      - '.github/workflows/ui-ci.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'admin-site/**'
+      - 'public-site/**'
+      - 'test-fixtures/**'
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  admin-site:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: admin-site
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: admin-site/package-lock.json
+      - run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Smoke — dist exists
+        run: |
+          set -euo pipefail
+          if [ ! -f dist/index.html ]; then
+            echo "::error::admin-site dist/index.html missing"; exit 1
+          fi
+          echo "admin-site build: OK"
+
+  public-site:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: public-site
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: public-site/package-lock.json
+      - run: npm ci
+
+      # astro check は .astro テンプレート内のバインディング参照も型検査する。
+      # 現状 89 件の既存エラー (D1Database / process 型定義の欠落) があるため
+      # 即時 hard gate にはしない。continue-on-error で出力は得つつ、エラー数
+      # を監視してコンソール出力から読めるようにする。完全 green 化は別タスク。
+      - name: Astro check (advisory)
+        id: astro-check
+        continue-on-error: true
+        run: npx astro check
+
+      - name: Build
+        run: npm run build
+
+      - name: Smoke — dashboard must render cards
+        run: |
+          set -euo pipefail
+          count=$(grep -oE 'class="card"' dist/client/index.html | wc -l | tr -d ' ')
+          echo "Dashboard card count: $count"
+          if [ "$count" -lt 1 ]; then
+            echo "::error::Dashboard rendered zero cards. Likely a silent Astro render error."
+            exit 1
+          fi
+
+      - name: Smoke — status page exists
+        run: |
+          set -euo pipefail
+          if [ ! -f dist/client/status/index.html ]; then
+            echo "::error::status/index.html missing"; exit 1
+          fi
+          count=$(grep -oE 'class="feature-card"' dist/client/status/index.html | wc -l | tr -d ' ')
+          echo "Status feature-card count: $count"
+          if [ "$count" -lt 1 ]; then
+            echo "::error::Status page rendered zero feature cards."
+            exit 1
+          fi
+
+      - name: Smoke — calendar page exists
+        run: |
+          set -euo pipefail
+          if [ ! -f dist/client/calendar/index.html ]; then
+            echo "::error::calendar/index.html missing"; exit 1
+          fi
+
+      - name: Smoke — tags page exists
+        run: |
+          set -euo pipefail
+          if [ ! -f dist/client/tags/index.html ]; then
+            echo "::error::tags/index.html missing"; exit 1
+          fi

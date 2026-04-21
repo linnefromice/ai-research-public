@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { buildReportCardTitle, features, getFeatureLabel, getFeatureColor } from '../../features';
+import { getUnpublishedIds, toD1Id } from '../../lib/d1-client';
+import { MyBookmarksList, type ReportMeta } from '../../components/MyBookmarksList';
+
+// 公開サイト全体のレポートを取得。ブックマークは localStorage ベースなので
+// ログインチェックは不要だが、非公開レポートは表示対象外。
+const unpublished = await getUnpublishedIds();
+const allReports: ReportMeta[] = [];
+
+for (const f of features) {
+  const reports = await getCollection(f.slug as any);
+  for (const r of reports) {
+    const id = toD1Id(f.slug, r.id);
+    if (unpublished.has(id)) continue;
+    allReports.push({
+      id,
+      title: buildReportCardTitle(f.slug, r.data.date),
+      feature: f.slug,
+      featureLabel: getFeatureLabel(f.slug),
+      featureColor: getFeatureColor(f.slug),
+      slug: r.id,
+      date: r.data.date,
+      session: r.data.session,
+    });
+  }
+}
+allReports.sort((a, b) => b.date.localeCompare(a.date));
+---
+
+<BaseLayout title="My Bookmarks" activeFeature="_my_bookmarks">
+  <header class="page-header">
+    <h1>⭐ My Bookmarks</h1>
+    <p class="muted">保存したレポートの一覧。ブックマークは端末の localStorage に保存されます。</p>
+  </header>
+
+  <MyBookmarksList client:load allReports={allReports} />
+</BaseLayout>
+
+<style>
+  .page-header {
+    margin-bottom: 1.5rem;
+  }
+  .page-header h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+  }
+  .muted {
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+  }
+</style>
