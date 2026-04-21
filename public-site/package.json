@@ -4,9 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "predev": "node scripts/copy-fixtures-to-content.mjs",
     "dev": "astro dev",
+    "prebuild": "node scripts/copy-fixtures-to-content.mjs",
     "build": "astro build",
     "preview": "astro preview",
+    "prescreenshot": "node scripts/copy-fixtures-to-content.mjs",
     "screenshot": "node scripts/screenshot.mjs",
     "screenshot:desktop": "node scripts/screenshot.mjs --viewport=desktop",
     "screenshot:mobile": "node scripts/screenshot.mjs --viewport=mobile"
