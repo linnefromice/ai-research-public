@@ -1,0 +1,199 @@
+---
+// SSG で全件を埋め込み、publish 状態はクライアント JS が
+// /api/visibility/deep-research から取得して適用する。
+// これにより admin の publish/unpublish 切替が再ビルドなしで反映される。
+// (データの流れ: push で記事が配信 → CI build で静的ページ生成 →
+//  admin 操作 → 次回ページロードで表示/非表示が入れ替わる)
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { toD1Id } from '../../lib/d1-client';
+
+const reports = await getCollection('deep-research');
+const sorted = reports.sort((a, b) => b.data.date.localeCompare(a.data.date));
+
+function extractExcerpt(body: string): string {
+  const summaryMatch = body.match(/## Executive Summary\s*\n+([\s\S]*?)(?=\n## |\n---)/);
+  if (summaryMatch) {
+    const text = summaryMatch[1]
+      .replace(/\*\*/g, '')
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+      .replace(/\n+/g, ' ')
+      .trim();
+    return text.length > 300 ? text.slice(0, 300) + '…' : text;
+  }
+  // Fallback: first non-heading paragraph
+  const lines = body.split('\n').filter(l => l.trim() && !l.startsWith('#') && !l.startsWith('---'));
+  const text = lines.slice(0, 3).join(' ').replace(/\*\*/g, '').trim();
+  return text.length > 300 ? text.slice(0, 300) + '…' : text;
+}
+
+function countSources(body: string): number {
+  // Count sources from the metadata section
+  const match = body.match(/Sources count: (\d+)/);
+  return match ? parseInt(match[1]) : 0;
+}
+
+function extractTopic(report: any): string {
+  return report.data.topic || report.id;
+}
+---
+
+<BaseLayout title="Deep Research" activeFeature="deep-research">
+  <div class="research-header">
+    <h1>Deep Research</h1>
+    <p class="subtitle">ビジネス概念・サービス・技術の深堀り調査レポート</p>
+  </div>
+
+  {sorted.length === 0 ? (
+    <p class="empty" id="research-empty">調査レポートはまだありません。</p>
+  ) : (
+    <div class="research-list" id="research-list">
+      {sorted.map((report) => {
+        const topic = extractTopic(report);
+        const excerpt = extractExcerpt(report.body ?? '');
+        const sources = countSources(report.body ?? '');
+        const cardId = toD1Id('deep-research', report.id);
+        return (
+          <a
+            href={`/deep-research/${topic}`}
+            class="research-card"
+            data-card-id={cardId}
+            style="display: none"
+          >
+            <div class="card-meta">
+              <span class="date">{report.data.date}</span>
+              {sources > 0 && <span class="sources">{sources} sources</span>}
+              <span class="engine">{report.data.engine}</span>
+            </div>
+            <h2>{report.data.title}</h2>
+            {excerpt && <p class="excerpt">{excerpt}</p>}
+          </a>
+        );
+      })}
+    </div>
+    <p class="empty" id="research-empty" hidden>調査レポートはまだありません。</p>
+  )}
+</BaseLayout>
+
+<script>
+  // publish 状態をランタイムで取得し、unpublished のカードを隠す。
+  // 取得失敗時は fail-safe に全カードを隠す (非公開を優先)。
+  (async () => {
+    const list = document.getElementById('research-list');
+    const empty = document.getElementById('research-empty');
+    const cards = document.querySelectorAll<HTMLElement>('a.research-card[data-card-id]');
+    if (cards.length === 0) return;
+
+    let unpublished = new Set<string>();
+    let apiOk = false;
+    try {
+      const res = await fetch('/api/visibility/deep-research', {
+        cache: 'no-store',
+        headers: { Accept: 'application/json' },
+      });
+      if (res.ok) {
+        const data = await res.json() as { unpublished?: string[] };
+        unpublished = new Set(data.unpublished ?? []);
+        apiOk = true;
+      }
+    } catch {
+      // fall through to fail-safe
+    }
+
+    let visibleCount = 0;
+    cards.forEach((card) => {
+      const id = card.dataset.cardId!;
+      const hide = !apiOk || unpublished.has(id);
+      if (!hide) {
+        card.style.display = '';
+        visibleCount += 1;
+      }
+    });
+
+    if (visibleCount === 0) {
+      if (list) list.style.display = 'none';
+      if (empty) empty.removeAttribute('hidden');
+    }
+  })();
+</script>
+
+<style>
+  .research-header {
+    margin-bottom: 2rem;
+  }
+  .research-header h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+  }
+  .subtitle {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+  .empty {
+    color: var(--color-text-muted);
+    text-align: center;
+    padding: 3rem 0;
+  }
+  .research-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .research-card {
+    display: block;
+    padding: 1.25rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-accent-deep-research);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--color-text);
+    transition: border-color 0.2s, transform 0.1s;
+  }
+  .research-card:hover {
+    border-color: var(--color-accent-deep-research);
+    transform: translateY(-1px);
+    text-decoration: none;
+  }
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+  .sources {
+    background: var(--color-accent-deep-research)20;
+    color: var(--color-accent-deep-research);
+    padding: 0.1rem 0.4rem;
+    border-radius: 3px;
+    font-weight: 600;
+  }
+  .engine {
+    background: var(--color-border);
+    padding: 0.1rem 0.4rem;
+    border-radius: 3px;
+  }
+  h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--color-text);
+  }
+  .excerpt {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  @media (max-width: 768px) {
+    .research-header h1 { font-size: 1.2rem; }
+    h2 { font-size: 1rem; }
+    .excerpt { -webkit-line-clamp: 3; }
+  }
+</style>

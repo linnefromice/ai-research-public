@@ -1,0 +1,188 @@
+---
+import {
+  REGION_META,
+  buildReportCardTitle,
+  getFeatureColor,
+  getFeatureLabel,
+  getFeatureRegion,
+} from '../features';
+
+interface Props {
+  title?: string; // kept for API stability; card derives its own display title
+  date: string;
+  feature: string;
+  slug: string;
+  excerpt?: string;
+  session?: string;
+  tags?: string[];
+}
+
+const { date, feature, slug, excerpt, session, tags } = Astro.props;
+const featureLabel = getFeatureLabel(feature);
+const featureColor = getFeatureColor(feature);
+const region = getFeatureRegion(feature);
+const regionMeta = REGION_META[region];
+// Derive the card title in well-formed English regardless of whether the
+// frontmatter stored the lower-case slug variant.
+const displayTitle = buildReportCardTitle(feature, date);
+
+// 経過時間の表示（ビルド時点からの差分）
+function getTimeAgo(dateStr: string): string {
+  const now = new Date();
+  const d = new Date(dateStr + 'T09:00:00+09:00'); // JST 9:00 を仮定
+  const diffMs = now.getTime() - d.getTime();
+  const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+  const diffDays = Math.floor(diffHours / 24);
+  if (diffDays > 0) return `${diffDays}d ago`;
+  if (diffHours > 0) return `${diffHours}h ago`;
+  return 'just now';
+}
+const timeAgo = getTimeAgo(date);
+---
+
+<a
+  href={`/${feature}/${slug}`}
+  class="card"
+  data-card-id={`${feature}/${slug}`}
+  data-region={region}
+>
+  <div class="card-header">
+    <span class="feature-dot" style={`background: ${featureColor}`} />
+    <span class={`region-pill region-pill--${region}`} title={regionMeta.label}>
+      <span class="region-flag">{regionMeta.flag}</span>
+      <span class="region-short">{regionMeta.short}</span>
+    </span>
+    <span class="card-badges">
+      <span class="read-badge" style="display:none" title="Read">✓</span>
+      <span class="bookmark-badge" style="display:none" title="Bookmarked">⭐</span>
+    </span>
+    <span class="time-ago">{timeAgo}</span>
+  </div>
+  <h3 class="card-title">{displayTitle}</h3>
+  <span class="card-source">{featureLabel}{session && session !== 'daily' ? ` · ${session}` : ''}</span>
+  {excerpt && <p class="card-excerpt">{excerpt}</p>}
+  {tags && tags.length > 0 && (
+    <div class="card-tags">
+      {tags.slice(0, 4).map((tag) => (
+        <span class="tag">{tag}</span>
+      ))}
+      {tags.length > 4 && <span class="tag-more">+{tags.length - 4}</span>}
+    </div>
+  )}
+</a>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--color-text);
+    transition: border-color 0.2s, transform 0.15s;
+    height: 100%;
+  }
+  .card:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+    text-decoration: none;
+  }
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem; /* feature-dot と region-pill が密着しないように */
+    margin-bottom: 0.6rem;
+  }
+  .feature-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .region-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 0.1rem 0.45rem;
+    border-radius: 999px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-text-muted);
+    margin-right: auto; /* push badges/time-ago to the right */
+  }
+  .region-pill--global {
+    background: color-mix(in srgb, var(--color-primary) 8%, var(--color-surface));
+    border-color: color-mix(in srgb, var(--color-primary) 35%, var(--color-border));
+    color: var(--color-primary);
+  }
+  .region-flag { font-size: 0.75rem; line-height: 1; }
+  .region-short { font-size: 0.62rem; }
+  .time-ago {
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+  }
+  .card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 0.35rem;
+  }
+  .card-source {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.5rem;
+  }
+  .card-excerpt {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex: 1;
+  }
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    margin-top: 0.6rem;
+  }
+  .tag {
+    font-size: 0.6rem;
+    padding: 0.1rem 0.35rem;
+    background: var(--color-border);
+    border-radius: 3px;
+    color: var(--color-text-muted);
+  }
+  .tag-more {
+    font-size: 0.6rem;
+    color: var(--color-text-muted);
+    padding: 0.1rem 0.15rem;
+  }
+
+  .card-badges {
+    display: flex;
+    gap: 0.2rem;
+    font-size: 0.7rem;
+  }
+  .read-badge {
+    color: var(--color-text-muted);
+    font-size: 0.65rem;
+  }
+  .bookmark-badge {
+    font-size: 0.65rem;
+  }
+
+  @media (max-width: 768px) {
+    .card { padding: 1rem 1.25rem; }
+    .card-title { font-size: 0.95rem; }
+    .card-excerpt { font-size: 0.8rem; line-height: 1.6; }
+  }
+</style>

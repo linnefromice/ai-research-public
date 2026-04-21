@@ -1,0 +1,178 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { dailyFeatures } from '../features';
+import { getUnpublishedIds, toD1Id } from '../lib/d1-client';
+import { dedupByLang } from '../lib/multilingual';
+
+const unpublished = await getUnpublishedIds();
+
+const allReports: { date: string; feature: string }[] = [];
+for (const f of dailyFeatures) {
+  const reports = await getCollection(f.slug as any);
+  const deduped = dedupByLang(reports);
+  for (const r of deduped) {
+    if (unpublished.has(toD1Id(f.slug, r.id))) continue;
+    const dateMatch = r.id.match(/^\d{4}-\d{2}-\d{2}/);
+    if (dateMatch) {
+      allReports.push({ date: dateMatch[0], feature: f.slug });
+    }
+  }
+}
+
+// 日付ごとにレポート数を集計
+const dateCounts = new Map<string, number>();
+for (const r of allReports) {
+  dateCounts.set(r.date, (dateCounts.get(r.date) ?? 0) + 1);
+}
+
+// 月ごとに整理
+const months = new Map<string, Map<number, number>>();
+for (const [date, count] of dateCounts) {
+  const [y, m, d] = date.split('-').map(Number);
+  const monthKey = `${y}-${String(m).padStart(2, '0')}`;
+  if (!months.has(monthKey)) months.set(monthKey, new Map());
+  months.get(monthKey)!.set(d, count);
+}
+
+const sortedMonths = [...months.keys()].sort().reverse();
+
+function getDaysInMonth(yearMonth: string): number {
+  const [y, m] = yearMonth.split('-').map(Number);
+  return new Date(y, m, 0).getDate();
+}
+
+function getFirstDayOfWeek(yearMonth: string): number {
+  const [y, m] = yearMonth.split('-').map(Number);
+  return new Date(y, m - 1, 1).getDay();
+}
+
+function formatMonthLabel(yearMonth: string): string {
+  const [y, m] = yearMonth.split('-').map(Number);
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  return `${monthNames[m - 1]} ${y}`;
+}
+---
+
+<BaseLayout title="Calendar" activeFeature="_calendar">
+  <div class="calendar-page">
+    <h1>Archive Calendar</h1>
+    <p class="calendar-subtitle">Click a date to see all reports for that day</p>
+
+    {sortedMonths.map(monthKey => {
+      const days = months.get(monthKey)!;
+      const totalDays = getDaysInMonth(monthKey);
+      const firstDay = getFirstDayOfWeek(monthKey);
+
+      return (
+        <div class="calendar-month">
+          <h2 class="month-label">{formatMonthLabel(monthKey)}</h2>
+          <div class="calendar-grid">
+            <div class="day-header">Sun</div>
+            <div class="day-header">Mon</div>
+            <div class="day-header">Tue</div>
+            <div class="day-header">Wed</div>
+            <div class="day-header">Thu</div>
+            <div class="day-header">Fri</div>
+            <div class="day-header">Sat</div>
+            {Array.from({ length: firstDay }, (_, i) => (
+              <div class="day-cell empty" />
+            ))}
+            {Array.from({ length: totalDays }, (_, i) => {
+              const day = i + 1;
+              const count = days.get(day) ?? 0;
+              const dateStr = `${monthKey}-${String(day).padStart(2, '0')}`;
+              const hasReports = count > 0;
+              return (
+                <div class:list={['day-cell', { 'has-reports': hasReports }]}>
+                  {hasReports ? (
+                    <a href={`/?date=${dateStr}`} class="day-link">
+                      <span class="day-num">{day}</span>
+                      <span class="day-count">{count}</span>
+                    </a>
+                  ) : (
+                    <span class="day-num muted">{day}</span>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      );
+    })}
+  </div>
+</BaseLayout>
+
+<style>
+  .calendar-page {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .calendar-page h1 {
+    margin-bottom: 0.25rem;
+  }
+  .calendar-subtitle {
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+  }
+  .calendar-month {
+    margin-bottom: 2.5rem;
+  }
+  .month-label {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+    color: var(--color-text);
+  }
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+  }
+  .day-header {
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    padding: 0.25rem 0;
+    font-weight: 600;
+  }
+  .day-cell {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    background: var(--color-surface);
+    min-height: 40px;
+    position: relative;
+  }
+  .day-cell.empty {
+    background: transparent;
+  }
+  .day-cell.has-reports {
+    background: var(--color-accent-tech);
+    cursor: pointer;
+  }
+  .day-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+  }
+  .day-num {
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+  .day-num.muted {
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+  }
+  .day-count {
+    font-size: 0.65rem;
+    opacity: 0.85;
+  }
+</style>

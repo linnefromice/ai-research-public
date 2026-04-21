@@ -1,6 +1,51 @@
 # openclaw-public-src
 
-OpenClaw 自動化で使用するパブリックリソース。RSS フィードのソースリスト管理と、GitHub Actions による自動精査を行う。
+OpenClaw 自動化のパブリックリソース。2 つの役割を持つ:
+
+1. **RSS ソースリスト管理** (`<feature>/sources.json`) — 各 Feature のレポート生成に使う RSS フィード URL を一元管理し、GitHub Actions で定期精査する
+2. **Web UI コード** (`admin-site/`, `public-site/`) — 管理 UI と公開サイトのソース (source of truth)。このリポジトリで lint/typecheck/screenshot CI を回し、実デプロイは private 側 [`openclaw-automation-ws`](https://github.com/linnefromice/openclaw-automation-ws) が本 repo を clone して Cloudflare Pages / Workers にデプロイする
+
+## ディレクトリ構成
+
+```
+openclaw-public-src/
+├── <feature>/sources.json             RSS ソース定義
+├── admin-site/                        React (Vite) 管理 UI
+│   ├── templates-src/                 Deep Research テンプレ (SoT)
+│   ├── scripts/screenshot.mjs         Playwright 自動撮影
+│   └── scripts/copy-research-templates.mjs
+├── public-site/                       Astro 公開サイト
+│   ├── scripts/copy-fixtures-to-content.mjs  (prebuild: test-fixtures → src/content)
+│   └── scripts/screenshot.mjs         Playwright 自動撮影
+├── test-fixtures/                     Public CI 用のサンプル content (各 feature × 1 件)
+└── .github/workflows/
+    ├── update-*-sources.yml           RSS ソース自動精査 (既存)
+    ├── ui-ci.yml                      admin-site / public-site の lint+build smoke
+    ├── admin-screenshots-{check,refresh}.yml
+    └── public-screenshots-{check,refresh}.yml
+```
+
+## Web UI 開発フロー
+
+```bash
+cd admin-site
+npm install
+npx playwright install chromium  # 初回のみ
+npm run dev                       # http://localhost:5173
+npm run screenshot                # 全 14 枚 (desktop/mobile × 7 画面)
+```
+
+```bash
+cd public-site
+npm install
+npx playwright install chromium   # 初回のみ
+npm run dev                       # http://localhost:4321 (test-fixtures が自動で src/content に展開される)
+npm run screenshot                # 全 20 枚 (desktop/mobile × 10 画面)
+```
+
+`public-site` は `test-fixtures/<feature>/*.md` を prebuild で `src/content/<feature>/` にコピーして動作する。デプロイ時 (private repo) は代わりに features/<feature>/reports への symlink が張られる。
+
+## RSS ソースリスト管理
 
 ## Feature 一覧
 

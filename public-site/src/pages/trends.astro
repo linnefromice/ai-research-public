@@ -1,0 +1,79 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCfEnv } from '../lib/api-helpers';
+export const prerender = false;
+
+interface TagTimeline {
+  tag: string;
+  data: { date: string; count: number }[];
+}
+
+const cfEnv = getCfEnv();
+const db = cfEnv?.DB;
+
+let topTags: TagTimeline[] = [];
+let errorMsg = '';
+if (db) {
+  try {
+  const since = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+  const topTagsResult = await db.prepare(`
+    SELECT rt.tag, COUNT(DISTINCT rt.report_id) AS cnt
+    FROM report_tags rt
+    JOIN reports r ON r.id = rt.report_id
+    WHERE rt.tag_type = 'keyword' AND r.date >= ? AND r.published = 1
+    GROUP BY rt.tag
+    ORDER BY cnt DESC
+    LIMIT 8
+  `).bind(since).all<{ tag: string; cnt: number }>();
+
+  const tags = (topTagsResult.results ?? []).map(r => r.tag);
+
+  for (const tag of tags) {
+    const timelineResult = await db.prepare(`
+      SELECT r.date, COUNT(DISTINCT rt.report_id) AS count
+      FROM report_tags rt
+      JOIN reports r ON r.id = rt.report_id
+      WHERE rt.tag = ? AND rt.tag_type = 'keyword' AND r.date >= ? AND r.published = 1
+      GROUP BY r.date
+      ORDER BY r.date
+    `).bind(tag, since).all<{ date: string; count: number }>();
+
+    topTags.push({ tag, data: timelineResult.results ?? [] });
+  }
+  } catch (e) {
+    errorMsg = e instanceof Error ? e.message : 'unknown error';
+    console.warn('[trends] query failed:', errorMsg);
+  }
+}
+
+function renderSparkline(data: { count: number }[], width = 200, height = 30): string {
+  if (data.length === 0) return '';
+  const max = Math.max(...data.map(d => d.count), 1);
+  const step = width / Math.max(data.length - 1, 1);
+  const points = data.map((d, i) => `${i * step},${height - (d.count / max) * height}`).join(' ');
+  return `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><polyline fill="none" stroke="currentColor" stroke-width="2" points="${points}" /></svg>`;
+}
+---
+
+<BaseLayout title="Trends" activeFeature="_trends">
+  <h1>📈 Trend Keywords (Last 30 Days)</h1>
+  <p style="color: var(--color-text-muted); margin-bottom: 1.5rem;">
+    Top keywords by mention frequency in published reports
+  </p>
+
+  {topTags.length === 0 ? (
+    <p style="color: var(--color-text-muted);">No data available.</p>
+  ) : (
+    <div style="display: grid; gap: 0.75rem;">
+      {topTags.map(t => (
+        <a href={`/tags/${encodeURIComponent(t.tag)}/`} style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem 1rem; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px; text-decoration: none; color: var(--color-text);">
+          <span style="font-weight: 600; min-width: 150px;">#{t.tag}</span>
+          <span style="color: var(--color-accent-tech);" set:html={renderSparkline(t.data)}></span>
+          <span style="color: var(--color-text-muted); font-size: 0.85rem; margin-left: auto;">
+            {t.data.reduce((a, d) => a + d.count, 0)} mentions
+          </span>
+        </a>
+      ))}
+    </div>
+  )}
+</BaseLayout>

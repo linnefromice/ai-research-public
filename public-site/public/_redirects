@@ -1,0 +1,7 @@
+# Cloudflare Pages redirects
+
+# RSS feed shortcuts
+/feed          /feed/index.xml    200
+/feed/         /feed/index.xml    200
+/rss           /feed/index.xml    302
+/rss.xml       /feed/index.xml    302

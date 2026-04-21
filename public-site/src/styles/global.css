@@ -1,0 +1,273 @@
+:root {
+  --color-bg: #020617;
+  --color-surface: #0f172a;
+  --color-border: #334155;
+  --color-text: #e2e8f0;
+  --color-text-muted: #94a3b8;
+  --color-primary: #38bdf8;
+  --color-primary-hover: #7dd3fc;
+  --color-accent-tech: #38bdf8;
+  --color-accent-life: #a78bfa;
+  --color-accent-finance: #4ade80;
+  --color-accent-invest-jp: #f472b6;
+  --color-accent-invest-gl: #fb923c;
+  --color-accent-productivity: #facc15;
+  --color-accent-wellness: #34d399;
+  --color-accent-parenting-baby: #f9a8d4;
+  --color-accent-parenting-edu: #818cf8;
+  --color-accent-family-finance: #fbbf24;
+  --color-accent-workstyle: #22d3ee;
+  --color-accent-tech-gl: #7dd3fc;
+  --color-accent-wellness-gl: #6ee7b7;
+  --color-accent-parenting-gl: #f0abfc;
+  --color-accent-family-finance-gl: #fcd34d;
+  --color-accent-workstyle-gl: #67e8f9;
+  --color-accent-deep-research: #c084fc;
+  --color-danger: #ef4444;
+  --color-warning: #fbbf24;
+  --color-success: #4ade80;
+  --max-width: 100%;
+  --nav-height: 56px;
+  --sidebar-width: 80px;
+}
+
+[data-theme="light"] {
+  --color-bg: #f8fafc;
+  --color-surface: #ffffff;
+  --color-border: #e2e8f0;
+  --color-text: #1e293b;
+  --color-text-muted: #64748b;
+  --color-primary: #0284c7;
+  --color-primary-hover: #0369a1;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.7;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-primary-hover);
+  text-decoration: underline;
+}
+
+main {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 2rem 1.5rem 2rem;
+}
+
+@media (min-width: 769px) {
+  main {
+    margin-left: calc(var(--sidebar-width) + 2rem);
+    margin-right: 2rem;
+    padding: 2.5rem 0 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  main {
+    padding: 1.25rem 1rem calc(70px + 1.5rem);
+  }
+}
+
+/* === Shared: Report Grid === */
+.report-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+@media (max-width: 1024px) {
+  .report-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .report-grid { grid-template-columns: 1fr; }
+}
+
+/* === Shared: Tab Bar === */
+.tab-bar {
+  display: flex;
+  gap: 0;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+.tab-btn {
+  padding: 0.5rem 1.25rem;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s, border-bottom-color 0.2s;
+}
+.tab-btn:hover { color: var(--color-text); }
+.tab-btn.active { color: var(--color-text); border-bottom-color: var(--color-primary); }
+.tab-btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: -2px;
+  border-radius: 2px;
+}
+
+/* === Shared: Load More === */
+.load-more-container { text-align: center; margin: 2rem 0 1rem; }
+.load-more-btn {
+  padding: 0.6rem 2rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  color: var(--color-text);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+.load-more-btn:hover { border-color: var(--color-primary); background: var(--color-border); }
+
+/* === Report Content === */
+
+.report-content h1 { font-size: 1.8rem; margin: 1.5rem 0 1rem; color: var(--color-text); }
+.report-content h2 { font-size: 1.4rem; margin: 2rem 0 0.75rem; padding-bottom: 0.25rem; border-bottom: 1px solid var(--color-border); color: var(--color-text); }
+.report-content h3 { font-size: 1.1rem; margin: 1.5rem 0 0.5rem; color: var(--color-text); }
+
+/* 記事タイトル (h3 内のリンク) を読みやすい色に */
+.report-content h3 a {
+  color: var(--color-primary-hover);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.report-content h3 a:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.report-content p { margin: 0.5rem 0; line-height: 1.7; }
+
+/*
+ * Today's Highlights セクションの段落は冒頭が **bold** のリード文で始まる
+ * 構造を持つ。<p> 直下の <strong> が最初の child の場合に限り、リード文を
+ * 見出し風に block 化し、本文との視覚的区切りを強調する。
+ *
+ * 例外: 「開発者向けアクションアイテム:」のような <ul>/<ol> リストの導入
+ * 段落 (p の直後にリストが続く形) はカード化しない — リードと list が
+ * 別ブロックになり視覚的に分断される副作用が出るため。
+ *
+ * 記事カード (### h3 + p) は h3 が見出しなので元から影響なし。
+ */
+.report-content p:has(> strong:first-child):not(:has(+ ul)):not(:has(+ ol)) {
+  background: var(--color-surface);
+  border-left: 3px solid var(--color-primary);
+  border-radius: 0 6px 6px 0;
+  padding: 0.85rem 1.1rem;
+  margin: 1rem 0;
+}
+.report-content p:has(> strong:first-child):not(:has(+ ul)):not(:has(+ ol)) > strong:first-child {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--color-primary);
+  font-size: 1.02em;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+/* blockquote: メタデータ行を整形 */
+.report-content blockquote {
+  border-left: 3px solid var(--color-border);
+  padding: 0.5rem 0.75rem;
+  margin: 0.5rem 0;
+  color: var(--color-text-muted);
+  background: var(--color-surface);
+  border-radius: 0 4px 4px 0;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  word-break: break-word;
+}
+.report-content blockquote p {
+  margin: 0.2rem 0;
+}
+
+.report-content ul, .report-content ol { padding-left: 1.5rem; margin: 0.5rem 0; }
+.report-content hr { border: none; border-top: 1px solid var(--color-border); margin: 2rem 0; }
+.report-content code {
+  background: var(--color-surface);
+  padding: 0.15rem 0.3rem;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+.report-content pre {
+  background: var(--color-surface);
+  padding: 1rem;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+.report-content pre code {
+  background: none;
+  padding: 0;
+}
+
+/* テーブル: モバイルで横スクロール */
+.report-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.85rem;
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.report-content thead {
+  display: table-header-group;
+}
+.report-content tbody {
+  display: table-row-group;
+}
+.report-content tr {
+  display: table-row;
+}
+.report-content th, .report-content td {
+  display: table-cell;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+.report-content th {
+  background: var(--color-surface);
+  font-weight: 600;
+  color: var(--color-text);
+}
+.report-content td {
+  color: var(--color-text-muted);
+}
+
+/* === Responsive === */
+
+@media (max-width: 768px) {
+  .report-content h1 { font-size: 1.3rem; margin: 1.25rem 0 1rem; line-height: 1.4; }
+  .report-content h2 { font-size: 1.15rem; margin: 2rem 0 0.75rem; }
+  .report-content h3 { font-size: 1rem; margin: 1.5rem 0 0.5rem; }
+  .report-content p { margin: 0.75rem 0; line-height: 1.8; }
+  .report-content blockquote {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8rem;
+  }
+  .report-content table {
+    font-size: 0.75rem;
+  }
+  .report-content th, .report-content td {
+    padding: 0.35rem 0.5rem;
+  }
+}

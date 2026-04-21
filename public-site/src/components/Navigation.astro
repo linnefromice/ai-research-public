@@ -1,0 +1,194 @@
+---
+import { LoginButton } from './LoginButton';
+import { AuthNavItems, AuthMobileTabs } from './AuthNavItems';
+
+interface Props {
+  activeFeature?: string;
+}
+
+const { activeFeature } = Astro.props;
+
+const navItems = [
+  { href: '/', icon: '🏠', label: 'Home', active: !activeFeature },
+  { href: '/search/', icon: '🔍', label: 'Search', active: activeFeature === '_search' },
+  { href: '/deep-research/', icon: '🔬', label: 'Research', active: activeFeature === 'deep-research' },
+  { href: '/tags/', icon: '🏷️', label: 'Tags', active: activeFeature === '_tags' },
+  { href: '/calendar/', icon: '📅', label: 'Calendar', active: activeFeature === '_calendar' },
+  { href: '/rankings/', icon: '📈', label: 'Rankings', active: activeFeature === '_rankings' },
+  { href: '/trends/', icon: '🔥', label: 'Trends', active: activeFeature === '_trends' },
+  { href: '/status/', icon: '📊', label: 'Status', active: activeFeature === '_status' },
+];
+---
+
+{/* Desktop: Left sidebar */}
+<nav class="sidebar" aria-label="Main navigation">
+  <a href="/" class="sidebar-logo">📊</a>
+  <div class="sidebar-items">
+    {navItems.map(item => (
+      <a href={item.href} class:list={['sidebar-item', { active: item.active }]}>
+        <span class="sidebar-icon">{item.icon}</span>
+        <span class="sidebar-label">{item.label}</span>
+      </a>
+    ))}
+    <AuthNavItems client:load activeFeature={activeFeature} />
+  </div>
+  <div class="sidebar-auth">
+    <LoginButton client:load />
+  </div>
+  <button class="theme-toggle" id="theme-toggle" aria-label="テーマ切替">
+    <span class="theme-icon-dark">🌙</span>
+    <span class="theme-icon-light">☀️</span>
+  </button>
+</nav>
+
+{/* Mobile: Bottom tab bar */}
+<nav class="mobile-bar" aria-label="Mobile navigation">
+  {navItems.slice(0, 5).map(item => (
+    <a href={item.href} class:list={['mobile-tab', { active: item.active }]}>
+      <span class="mobile-icon">{item.icon}</span>
+      <span class="mobile-label">{item.label}</span>
+    </a>
+  ))}
+  <AuthMobileTabs client:load activeFeature={activeFeature} />
+</nav>
+
+<script>
+  const themeBtn = document.getElementById('theme-toggle')!;
+  themeBtn.addEventListener('click', () => {
+    const isLight = document.documentElement.dataset.theme === 'light';
+    if (isLight) {
+      delete document.documentElement.dataset.theme;
+      localStorage.removeItem('theme');
+    } else {
+      document.documentElement.dataset.theme = 'light';
+      localStorage.setItem('theme', 'light');
+    }
+  });
+</script>
+
+<style>
+  /* === Desktop Sidebar === */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: var(--sidebar-width);
+    background: var(--color-surface);
+    border-right: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 0;
+    z-index: 100;
+  }
+
+  .sidebar-logo {
+    font-size: 1.5rem;
+    text-decoration: none;
+    margin-bottom: 1.5rem;
+  }
+
+  .sidebar-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex: 1;
+  }
+
+  .sidebar-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+    padding: 0.6rem 0.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--color-text-muted);
+    transition: color 0.2s, background 0.2s;
+    width: 64px;
+  }
+
+  .sidebar-item:hover {
+    color: var(--color-text);
+    background: var(--color-bg);
+    text-decoration: none;
+  }
+
+  .sidebar-item.active {
+    color: var(--color-primary);
+    background: var(--color-bg);
+  }
+
+  .sidebar-icon {
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+
+  .sidebar-label {
+    font-size: 0.6rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  .sidebar-auth {
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 0.5rem;
+    margin-top: auto;
+  }
+
+  .theme-toggle:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  .theme-icon-light { display: none; }
+  :global([data-theme="light"]) .theme-icon-dark { display: none; }
+  :global([data-theme="light"]) .theme-icon-light { display: inline; }
+
+  /* === Mobile Bottom Bar === */
+  .mobile-bar {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    z-index: 100;
+    justify-content: space-around;
+    padding: 0.5rem 0 env(safe-area-inset-bottom, 0.5rem);
+  }
+
+  .mobile-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.1rem;
+    text-decoration: none;
+    color: var(--color-text-muted);
+    font-size: 0.65rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .mobile-tab:hover { text-decoration: none; }
+  .mobile-tab.active { color: var(--color-primary); }
+
+  .mobile-icon { font-size: 1.2rem; }
+  .mobile-label { font-weight: 600; }
+
+  /* === Responsive === */
+  @media (max-width: 768px) {
+    .sidebar { display: none; }
+    .mobile-bar { display: flex; }
+  }
+</style>

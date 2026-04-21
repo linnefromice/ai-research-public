@@ -1,0 +1,71 @@
+{
+  "generated_at": "2026-04-21T07:02:20.405Z",
+  "generated_commit": "50b2ef065e58f99f41a4cff8d236eba73b80fe2a",
+  "watched_paths": [
+    "public-site/src",
+    "public-site/package.json"
+  ],
+  "source_tree_sha": "0efd55ac83f98078515cde8889f3eadb3225e242",
+  "files": {
+    "calendar--desktop.png": {
+      "bytes": 60197
+    },
+    "calendar--mobile.png": {
+      "bytes": 39267
+    },
+    "deep-research-detail--desktop.png": {
+      "bytes": 64487
+    },
+    "deep-research-detail--mobile.png": {
+      "bytes": 43073
+    },
+    "deep-research-index--desktop.png": {
+      "bytes": 54437
+    },
+    "deep-research-index--mobile.png": {
+      "bytes": 37323
+    },
+    "feature-listing--desktop.png": {
+      "bytes": 56952
+    },
+    "feature-listing--mobile.png": {
+      "bytes": 36297
+    },
+    "home--desktop.png": {
+      "bytes": 214832
+    },
+    "home--mobile.png": {
+      "bytes": 67695
+    },
+    "rankings--desktop.png": {
+      "bytes": 48200
+    },
+    "rankings--mobile.png": {
+      "bytes": 32840
+    },
+    "report-detail--desktop.png": {
+      "bytes": 123130
+    },
+    "report-detail--mobile.png": {
+      "bytes": 65470
+    },
+    "status--desktop.png": {
+      "bytes": 224322
+    },
+    "status--mobile.png": {
+      "bytes": 60370
+    },
+    "tags--desktop.png": {
+      "bytes": 38250
+    },
+    "tags--mobile.png": {
+      "bytes": 23544
+    },
+    "trends--desktop.png": {
+      "bytes": 49397
+    },
+    "trends--mobile.png": {
+      "bytes": 35042
+    }
+  }
+}

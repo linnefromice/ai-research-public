@@ -1,0 +1,21 @@
+# public-site (Astro + Cloudflare Workers) の wrangler 設定
+#
+# このファイルは astro build 時に @astrojs/cloudflare adapter が読み込み、
+# miniflare の platformProxy に渡される。主な目的は compatibility_date の固定:
+#
+# 背景: adapter は platformProxy: { enabled: true } で build 時に miniflare を
+# 起動する。compatibility_date を明示しないと miniflare は当日日付を設定するが、
+# GitHub Actions runner に bundle されている wrangler がまだ追いついていないと
+# "newest date supported is X" で build が失敗する (2026-04-09 の事故参照)。
+#
+# 2025-10-01 は半年前で全 wrangler バージョンが確実にサポートし、
+# nodejs_compat flag と併せて本プロジェクトに必要な機能 (Kysely の Node API 等)
+# が揃っている。日付に依存しない安定値として固定する。
+#
+# 注: D1 binding と "auto-research" へのリネームは .github/workflows/deploy-site.yml
+# の Clean wrangler config ステップで行う (ローカル dev が本番 D1 に触れないよう、
+# source wrangler.toml には D1 binding を含めない)。
+
+name = "public-site"
+compatibility_date = "2025-10-01"
+compatibility_flags = ["nodejs_compat"]
