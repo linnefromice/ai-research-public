@@ -2,10 +2,12 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { ReactionBar } from '../../components/ReactionBar';
 import { NoteEditor } from '../../components/NoteEditor';
+import { ReadAloudPanel } from '../../components/ReadAloudPanel';
 import { getCollection, render } from 'astro:content';
 import { buildReportCardTitle, features, getFeatureLabel } from '../../features';
 import { getUnpublishedIds, getAllReportTags, toD1Id } from '../../lib/d1-client';
 import { getFeatureColor } from '../../features';
+import { detectLang } from '../../lib/multilingual';
 
 interface RelatedReport {
   report_id: string;
@@ -71,6 +73,9 @@ if (apiUrl && apiKey) {
 const rawMarkdown = report.body ?? '';
 const filename = `${report.id}.md`;
 
+// TTS (読み上げ) 用言語判定: en suffix のみ en、それ以外は ja
+const reportLang = detectLang(report.id) === 'en' ? 'en-US' : 'ja-JP';
+
 // TOC: Sources, Metadata を除外
 const excludedSections = ['sources', 'metadata'];
 const tocHeadings = headings.filter(h =>
@@ -115,6 +120,8 @@ const tocHeadings = headings.filter(h =>
 
   <script type="application/json" id="raw-markdown" set:html={JSON.stringify({ content: rawMarkdown, filename })} />
   <script type="application/json" id="report-meta" set:html={JSON.stringify({ id: toD1Id(feature, report.id), feature, slug: report.id })} />
+
+  <ReadAloudPanel markdown={rawMarkdown} lang={reportLang} client:load />
 
   <article class="report-content">
     <Content />

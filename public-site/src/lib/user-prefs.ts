@@ -56,6 +56,30 @@ export function isRead(reportId: string): boolean {
   return getReadReports().has(reportId);
 }
 
+// ── TTS (読み上げ) 設定 ──
+
+const TTS_KEY = 'openclaw_tts';
+
+export interface TtsPrefs {
+  rate: number;       // 0.75 / 1.0 / 1.25 / 1.5
+  voice: string | null; // voiceURI or null (default)
+  collapsedMobile: boolean;
+}
+
+const DEFAULT_TTS: TtsPrefs = { rate: 1.0, voice: null, collapsedMobile: true };
+
+export function getTtsPrefs(): TtsPrefs {
+  try {
+    const raw = localStorage.getItem(TTS_KEY);
+    return raw ? { ...DEFAULT_TTS, ...JSON.parse(raw) } : DEFAULT_TTS;
+  } catch { return DEFAULT_TTS; }
+}
+
+export function setTtsPrefs(prefs: Partial<TtsPrefs>): void {
+  const current = getTtsPrefs();
+  localStorage.setItem(TTS_KEY, JSON.stringify({ ...current, ...prefs }));
+}
+
 // ── 表示設定 ──
 
 export interface DisplayPrefs {

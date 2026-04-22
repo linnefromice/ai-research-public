@@ -271,3 +271,80 @@ main {
     padding: 0.35rem 0.5rem;
   }
 }
+
+/* === Read Aloud Panel === */
+.read-aloud-panel {
+  margin: 0.75rem 0 1rem;
+  padding: 0.6rem 0.75rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+}
+.read-aloud-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.read-aloud-icon { font-size: 1.1rem; }
+.read-aloud-select {
+  padding: 0.3rem 0.5rem;
+  font-size: 0.85rem;
+  background: var(--color-bg);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: 0.3rem;
+  max-width: 14rem;
+}
+.read-aloud-speed { max-width: 5rem; }
+.read-aloud-voice { max-width: 12rem; }
+.read-aloud-btn {
+  padding: 0.3rem 0.7rem;
+  font-size: 0.95rem;
+  background: var(--color-bg);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: 0.3rem;
+  cursor: pointer;
+  min-width: 2.4rem;
+}
+.read-aloud-btn:hover {
+  background: var(--color-border);
+}
+.read-aloud-play {
+  background: var(--color-accent-tech, var(--color-text));
+  color: var(--color-bg);
+  border-color: transparent;
+}
+.read-aloud-close {
+  margin-left: auto;
+  padding: 0.2rem 0.5rem;
+  background: transparent;
+  color: var(--color-text-muted);
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+.read-aloud-close:hover { color: var(--color-text); }
+.read-aloud-progress {
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+.read-aloud-collapsed { padding: 0.4rem 0.6rem; }
+.read-aloud-toggle {
+  padding: 0.3rem 0.7rem;
+  background: var(--color-bg);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: 0.3rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.read-aloud-toggle:hover { background: var(--color-border); }
+
+@media (max-width: 640px) {
+  .read-aloud-select { font-size: 0.8rem; }
+  .read-aloud-voice { display: none; }
+}
