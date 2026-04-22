@@ -1,0 +1,32 @@
+[
+  {
+    "name": "GitHub Trending - Daily All",
+    "url": "https://mshibanami.github.io/GitHubTrendingRSS/daily/all.xml",
+    "feed": "https://mshibanami.github.io/GitHubTrendingRSS/daily/all.xml",
+    "category": "All Languages"
+  },
+  {
+    "name": "GitHub Trending - Python Daily",
+    "url": "https://mshibanami.github.io/GitHubTrendingRSS/daily/python.xml",
+    "feed": "https://mshibanami.github.io/GitHubTrendingRSS/daily/python.xml",
+    "category": "Python"
+  },
+  {
+    "name": "GitHub Trending - TypeScript Daily",
+    "url": "https://mshibanami.github.io/GitHubTrendingRSS/daily/typescript.xml",
+    "feed": "https://mshibanami.github.io/GitHubTrendingRSS/daily/typescript.xml",
+    "category": "TypeScript"
+  },
+  {
+    "name": "GitHub Trending - Rust Daily",
+    "url": "https://mshibanami.github.io/GitHubTrendingRSS/daily/rust.xml",
+    "feed": "https://mshibanami.github.io/GitHubTrendingRSS/daily/rust.xml",
+    "category": "Rust"
+  },
+  {
+    "name": "GitHub Trending - Go Daily",
+    "url": "https://mshibanami.github.io/GitHubTrendingRSS/daily/go.xml",
+    "feed": "https://mshibanami.github.io/GitHubTrendingRSS/daily/go.xml",
+    "category": "Go"
+  }
+]

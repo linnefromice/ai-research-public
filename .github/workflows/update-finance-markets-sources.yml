@@ -27,7 +27,7 @@ jobs:
         run: |
           echo "## Feed Validation Report" > validation-report.txt
           echo "" >> validation-report.txt
-          jq -r '.[] | select(.feed != null) | "\(.name)\t\(.feed)"' finance-markets/sources.json | while IFS=$'\t' read -r name feed; do
+          jq -r '.[] | select(.feed != null) | "\(.name)\t\(.feed)"' sources/finance-markets/sources.json | while IFS=$'\t' read -r name feed; do
             http_code=$(curl -s -o /dev/null -w "%{http_code}" -L --max-time 10 "$feed" 2>/dev/null || echo "000")
             if [[ "$http_code" -ge 200 && "$http_code" -lt 400 ]]; then
               echo "- ✅ $name: $feed (HTTP $http_code)" >> validation-report.txt
@@ -36,7 +36,7 @@ jobs:
             fi
           done
           # Web URL も検証
-          jq -r '.[] | select(.feed == null) | "\(.name)\t\(.url)"' finance-markets/sources.json | while IFS=$'\t' read -r name url; do
+          jq -r '.[] | select(.feed == null) | "\(.name)\t\(.url)"' sources/finance-markets/sources.json | while IFS=$'\t' read -r name url; do
             http_code=$(curl -s -o /dev/null -w "%{http_code}" -L --max-time 10 "$url" 2>/dev/null || echo "000")
             if [[ "$http_code" -ge 200 && "$http_code" -lt 400 ]]; then
               echo "- ✅ $name (web only): $url (HTTP $http_code)" >> validation-report.txt
@@ -54,7 +54,7 @@ jobs:
             あなたは金融・市場情報収集のためのソースリスト管理者です。
 
             ## 現在のソースリスト
-            `finance-markets/sources.json` を読んでください。JSON 形式で、各エントリに name, url, feed, category があります。
+            `sources/finance-markets/sources.json` を読んでください。JSON 形式で、各エントリに name, url, feed, category があります。
 
             ## Feed 検証結果
             `validation-report.txt` を読んでください。❌マークのフィードは無効です。
@@ -72,7 +72,7 @@ jobs:
                - RSS/Atom フィードがあること（なければ feed: null で Web URL のみ）
                - 市場データの正確性が高いこと
                - タイムリーな市場カバレッジがあること
-            4. `finance-markets/sources.json` を更新してください（JSON 配列形式）
+            4. `sources/finance-markets/sources.json` を更新してください（JSON 配列形式）
 
             変更がある場合はPRを作成してください。PR本文には追加/除外の理由を記載してください。
           claude_args: |

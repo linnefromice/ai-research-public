@@ -27,7 +27,7 @@ jobs:
         run: |
           echo "## Feed Validation Report" > validation-report.txt
           echo "" >> validation-report.txt
-          jq -r '.[] | select(.feed != null) | "\(.name)\t\(.feed)"' invest-global/sources.json | while IFS=$'\t' read -r name feed; do
+          jq -r '.[] | select(.feed != null) | "\(.name)\t\(.feed)"' sources/invest-global/sources.json | while IFS=$'\t' read -r name feed; do
             http_code=$(curl -s -o /dev/null -w "%{http_code}" -L --max-time 10 "$feed" 2>/dev/null || echo "000")
             if [[ "$http_code" -ge 200 && "$http_code" -lt 400 ]]; then
               echo "- ✅ $name: $feed (HTTP $http_code)" >> validation-report.txt
@@ -36,7 +36,7 @@ jobs:
             fi
           done
           # Web URL も検証
-          jq -r '.[] | select(.feed == null) | "\(.name)\t\(.url)"' invest-global/sources.json | while IFS=$'\t' read -r name url; do
+          jq -r '.[] | select(.feed == null) | "\(.name)\t\(.url)"' sources/invest-global/sources.json | while IFS=$'\t' read -r name url; do
             http_code=$(curl -s -o /dev/null -w "%{http_code}" -L --max-time 10 "$url" 2>/dev/null || echo "000")
             if [[ "$http_code" -ge 200 && "$http_code" -lt 400 ]]; then
               echo "- ✅ $name (web only): $url (HTTP $http_code)" >> validation-report.txt
@@ -54,7 +54,7 @@ jobs:
             You are a source list manager for global investment information targeting individual investors.
 
             ## Current Source List
-            Read `invest-global/sources.json`. It's in JSON format with entries containing name, url, feed, and category fields.
+            Read `sources/invest-global/sources.json`. It's in JSON format with entries containing name, url, feed, and category fields.
 
             ## Feed Validation Results
             Read `validation-report.txt`. Feeds marked with ❌ are invalid.
@@ -75,7 +75,7 @@ jobs:
                - RSS/Atom feeds preferred (if not available, set feed: null and use Web URL only)
                - Abundant concrete market data and figures
                - Timely market coverage and updates
-            4. Update `invest-global/sources.json` (JSON array format)
+            4. Update `sources/invest-global/sources.json` (JSON array format)
 
             If there are changes, create a PR with reasons for additions/removals in the PR description.
           claude_args: |
