@@ -2,14 +2,15 @@
 
 OpenClaw 自動化のパブリックリソース。2 つの役割を持つ:
 
-1. **RSS ソースリスト管理** (`<feature>/sources.json`) — 各 Feature のレポート生成に使う RSS フィード URL を一元管理し、GitHub Actions で定期精査する
+1. **RSS ソースリスト管理** (`sources/<feature>/sources.json`) — 各 Feature のレポート生成に使う RSS フィード URL を一元管理し、GitHub Actions で定期精査する
 2. **Web UI コード** (`admin-site/`, `public-site/`) — 管理 UI と公開サイトのソース (source of truth)。このリポジトリで lint/typecheck/screenshot CI を回し、実デプロイは private 側 [`openclaw-automation-ws`](https://github.com/linnefromice/openclaw-automation-ws) が本 repo を clone して Cloudflare Pages / Workers にデプロイする
 
 ## ディレクトリ構成
 
 ```
 openclaw-public-src/
-├── <feature>/sources.json             RSS ソース定義
+├── sources/
+│   └── <feature>/sources.json         RSS ソース定義
 ├── admin-site/                        React (Vite) 管理 UI
 │   ├── templates-src/                 Deep Research テンプレ (SoT)
 │   ├── scripts/screenshot.mjs         Playwright 自動撮影
