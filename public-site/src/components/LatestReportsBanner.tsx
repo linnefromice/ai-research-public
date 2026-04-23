@@ -32,16 +32,22 @@ export function LatestReportsBanner() {
 
     (async () => {
       try {
-        const res = await fetch('/api/latest-reports');
+        const res = await fetch('/api/latest-reports', {
+          signal: AbortSignal.timeout(5000),
+        });
         if (!res.ok) return;
         const { reports } = (await res.json()) as { reports: LatestReport[] };
         if (!reports?.length) return;
 
-        // Probe each canonical URL in parallel.
+        // Probe each canonical URL in parallel with a short timeout so a slow
+        // CDN doesn't block banner rendering.
         const probes = await Promise.all(
           reports.map(async (r) => {
             try {
-              const head = await fetch(r.static_url, { method: 'HEAD' });
+              const head = await fetch(r.static_url, {
+                method: 'HEAD',
+                signal: AbortSignal.timeout(3000),
+              });
               return head.ok;
             } catch {
               return false;

@@ -71,12 +71,12 @@ export async function fetchReportByFeatureDate(
 }
 
 /**
- * "YYYY-MM-DD" in JST. Uses Intl API so it works on the Workers runtime
- * without importing a date library.
+ * "YYYY-MM-DD" in JST. Cloudflare Workers runs in UTC; JST has no DST, so
+ * a fixed +9h offset is exact. Implemented without a date library for
+ * minimal runtime cost.
  */
 export function todayJST(): string {
   const now = new Date();
-  // Cloudflare Workers uses UTC; shift to JST.
   const jst = new Date(now.getTime() + 9 * 60 * 60 * 1000);
   return jst.toISOString().slice(0, 10);
 }

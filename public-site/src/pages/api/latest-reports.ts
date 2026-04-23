@@ -21,7 +21,10 @@ export const GET: APIRoute = async (context) => {
     const today = todayJST();
     const rows = await fetchLatestDailyReports(guard.db, today);
 
-    // Dedupe multilingual variants: prefer ja, drop en when ja exists for same feature/date.
+    // Dedupe multilingual variants: prefer ja, drop en when ja exists for
+    // same feature/date. Works regardless of arrival order since ja only
+    // overwrites non-ja; if ja comes first it stays. language === null
+    // (single-language features) has no key collision.
     const byKey = new Map<string, typeof rows[number]>();
     for (const r of rows) {
       const key = `${r.feature}/${r.date}`;
@@ -30,7 +33,6 @@ export const GET: APIRoute = async (context) => {
         byKey.set(key, r);
         continue;
       }
-      // Prefer ja over en, otherwise keep first.
       if (r.language === 'ja' && existing.language !== 'ja') {
         byKey.set(key, r);
       }
