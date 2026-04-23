@@ -121,7 +121,14 @@ const tocHeadings = headings.filter(h =>
   <script type="application/json" id="raw-markdown" set:html={JSON.stringify({ content: rawMarkdown, filename })} />
   <script type="application/json" id="report-meta" set:html={JSON.stringify({ id: toD1Id(feature, report.id), feature, slug: report.id })} />
 
-  <ReadAloudPanel markdown={rawMarkdown} lang={reportLang} client:load />
+  <ReadAloudPanel
+    markdown={rawMarkdown}
+    lang={reportLang}
+    reportId={toD1Id(feature, report.id)}
+    reportTitle={buildReportCardTitle(feature, report.data.date)}
+    featureLabel={featureLabel}
+    client:load
+  />
 
   <article class="report-content">
     <Content />
