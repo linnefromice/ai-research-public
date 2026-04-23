@@ -348,3 +348,41 @@ main {
   .read-aloud-select { font-size: 0.8rem; }
   .read-aloud-voice { display: none; }
 }
+
+/* === Read Aloud Phase 2 additions === */
+.read-aloud-sticky {
+  position: sticky;
+  top: 0.5rem;
+  z-index: 15;
+  background: color-mix(in srgb, var(--color-surface) 95%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.read-aloud-resume {
+  background: var(--color-accent-tech, var(--color-text));
+  color: var(--color-bg);
+  border-color: transparent;
+  font-size: 0.8rem;
+  padding: 0.3rem 0.6rem;
+}
+
+.read-aloud-remaining {
+  margin-left: 0.6rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Section being read aloud */
+.report-content h2.tts-reading {
+  background: color-mix(in srgb, var(--color-accent-tech, #38bdf8) 15%, transparent);
+  border-left: 3px solid var(--color-accent-tech, #38bdf8);
+  padding-left: 0.5rem;
+  transition: background 0.3s ease;
+}
+
+@media (max-width: 640px) {
+  .read-aloud-sticky {
+    top: 0;
+  }
+}
