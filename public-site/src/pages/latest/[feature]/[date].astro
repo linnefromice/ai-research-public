@@ -1,0 +1,89 @@
+---
+/**
+ * SSR preview detail page for daily reports that are published in D1 but not
+ * yet reflected in the static build.
+ *
+ * URL: /latest/<feature>/<date>/
+ *
+ * Design: docs/plans/2026-04-23-daily-preview-d1-design.md (private)
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { ReactionBar } from '../../../components/ReactionBar';
+import { NoteEditor } from '../../../components/NoteEditor';
+import { ReadAloudPanel } from '../../../components/ReadAloudPanel';
+import { getCfEnv } from '../../../lib/api-helpers';
+import { fetchReportByFeatureDate } from '../../../lib/runtime-reports';
+import { buildReportCardTitle, getFeatureLabel } from '../../../features';
+import { marked } from 'marked';
+
+export const prerender = false;
+
+const { feature, date } = Astro.params as { feature: string; date: string };
+
+if (!feature || !date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+  return new Response('Not Found', { status: 404 });
+}
+
+const cfEnv = getCfEnv();
+if (!cfEnv?.DB) {
+  return new Response('Service unavailable', { status: 503 });
+}
+
+const row = await fetchReportByFeatureDate(cfEnv.DB, feature, date);
+if (!row || !row.content) {
+  return new Response('Not Found', { status: 404 });
+}
+
+// Strip frontmatter from the stored markdown if present (pipeline sometimes
+// stores with YAML block at top).
+function stripFrontmatter(md: string): string {
+  if (md.startsWith('---\n')) {
+    const end = md.indexOf('\n---', 4);
+    if (end > 0) return md.slice(end + 4).replace(/^\n+/, '');
+  }
+  return md;
+}
+
+const rawMarkdown = stripFrontmatter(row.content);
+
+// Configure marked for safer defaults
+marked.setOptions({ breaks: false, gfm: true });
+const contentHtml = await marked.parse(rawMarkdown);
+
+const featureLabel = getFeatureLabel(feature);
+const cardTitle = row.title ?? buildReportCardTitle(feature, row.date);
+const reportId = row.id;
+const reportLang = row.language === 'en' ? 'en-US' : 'ja-JP';
+const canonicalUrl = `/${feature}/${row.date}/`;
+---
+
+<BaseLayout title={cardTitle} activeFeature={feature}>
+  <div class="preview-notice" role="status">
+    <span class="preview-icon" aria-hidden="true">🆕</span>
+    <span>
+      <strong>プレビュー表示</strong> — このレポートはまだ静的サイトに反映されていません。
+      反映後は <a href={canonicalUrl}>正式 URL</a> をご利用ください。
+    </span>
+  </div>
+
+  <div class="report-meta-bar">
+    <span class="reading-time">📖 {Math.max(1, Math.ceil(rawMarkdown.length / 600))} min read</span>
+    <span>🆕 preview</span>
+  </div>
+
+  <ReadAloudPanel
+    markdown={rawMarkdown}
+    lang={reportLang}
+    reportId={reportId}
+    reportTitle={cardTitle}
+    featureLabel={featureLabel}
+    client:load
+  />
+
+  <article class="report-content" set:html={contentHtml} />
+
+  <ReactionBar reportId={reportId} client:load />
+  <NoteEditor reportId={reportId} client:load />
+</BaseLayout>
+
+<link rel="canonical" href={canonicalUrl} slot="head" />
