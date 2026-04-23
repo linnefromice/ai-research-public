@@ -386,3 +386,93 @@ main {
     top: 0;
   }
 }
+
+/* === Latest Reports Banner (preview before deploy) === */
+.latest-banner {
+  margin: 0 0 1rem;
+  padding: 0.75rem 1rem;
+  background: color-mix(in srgb, var(--color-accent-tech, #38bdf8) 10%, var(--color-surface));
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-accent-tech, #38bdf8);
+  border-radius: 0.5rem;
+}
+.latest-banner-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.latest-banner-icon { font-size: 1.1rem; }
+.latest-banner-title {
+  flex: 1;
+  font-size: 0.9rem;
+  color: var(--color-text);
+  font-weight: 600;
+}
+.latest-banner-note {
+  margin-left: 0.4rem;
+  color: var(--color-text-muted);
+  font-weight: 400;
+  font-size: 0.85rem;
+}
+.latest-banner-close {
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: 0.2rem 0.4rem;
+}
+.latest-banner-close:hover { color: var(--color-text); }
+.latest-banner-list {
+  margin: 0.5rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.latest-banner-item a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.6rem;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 0.3rem;
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+.latest-banner-item a:hover { background: var(--color-surface); }
+.latest-banner-feature {
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+}
+.latest-banner-label { font-weight: 500; }
+.latest-banner-badge {
+  padding: 0.1rem 0.4rem;
+  font-size: 0.7rem;
+  background: var(--color-accent-tech, #38bdf8);
+  color: var(--color-bg);
+  border-radius: 0.2rem;
+}
+
+/* Preview notice on /latest/... pages */
+.preview-notice {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 1rem;
+  padding: 0.7rem 1rem;
+  background: color-mix(in srgb, var(--color-accent-tech, #38bdf8) 10%, var(--color-surface));
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-accent-tech, #38bdf8);
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+}
+.preview-icon { font-size: 1.1rem; }
+.preview-notice a {
+  color: var(--color-accent-tech, #38bdf8);
+  text-decoration: underline;
+}

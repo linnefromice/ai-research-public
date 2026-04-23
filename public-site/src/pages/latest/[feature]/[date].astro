@@ -1,0 +1,129 @@
+---
+/**
+ * SSR preview detail page for daily reports that are published in D1 but not
+ * yet reflected in the static build.
+ *
+ * URL: /latest/<feature>/<date>/
+ *
+ * Security: raw HTML tokens from the markdown are dropped by the renderer
+ * (defense-in-depth; D1 content is pipeline-generated but LLMs have produced
+ * surprising markdown before — see cloudflare-astro-patterns.md §17).
+ *
+ * Design: docs/plans/2026-04-23-daily-preview-d1-design.md (private)
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { ReactionBar } from '../../../components/ReactionBar';
+import { NoteEditor } from '../../../components/NoteEditor';
+import { ReadAloudPanel } from '../../../components/ReadAloudPanel';
+import { getCfEnv } from '../../../lib/api-helpers';
+import { fetchReportByFeatureDate } from '../../../lib/runtime-reports';
+import { buildReportCardTitle, getFeatureLabel } from '../../../features';
+import { Marked } from 'marked';
+
+export const prerender = false;
+
+const { feature, date } = Astro.params as { feature: string; date: string };
+
+// Validate params: feature must be safe slug, date must be ISO YYYY-MM-DD.
+// Deep Research is served via its own runtime-visibility pipeline, exclude here.
+if (
+  !feature ||
+  !/^[a-z0-9-]{1,64}$/i.test(feature) ||
+  feature === 'deep-research' ||
+  !date ||
+  !/^\d{4}-\d{2}-\d{2}$/.test(date)
+) {
+  return new Response('Not Found', { status: 404 });
+}
+
+const cfEnv = getCfEnv();
+if (!cfEnv?.DB) {
+  return new Response('Service unavailable', { status: 503 });
+}
+
+const row = await fetchReportByFeatureDate(cfEnv.DB, feature, date);
+if (!row || !row.content) {
+  return new Response('Not Found', { status: 404 });
+}
+
+/**
+ * Strip leading YAML frontmatter. Handles LF and CRLF line endings.
+ */
+function stripFrontmatter(md: string): string {
+  const normalized = md.replace(/\r\n/g, '\n');
+  if (!normalized.startsWith('---\n')) return md;
+  const end = normalized.indexOf('\n---', 4);
+  if (end <= 0) return md;
+  return normalized.slice(end + 4).replace(/^\n+/, '');
+}
+
+const rawMarkdown = stripFrontmatter(row.content);
+
+// Use a fresh Marked instance with a renderer that drops raw HTML tokens.
+// This is our XSS guard (defense-in-depth).
+const mdRenderer = new Marked({
+  gfm: true,
+  breaks: false,
+  renderer: {
+    html: () => '',
+  },
+});
+
+/**
+ * Extra URL sanitization on top of marked's html-token drop:
+ * neutralize `javascript:` / `data:` schemes that marked otherwise
+ * passes through from `[text](javascript:...)` markdown links.
+ */
+function sanitizeUrls(html: string): string {
+  return html
+    .replace(/(href|src)\s*=\s*["']\s*javascript:[^"']*["']/gi, '$1="#"')
+    .replace(/(href|src)\s*=\s*["']\s*data:[^"']*["']/gi, '$1="#"')
+    .replace(/(href|src)\s*=\s*["']\s*vbscript:[^"']*["']/gi, '$1="#"');
+}
+
+let contentHtml = '';
+try {
+  const raw = await mdRenderer.parse(rawMarkdown);
+  contentHtml = sanitizeUrls(raw);
+} catch (e) {
+  console.error('[preview] marked.parse failed', e);
+  return new Response('Failed to render report', { status: 500 });
+}
+
+const featureLabel = getFeatureLabel(feature);
+const cardTitle = row.title ?? buildReportCardTitle(feature, row.date);
+const reportId = row.id;
+const reportLang = row.language === 'en' ? 'en-US' : 'ja-JP';
+const canonicalUrl = `/${feature}/${row.date}/`;
+---
+
+<BaseLayout title={cardTitle} activeFeature={feature}>
+  <link rel="canonical" href={canonicalUrl} slot="head" />
+
+  <div class="preview-notice" role="status">
+    <span class="preview-icon" aria-hidden="true">🆕</span>
+    <span>
+      <strong>プレビュー表示</strong> — このレポートはまだ静的サイトに反映されていません。
+      反映後は <a href={canonicalUrl}>正式 URL</a> をご利用ください。
+    </span>
+  </div>
+
+  <div class="report-meta-bar">
+    <span class="reading-time">📖 {Math.max(1, Math.ceil(rawMarkdown.length / 600))} min read</span>
+    <span>🆕 preview</span>
+  </div>
+
+  <ReadAloudPanel
+    markdown={rawMarkdown}
+    lang={reportLang}
+    reportId={reportId}
+    reportTitle={cardTitle}
+    featureLabel={featureLabel}
+    client:load
+  />
+
+  <article class="report-content" set:html={contentHtml} />
+
+  <ReactionBar reportId={reportId} client:load />
+  <NoteEditor reportId={reportId} client:load />
+</BaseLayout>

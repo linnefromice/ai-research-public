@@ -32,6 +32,7 @@ const { title, activeFeature } = Astro.props;
       if (theme === 'light') document.documentElement.dataset.theme = 'light';
     })();
   </script>
+  <slot name="head" />
 </head>
 <body>
   <Navigation activeFeature={activeFeature} />

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ReportCard from '../components/ReportCard.astro';
+import { LatestReportsBanner } from '../components/LatestReportsBanner';
 import { getCollection } from 'astro:content';
 import { dailyFeatures, featureGroups, getFeatureGroup, getFeatureRegion } from '../features';
 import { getUnpublishedIds, getReportMeta, getAllReportTags, toD1Id } from '../lib/d1-client';
@@ -59,6 +60,8 @@ const PAGE_SIZE = 7;
 ---
 
 <BaseLayout title="Dashboard">
+  <LatestReportsBanner client:load />
+
   <div class="dashboard-header">
     <h1>Latest Reports</h1>
   </div>
