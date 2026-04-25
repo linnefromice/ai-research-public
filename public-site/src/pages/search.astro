@@ -1,66 +1,88 @@
 ---
+/**
+ * Search page (SSG + client-side fetch).
+ *
+ * The previous SSR implementation returned "[object Object]" 15 bytes on
+ * Cloudflare Workers (see .claude/rules/cloudflare-astro-patterns.md §16).
+ * Pattern: render an empty shell, fetch /api/search?q=... on the client.
+ */
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getCfEnv } from '../lib/api-helpers';
-export const prerender = false;
-
-const url = new URL(Astro.request.url);
-const q = (url.searchParams.get('q') ?? '').trim();
-
-interface SearchHit {
-  id: string; feature: string; date: string; title: string | null;
-  summary: string | null; tldr: string | null;
-}
-
-let results: SearchHit[] = [];
-let error = '';
-
-if (q.length >= 2) {
-  const cfEnv = getCfEnv();
-  const db = cfEnv?.DB;
-  if (db) {
-    try {
-      const ftsQuery = q.replace(/"/g, ' ');
-      const r = await db.prepare(`
-        SELECT r.id, r.feature, r.date, r.title, r.summary, r.tldr
-        FROM reports_fts
-        JOIN reports r ON r.rowid = reports_fts.rowid
-        WHERE reports_fts MATCH ? AND r.published = 1
-        ORDER BY bm25(reports_fts)
-        LIMIT 30
-      `).bind(ftsQuery).all<SearchHit>();
-      results = r.results ?? [];
-    } catch (e) { error = String(e); }
-  } else {
-    error = 'Search unavailable (D1 not bound)';
-  }
-}
 ---
 
 <BaseLayout title="Search" activeFeature="_search">
   <h1>🔍 Search</h1>
-  <form method="get" style="margin: 1rem 0;">
-    <input type="search" name="q" value={q} placeholder="Search reports..." autofocus
+  <form id="search-form" method="get" style="margin: 1rem 0;">
+    <input type="search" name="q" id="search-input" placeholder="Search reports..." autofocus
       style="width: 100%; padding: 0.75rem 1rem; font-size: 1rem; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px; color: var(--color-text);" />
   </form>
 
-  {error && <p style="color: var(--color-danger);">{error}</p>}
+  <p id="search-error" style="color: var(--color-danger); display: none;"></p>
+  <p id="search-status" style="color: var(--color-text-muted);"></p>
+  <div id="search-results" style="display: grid; gap: 0.75rem;"></div>
 
-  {q.length >= 2 && results.length === 0 && !error && (
-    <p style="color: var(--color-text-muted);">No results for "{q}"</p>
-  )}
+  <script is:inline>
+    (function () {
+      var input = document.getElementById('search-input');
+      var form = document.getElementById('search-form');
+      var resultsDiv = document.getElementById('search-results');
+      var statusEl = document.getElementById('search-status');
+      var errorEl = document.getElementById('search-error');
 
-  {results.length > 0 && (
-    <>
-      <p style="color: var(--color-text-muted); margin-bottom: 1rem;">{results.length} results</p>
-      <div style="display: grid; gap: 0.75rem;">
-        {results.map(r => (
-          <a href={`/${r.feature}/${r.date}/`} style="display: block; padding: 0.75rem 1rem; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px; text-decoration: none; color: var(--color-text);">
-            <div style="font-weight: 600;">{r.title ?? `${r.feature} ${r.date}`}</div>
-            <div style="font-size: 0.8rem; color: var(--color-text-muted); margin-top: 0.25rem;">{r.feature} · {r.date}</div>
-            {r.tldr && <div style="margin-top: 0.5rem; font-size: 0.85rem;">{r.tldr}</div>}
-          </a>
-        ))}
-      </div>
-    </>
-  )}
+      function escapeHtml(s) {
+        if (s == null) return '';
+        return String(s)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      function render(results, q) {
+        resultsDiv.innerHTML = '';
+        errorEl.style.display = 'none';
+        if (q.length < 2) { statusEl.textContent = ''; return; }
+        if (!results.length) { statusEl.textContent = 'No results for "' + q + '"'; return; }
+        statusEl.textContent = results.length + ' results';
+        resultsDiv.innerHTML = results.map(function (r) {
+          var title = r.title || (r.feature + ' ' + r.date);
+          return (
+            '<a href="/' + encodeURIComponent(r.feature) + '/' + encodeURIComponent(r.date) + '/" ' +
+            'style="display:block;padding:0.75rem 1rem;background:var(--color-surface);border:1px solid var(--color-border);border-radius:8px;text-decoration:none;color:var(--color-text);">' +
+            '<div style="font-weight:600;">' + escapeHtml(title) + '</div>' +
+            '<div style="font-size:0.8rem;color:var(--color-text-muted);margin-top:0.25rem;">' +
+              escapeHtml(r.feature) + ' · ' + escapeHtml(r.date) + '</div>' +
+            (r.tldr ? '<div style="margin-top:0.5rem;font-size:0.85rem;">' + escapeHtml(r.tldr) + '</div>' : '') +
+            '</a>'
+          );
+        }).join('');
+      }
+
+      function search(q) {
+        if (q.length < 2) { render([], q); return; }
+        statusEl.textContent = 'Searching...';
+        fetch('/api/search?q=' + encodeURIComponent(q), { signal: AbortSignal.timeout(8000) })
+          .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+          .then(function (data) { render(data.results || [], q); })
+          .catch(function (e) {
+            errorEl.textContent = 'Search failed: ' + e;
+            errorEl.style.display = '';
+            statusEl.textContent = '';
+          });
+      }
+
+      var initialQ = new URL(location.href).searchParams.get('q') || '';
+      input.value = initialQ;
+      if (initialQ) search(initialQ.trim());
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var q = input.value.trim();
+        var url = new URL(location.href);
+        if (q) url.searchParams.set('q', q); else url.searchParams.delete('q');
+        history.replaceState(null, '', url.toString());
+        search(q);
+      });
+    })();
+  </script>
 </BaseLayout>
