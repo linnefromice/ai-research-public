@@ -4,7 +4,7 @@
 // frontmatter 未搭載のファイル (goal-minimal/standard, enhance-template) はスキップ。
 // SoT は admin-site/templates-src/。コピー先は .gitignore で除外する。
 //
-// 注: private repo (openclaw-automation-ws) 側の features/deep-research/templates/ と
+// 注: private repo (ai-research-pipeline) 側の features/deep-research/templates/ と
 // 内容を定期的に同期する必要がある (2 箇所管理)。詳細は ../README.md 参照。
 
 import { readdir, readFile, writeFile, mkdir, rm } from 'node:fs/promises';

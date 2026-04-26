@@ -1,4 +1,4 @@
-# openclaw-public-src
+# ai-research-public
 
 RSS フィードソースリストを管理するパブリックリポジトリ。
 
@@ -86,7 +86,7 @@ productivity, work-life-balance, parenting, health, home
 
 ## 連携リポジトリ
 
-- **openclaw-automation-ws** (プライベート) — レポート生成パイプライン
+- **ai-research-pipeline** (プライベート) — レポート生成パイプライン
   - `public-src/` にこのリポジトリをクローン
   - `shared/lib/fetch-feeds.sh` が `sources/<feature>/sources.json` を読み込み RSS をフェッチ
   - 各 feature の `config.sh` に `SOURCES_JSON_PATH="sources/<feature>/sources.json"` を指定
