@@ -1,14 +1,14 @@
-# openclaw-public-src
+# ai-research-public
 
 OpenClaw 自動化のパブリックリソース。2 つの役割を持つ:
 
 1. **RSS ソースリスト管理** (`sources/<feature>/sources.json`) — 各 Feature のレポート生成に使う RSS フィード URL を一元管理し、GitHub Actions で定期精査する
-2. **Web UI コード** (`admin-site/`, `public-site/`) — 管理 UI と公開サイトのソース (source of truth)。このリポジトリで lint/typecheck/screenshot CI を回し、実デプロイは private 側 [`openclaw-automation-ws`](https://github.com/linnefromice/openclaw-automation-ws) が本 repo を clone して Cloudflare Pages / Workers にデプロイする
+2. **Web UI コード** (`admin-site/`, `public-site/`) — 管理 UI と公開サイトのソース (source of truth)。このリポジトリで lint/typecheck/screenshot CI を回し、実デプロイは private 側 [`ai-research-pipeline`](https://github.com/linnefromice/ai-research-pipeline) が本 repo を clone して Cloudflare Pages / Workers にデプロイする
 
 ## ディレクトリ構成
 
 ```
-openclaw-public-src/
+ai-research-public/
 ├── sources/
 │   └── <feature>/sources.json         RSS ソース定義
 ├── admin-site/                        React (Vite) 管理 UI
@@ -128,6 +128,6 @@ npm run screenshot                # 全 20 枚 (desktop/mobile × 10 画面)
 
 ## 連携リポジトリ
 
-- **openclaw-automation-ws** (プライベート) — レポート生成パイプライン、launchd 定期実行、Astro サイト
+- **ai-research-pipeline** (プライベート) — レポート生成パイプライン、launchd 定期実行、Astro サイト
   - `public-src/` ディレクトリにこのリポジトリをクローンして使用
   - パイプライン実行時に `git pull` で最新のソースリストを取得

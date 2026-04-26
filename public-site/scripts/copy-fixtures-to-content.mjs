@@ -2,7 +2,7 @@
 // public-src repo の prebuild step.
 // test-fixtures/<feature>/*.md を public-site/src/content/<feature>/ にコピーする。
 //
-// Private repo (openclaw-automation-ws) での deploy 時は src/content/ が
+// Private repo (ai-research-pipeline) での deploy 時は src/content/ が
 // features/<feature>/reports/ への symlink として張り直されるので、この script は
 // 実行されない (deploy workflow が管理)。Public repo の CI / local dev 専用。
 
