@@ -93,7 +93,7 @@ const filename = `deep-research-${report.data.topic || report.id}.md`;
     <button class="action-btn" id="download-md-btn" title="Download as .md file">
       <span class="action-icon">⬇️</span> Download
     </button>
-    <a class="action-btn" href={`${report.data.topic || report.id}.md`} title="View raw markdown (.md)">
+    <a class="action-btn" href={`/deep-research/${report.data.topic || report.id}.md`} title="View raw markdown (.md)">
       <span class="action-icon">📄</span> .md
     </a>
   </div>
