@@ -1,27 +1,30 @@
 import type { APIRoute } from 'astro';
-import { getCollection } from 'astro:content';
+import { getCfEnv } from '../../lib/api-helpers';
+import { fetchReportContentById } from '../../lib/runtime-reports';
 
 // SSR で返す (理由は [feature]/[...slug].md.ts のコメント参照)。
+// D1 から取得することで Content Collections を Worker bundle から外し、
+// archive 内容も含めてサイズを小さく保つ (PR #437 / archive collection 設計)。
+// Deep Research は purge 対象外なので D1 content が常に保持されている。
 export const prerender = false;
 
 export const GET: APIRoute = async ({ params }) => {
   const topic = params.topic;
   if (!topic) return notFound();
 
-  let reports;
-  try {
-    reports = await getCollection('deep-research');
-  } catch {
-    return notFound();
+  const cfEnv = getCfEnv();
+  if (!cfEnv?.DB) {
+    return new Response('Service unavailable', { status: 503 });
   }
 
-  // .astro の getStaticPaths と同じ条件: topic フィールド優先、なければ id 一致
-  const report = reports.find(r => (r.data.topic || r.id) === topic);
-  if (!report) return notFound();
+  // Deep Research の D1 id 形式は `deep-research/<topic>`
+  const d1Id = `deep-research/${topic}`;
+  const row = await fetchReportContentById(cfEnv.DB, d1Id);
+  if (!row?.content) return notFound();
 
-  const filename = `deep-research-${report.data.topic || report.id}.md`;
+  const filename = `deep-research-${topic}.md`;
 
-  return new Response(report.body ?? '', {
+  return new Response(row.content, {
     status: 200,
     headers: {
       'Content-Type': 'text/markdown; charset=utf-8',

@@ -1,9 +1,9 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ReportCard from '../../components/ReportCard.astro';
-import { getCollection } from 'astro:content';
 import { featureGroups, getFeatureLabel } from '../../features';
 import { getUnpublishedIds, getReportMeta, getAllReportTags, toD1Id } from '../../lib/d1-client';
+import { getAllReports } from '../../lib/all-reports';
 import { getExcerpt } from '../../lib/excerpt';
 import { dedupByLang } from '../../lib/multilingual';
 
@@ -22,7 +22,7 @@ const reportTags = await getAllReportTags();
 // グループ内の全 Feature からレポートを収集
 const rawReports = [];
 for (const f of group.features) {
-  const reports = await getCollection(f.slug as any);
+  const reports = await getAllReports(f.slug);
   rawReports.push(...reports
     .filter(r => !unpublished.has(toD1Id(f.slug, r.id)))
     .map(r => ({ ...r, feature: f.slug })));

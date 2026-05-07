@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
 import {
   REGION_META,
   features,
@@ -9,6 +8,7 @@ import {
   getFeatureRegion,
 } from '../features';
 import { getUnpublishedIds, toD1Id } from '../lib/d1-client';
+import { getAllReports } from '../lib/all-reports';
 
 const unpublished = await getUnpublishedIds();
 
@@ -18,7 +18,7 @@ const sevenDaysAgo = new Date(Date.now() - 7 * 86400000).toISOString().slice(0, 
 
 const featureStats = [];
 for (const f of features) {
-  const allReports = await getCollection(f.slug as any);
+  const allReports = await getAllReports(f.slug);
   const reports = allReports.filter(r => !unpublished.has(toD1Id(f.slug, r.id)));
   const sorted = reports.sort((a, b) => b.data.date.localeCompare(a.data.date));
 
