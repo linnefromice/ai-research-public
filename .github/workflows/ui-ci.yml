@@ -104,9 +104,7 @@ jobs:
             echo "::error::calendar/index.html missing"; exit 1
           fi
 
-      - name: Smoke — tags page exists
-        run: |
-          set -euo pipefail
-          if [ ! -f dist/client/tags/index.html ]; then
-            echo "::error::tags/index.html missing"; exit 1
-          fi
+      # Tags / Rankings / Trends features were dropped in commit 6c945f5
+      # (PR #34). The smoke test for tags/index.html was left behind and
+      # has been failing CI since 2026-04-27 — removed here so CI reflects
+      # the actual feature set.

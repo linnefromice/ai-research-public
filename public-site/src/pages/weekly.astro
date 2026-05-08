@@ -1,8 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { dailyFeatures } from '../features';
-import { getCollection } from 'astro:content';
 import { getUnpublishedIds, toD1Id } from '../lib/d1-client';
+import { getAllReports } from '../lib/all-reports';
 import { dedupByLang } from '../lib/multilingual';
 
 // ビルド時に過去 7 日分のレポートを feature 別に集計して静的生成
@@ -19,7 +19,7 @@ interface FeatureSummary {
 const summaries: FeatureSummary[] = [];
 for (const f of dailyFeatures) {
   try {
-    const reports = await getCollection(f.slug as any);
+    const reports = await getAllReports(f.slug);
     const deduped = dedupByLang(reports);
     const recent = (deduped as any[])
       .filter(r => !unpublished.has(toD1Id(f.slug, r.id)))

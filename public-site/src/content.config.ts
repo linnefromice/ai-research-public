@@ -14,101 +14,46 @@ const reportSchema = z.object({
   refresh_count: z.number().optional().default(0),
 });
 
-const techTrends = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/tech-trends' }),
-  schema: reportSchema,
-});
+function reportCollection(baseDir: string) {
+  return defineCollection({
+    loader: glob({ pattern: '**/*.md', base: baseDir }),
+    schema: reportSchema,
+  });
+}
 
-const financeMarkets = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/finance-markets' }),
-  schema: reportSchema,
-});
+// Live (recent) collections — always bundled into static SSG pages.
+// File source: features/<slug>/reports/ via deploy-side symlink.
+const FEATURE_SLUGS = [
+  'tech-trends',
+  'tech-trends-global',
+  'finance-markets',
+  'invest-japan',
+  'invest-global',
+  'productivity',
+  'wellness',
+  'wellness-global',
+  'parenting-baby',
+  'parenting-edu',
+  'parenting-global',
+  'family-finance',
+  'family-finance-global',
+  'workstyle',
+  'workstyle-global',
+  'deep-research',
+] as const;
 
-const investJapan = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/invest-japan' }),
-  schema: reportSchema,
-});
+// Archive collections — separate so SSR endpoints can reference *only* the
+// live collections (smaller Worker bundle). Listing/SSG pages merge both via
+// the `getAllReports()` helper in src/lib/all-reports.ts.
+// File source: features/<slug>/archive/ via deploy-side symlink.
+// deep-research has no archive (kept all reports in reports/).
+const ARCHIVE_FEATURE_SLUGS = FEATURE_SLUGS.filter((s) => s !== 'deep-research');
 
-const investGlobal = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/invest-global' }),
-  schema: reportSchema,
-});
+const liveEntries = FEATURE_SLUGS.map(
+  (slug) => [slug, reportCollection(`./src/content/${slug}`)] as const
+);
+const archiveEntries = ARCHIVE_FEATURE_SLUGS.map(
+  (slug) => [`${slug}-archive`, reportCollection(`./src/content/${slug}-archive`)] as const
+);
 
-const productivity = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/productivity' }),
-  schema: reportSchema,
-});
-
-const wellness = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/wellness' }),
-  schema: reportSchema,
-});
-
-const parentingBaby = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/parenting-baby' }),
-  schema: reportSchema,
-});
-
-const parentingEdu = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/parenting-edu' }),
-  schema: reportSchema,
-});
-
-const familyFinance = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/family-finance' }),
-  schema: reportSchema,
-});
-
-const workstyle = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/workstyle' }),
-  schema: reportSchema,
-});
-
-const techTrendsGlobal = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/tech-trends-global' }),
-  schema: reportSchema,
-});
-
-const wellnessGlobal = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/wellness-global' }),
-  schema: reportSchema,
-});
-
-const parentingGlobal = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/parenting-global' }),
-  schema: reportSchema,
-});
-
-const familyFinanceGlobal = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/family-finance-global' }),
-  schema: reportSchema,
-});
-
-const workstyleGlobal = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/workstyle-global' }),
-  schema: reportSchema,
-});
-
-const deepResearch = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/deep-research' }),
-  schema: reportSchema,
-});
-
-export const collections = {
-  'tech-trends': techTrends,
-  'tech-trends-global': techTrendsGlobal,
-  'finance-markets': financeMarkets,
-  'invest-japan': investJapan,
-  'invest-global': investGlobal,
-  'productivity': productivity,
-  'wellness': wellness,
-  'wellness-global': wellnessGlobal,
-  'parenting-baby': parentingBaby,
-  'parenting-edu': parentingEdu,
-  'parenting-global': parentingGlobal,
-  'family-finance': familyFinance,
-  'family-finance-global': familyFinanceGlobal,
-  'workstyle': workstyle,
-  'workstyle-global': workstyleGlobal,
-  'deep-research': deepResearch,
-};
+export const collections = Object.fromEntries([...liveEntries, ...archiveEntries]);

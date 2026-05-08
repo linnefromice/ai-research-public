@@ -3,9 +3,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { ReactionBar } from '../../components/ReactionBar';
 import { NoteEditor } from '../../components/NoteEditor';
 import { ReadAloudPanel } from '../../components/ReadAloudPanel';
-import { getCollection, render } from 'astro:content';
+import { render } from 'astro:content';
 import { buildReportCardTitle, features, getFeatureLabel } from '../../features';
 import { getUnpublishedIds, getAllReportTags, toD1Id } from '../../lib/d1-client';
+import { getAllReports } from '../../lib/all-reports';
 import { getFeatureColor } from '../../features';
 import { detectLang } from '../../lib/multilingual';
 
@@ -22,7 +23,7 @@ export async function getStaticPaths() {
   const unpublished = await getUnpublishedIds();
   const paths = [];
   for (const f of features) {
-    const reports = await getCollection(f.slug as any);
+    const reports = await getAllReports(f.slug);
     const published = reports.filter(r => !unpublished.has(toD1Id(f.slug, r.id)));
     const sorted = published.sort((a, b) => a.data.date.localeCompare(b.data.date));
     for (let i = 0; i < sorted.length; i++) {

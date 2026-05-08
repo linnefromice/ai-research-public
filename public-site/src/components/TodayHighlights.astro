@@ -2,7 +2,7 @@
 // 今日のハイライトカルーセル (#53)
 // 各 feature の最新レポートから TL;DR を集めて表示
 import { dailyFeatures } from '../features';
-import { getCollection } from 'astro:content';
+import { getAllReports } from '../lib/all-reports';
 
 const today = new Date().toISOString().slice(0, 10);
 
@@ -18,7 +18,7 @@ const highlights: Highlight[] = [];
 
 for (const f of dailyFeatures.slice(0, 8)) {
   try {
-    const reports = await getCollection(f.slug as any);
+    const reports = await getAllReports(f.slug);
     const todayReport = (reports as any[]).find(r => (r.id || '').startsWith(today));
     if (!todayReport) continue;
 

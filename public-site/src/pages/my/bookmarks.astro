@@ -1,8 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
 import { buildReportCardTitle, features, getFeatureLabel, getFeatureColor } from '../../features';
 import { getUnpublishedIds, toD1Id } from '../../lib/d1-client';
+import { getAllReports } from '../../lib/all-reports';
 import { MyBookmarksList, type ReportMeta } from '../../components/MyBookmarksList';
 
 // 公開サイト全体のレポートを取得。ブックマークは localStorage ベースなので
@@ -11,7 +11,7 @@ const unpublished = await getUnpublishedIds();
 const allReports: ReportMeta[] = [];
 
 for (const f of features) {
-  const reports = await getCollection(f.slug as any);
+  const reports = await getAllReports(f.slug);
   for (const r of reports) {
     const id = toD1Id(f.slug, r.id);
     if (unpublished.has(id)) continue;

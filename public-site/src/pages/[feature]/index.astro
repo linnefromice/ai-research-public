@@ -1,9 +1,9 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ReportCard from '../../components/ReportCard.astro';
-import { getCollection } from 'astro:content';
 import { dailyFeatures, getFeatureLabel } from '../../features';
 import { getUnpublishedIds, getReportMeta, toD1Id } from '../../lib/d1-client';
+import { getAllReports } from '../../lib/all-reports';
 import { getExcerpt } from '../../lib/excerpt';
 import { dedupByLang } from '../../lib/multilingual';
 
@@ -17,7 +17,7 @@ const unpublished = await getUnpublishedIds();
 const reportMeta = await getReportMeta();
 
 const { feature } = Astro.params;
-const reports = await getCollection(feature as any);
+const reports = await getAllReports(feature!);
 // 多言語 feature (languages: [en, ja]) は 1 日につき 2 ファイル生成するため
 // (feature, date, session) 単位で重複排除し、JA を優先表示する。
 const filtered = reports

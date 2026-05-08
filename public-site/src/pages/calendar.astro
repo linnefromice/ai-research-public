@@ -1,15 +1,15 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
 import { dailyFeatures } from '../features';
 import { getUnpublishedIds, toD1Id } from '../lib/d1-client';
+import { getAllReports } from '../lib/all-reports';
 import { dedupByLang } from '../lib/multilingual';
 
 const unpublished = await getUnpublishedIds();
 
 const allReports: { date: string; feature: string }[] = [];
 for (const f of dailyFeatures) {
-  const reports = await getCollection(f.slug as any);
+  const reports = await getAllReports(f.slug);
   const deduped = dedupByLang(reports);
   for (const r of deduped) {
     if (unpublished.has(toD1Id(f.slug, r.id))) continue;

@@ -71,6 +71,27 @@ export async function fetchReportByFeatureDate(
 }
 
 /**
+ * Fetch one report row by its exact D1 id (e.g. `tech-trends/2026-05-09`,
+ * `tech-trends-global/2026-05-09/ja`, `wellness-global/2026-05-10-weekly/en`).
+ * Used by `.md.ts` SSR endpoints which receive the Astro slug and convert
+ * to the D1 id via `toD1Id()`.
+ */
+export async function fetchReportContentById(
+  db: D1Database,
+  id: string
+): Promise<ReportContentRow | null> {
+  const row = await db
+    .prepare(
+      `SELECT id, feature, date, title, summary, language, content, original_date
+       FROM reports
+       WHERE id = ? AND published = 1`
+    )
+    .bind(id)
+    .first<ReportContentRow>();
+  return row ?? null;
+}
+
+/**
  * "YYYY-MM-DD" in JST. Cloudflare Workers runs in UTC; JST has no DST, so
  * a fixed +9h offset is exact. Implemented without a date library for
  * minimal runtime cost.
