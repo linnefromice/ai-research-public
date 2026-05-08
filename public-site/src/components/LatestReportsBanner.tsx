@@ -6,6 +6,7 @@
  * Design: docs/plans/2026-04-23-daily-preview-d1-design.md (private)
  */
 import { useEffect, useState } from 'react';
+import { getFeatureLabel, getFeatureRegion, REGION_META } from '../features';
 
 interface LatestReport {
   id: string;
@@ -60,7 +61,7 @@ export function LatestReportsBanner() {
         const display: DisplayReport[] = reports.map((r, i) => ({
           ...r,
           live: probes[i],
-          label: r.title ?? `${r.feature} ${r.date}`,
+          label: `${getFeatureLabel(r.feature)} ${REGION_META[getFeatureRegion(r.feature)].flag} — ${r.date}`,
         }));
 
         setItems(display);
@@ -74,14 +75,15 @@ export function LatestReportsBanner() {
     };
   }, []);
 
-  if (dismissed) return null;
+  // Render a hidden marker so the parent slot can detect "no banner" via
+  // :has(.latest-banner-none) and collapse its reserved min-height.
+  if (dismissed) return <span class="latest-banner-none" />;
   if (!items || items.length === 0) return null;
 
   const pending = items.filter((it) => !it.live);
-  const livened = items.length - pending.length;
 
   // Hide the banner entirely once everything is live.
-  if (pending.length === 0) return null;
+  if (pending.length === 0) return <span class="latest-banner-none" />;
 
   return (
     <div class="latest-banner" role="status">
@@ -108,7 +110,6 @@ export function LatestReportsBanner() {
         {items.map((it) => (
           <li key={it.id} class={it.live ? 'latest-banner-item live' : 'latest-banner-item preview'}>
             <a href={it.live ? it.static_url : it.preview_url}>
-              <span class="latest-banner-feature">{it.feature}</span>
               <span class="latest-banner-label">{it.label}</span>
               {!it.live && <span class="latest-banner-badge">preview</span>}
             </a>

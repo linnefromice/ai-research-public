@@ -388,6 +388,14 @@ main {
 }
 
 /* === Latest Reports Banner (preview before deploy) === */
+#latest-banner-slot {
+  min-height: 5.5rem;          /* reserve space to prevent layout shift */
+}
+#latest-banner-slot:has(.latest-banner),
+#latest-banner-slot:has(.latest-banner-none) {
+  min-height: 0;               /* once resolved (banner or no-banner), collapse */
+}
+.latest-banner-none { display: none; }
 .latest-banner {
   margin: 0 0 1rem;
   padding: 0.75rem 1rem;
@@ -445,10 +453,6 @@ main {
   font-size: 0.85rem;
 }
 .latest-banner-item a:hover { background: var(--color-surface); }
-.latest-banner-feature {
-  color: var(--color-text-muted);
-  font-size: 0.8rem;
-}
 .latest-banner-label { font-weight: 500; }
 .latest-banner-badge {
   padding: 0.1rem 0.4rem;
