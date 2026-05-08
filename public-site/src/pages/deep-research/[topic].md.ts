@@ -18,8 +18,11 @@ export const GET: APIRoute = async ({ params }) => {
   }
 
   // Deep Research の D1 id 形式は `deep-research/<topic>`
+  // requirePublished=false: deep-research は runtime-visibility パターンで
+  // 詳細 URL は publish 状態に関わらずアクセス可。listing のみが
+  // /api/visibility/deep-research で filter される (cloudflare-astro-patterns.md §16)。
   const d1Id = `deep-research/${topic}`;
-  const row = await fetchReportContentById(cfEnv.DB, d1Id);
+  const row = await fetchReportContentById(cfEnv.DB, d1Id, { requirePublished: false });
   if (!row?.content) return notFound();
 
   const filename = `deep-research-${topic}.md`;

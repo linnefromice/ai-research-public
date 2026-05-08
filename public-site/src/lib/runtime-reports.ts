@@ -75,19 +75,26 @@ export async function fetchReportByFeatureDate(
  * `tech-trends-global/2026-05-09/ja`, `wellness-global/2026-05-10-weekly/en`).
  * Used by `.md.ts` SSR endpoints which receive the Astro slug and convert
  * to the D1 id via `toD1Id()`.
+ *
+ * `requirePublished` defaults to true to match daily-report visibility (an
+ * unpublished daily report should not be downloadable). Pass `false` for
+ * deep-research, which uses the runtime-visibility pattern: the detail URL
+ * is always reachable, only listings are filtered.
  */
 export async function fetchReportContentById(
   db: D1Database,
-  id: string
+  id: string,
+  options: { requirePublished?: boolean } = {}
 ): Promise<ReportContentRow | null> {
-  const row = await db
-    .prepare(
-      `SELECT id, feature, date, title, summary, language, content, original_date
+  const requirePublished = options.requirePublished ?? true;
+  const sql = requirePublished
+    ? `SELECT id, feature, date, title, summary, language, content, original_date
        FROM reports
        WHERE id = ? AND published = 1`
-    )
-    .bind(id)
-    .first<ReportContentRow>();
+    : `SELECT id, feature, date, title, summary, language, content, original_date
+       FROM reports
+       WHERE id = ?`;
+  const row = await db.prepare(sql).bind(id).first<ReportContentRow>();
   return row ?? null;
 }
 
