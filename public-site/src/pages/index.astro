@@ -42,7 +42,9 @@ const PAGE_SIZE = 7;
 ---
 
 <BaseLayout title="Dashboard">
-  <LatestReportsBanner client:load />
+  <div id="latest-banner-slot">
+    <LatestReportsBanner client:load />
+  </div>
 
   <div class="dashboard-header">
     <h1>Latest Reports</h1>
