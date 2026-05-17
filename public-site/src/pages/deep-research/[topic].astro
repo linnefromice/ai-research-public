@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { ReadAloudPanel } from '../../components/ReadAloudPanel';
 import { getCollection, render } from 'astro:content';
 import { STALENESS_WARN_DAYS, ageInDays, isStale } from '../../config/deep-research';
 
@@ -13,6 +14,11 @@ export async function getStaticPaths() {
 
 const { report } = Astro.props;
 const { Content, headings } = await render(report);
+
+// TTS (読み上げ) — Deep Research は日本語固定 (frontmatter に language なし)
+const reportLang = 'ja-JP';
+const reportTopic = report.data.topic || report.id;
+const ttsReportId = `deep-research/${reportTopic}`;
 
 const updatedAt = report.data.updated_at;
 const originalDate = report.data.original_date ?? report.data.date;
@@ -99,6 +105,15 @@ const filename = `deep-research-${report.data.topic || report.id}.md`;
   </div>
 
   <script type="application/json" id="raw-markdown" set:html={JSON.stringify({ content: rawMarkdown, filename })} />
+
+  <ReadAloudPanel
+    markdown={rawMarkdown}
+    lang={reportLang}
+    reportId={ttsReportId}
+    reportTitle={report.data.title}
+    featureLabel="Deep Research"
+    client:load
+  />
 
   <article class="report-content">
     <Content />
