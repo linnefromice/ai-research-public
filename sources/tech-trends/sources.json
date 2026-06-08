@@ -54,6 +54,18 @@
     "category": "news"
   },
   {
+    "name": "IEEE Spectrum",
+    "url": "https://spectrum.ieee.org",
+    "feed": "https://spectrum.ieee.org/feeds/feed.rss",
+    "category": "news"
+  },
+  {
+    "name": "VentureBeat",
+    "url": "https://venturebeat.com",
+    "feed": "https://venturebeat.com/feed/",
+    "category": "news"
+  },
+  {
     "name": "dev.to",
     "url": "https://dev.to",
     "feed": "https://dev.to/feed",
@@ -102,6 +114,12 @@
     "category": "blog"
   },
   {
+    "name": "Stack Overflow Blog",
+    "url": "https://stackoverflow.blog",
+    "feed": "https://stackoverflow.blog/feed/",
+    "category": "blog"
+  },
+  {
     "name": "Cloudflare Blog",
     "url": "https://blog.cloudflare.com",
     "feed": "https://blog.cloudflare.com/rss/",
@@ -144,6 +162,36 @@
     "category": "enterprise"
   },
   {
+    "name": "Google Cloud Blog",
+    "url": "https://cloud.google.com/blog",
+    "feed": "https://cloud.google.com/blog/rss",
+    "category": "enterprise"
+  },
+  {
+    "name": "Netflix Tech Blog",
+    "url": "https://netflixtechblog.com",
+    "feed": "https://netflixtechblog.medium.com/feed",
+    "category": "enterprise"
+  },
+  {
+    "name": "Stripe Engineering Blog",
+    "url": "https://stripe.com/blog/engineering",
+    "feed": "https://stripe.com/blog/feed.rss",
+    "category": "enterprise"
+  },
+  {
+    "name": "Microsoft Developer Blog",
+    "url": "https://developer.microsoft.com/blog",
+    "feed": "https://developer.microsoft.com/blog/feed",
+    "category": "enterprise"
+  },
+  {
+    "name": "Shopify Engineering",
+    "url": "https://shopify.engineering",
+    "feed": "https://shopify.engineering/blog.atom",
+    "category": "enterprise"
+  },
+  {
     "name": "CNCF Blog",
     "url": "https://www.cncf.io/blog",
     "feed": "https://www.cncf.io/feed/",
@@ -165,6 +213,18 @@
     "name": "opensource.com",
     "url": "https://opensource.com",
     "feed": "https://opensource.com/feed",
+    "category": "oss"
+  },
+  {
+    "name": "Mozilla Hacks",
+    "url": "https://hacks.mozilla.org",
+    "feed": "https://hacks.mozilla.org/feed/",
+    "category": "oss"
+  },
+  {
+    "name": "Rust Blog",
+    "url": "https://blog.rust-lang.org",
+    "feed": "https://blog.rust-lang.org/feed.xml",
     "category": "oss"
   }
 ]
