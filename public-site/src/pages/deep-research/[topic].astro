@@ -93,6 +93,12 @@ const filename = `deep-research-${report.data.topic || report.id}.md`;
   )}
 
   <div class="report-actions">
+    <button class="action-btn" id="copy-url-btn" title="Copy page URL">
+      <span class="action-icon">🔗</span> Copy URL
+    </button>
+    <button class="action-btn" id="copy-key-btn" title="Copy report key (topic)" data-report-key={reportTopic}>
+      <span class="action-icon">🔑</span> Copy key
+    </button>
     <button class="action-btn" id="copy-md-btn" title="Copy as Markdown">
       <span class="action-icon">📋</span> Copy MD
     </button>
@@ -131,32 +137,50 @@ const filename = `deep-research-${report.data.topic || report.id}.md`;
     toc.setAttribute('open', '');
   }
 
-  // Copy / Download Markdown
-  const rawData = JSON.parse(document.getElementById('raw-markdown')?.textContent || '{}');
-
-  const copyBtn = document.getElementById('copy-md-btn');
-  if (copyBtn && rawData.content) {
-    copyBtn.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(rawData.content);
-        const original = copyBtn.innerHTML;
-        copyBtn.innerHTML = '<span class="action-icon">✅</span> Copied!';
-        setTimeout(() => { copyBtn.innerHTML = original; }, 2000);
-      } catch {
-        const ta = document.createElement('textarea');
-        ta.value = rawData.content;
-        ta.style.position = 'fixed';
-        ta.style.opacity = '0';
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
-        const original = copyBtn.innerHTML;
-        copyBtn.innerHTML = '<span class="action-icon">✅</span> Copied!';
-        setTimeout(() => { copyBtn.innerHTML = original; }, 2000);
-      }
+  // Copy helpers — shared by URL / key / Markdown buttons.
+  async function copyText(text: string) {
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+    }
+  }
+  function flashCopied(btn: HTMLElement) {
+    const original = btn.innerHTML;
+    btn.innerHTML = '<span class="action-icon">✅</span> Copied!';
+    setTimeout(() => { btn.innerHTML = original; }, 2000);
+  }
+  function wireCopy(btn: HTMLElement | null, getText: () => string | undefined) {
+    if (!btn) return;
+    btn.addEventListener('click', async () => {
+      const text = getText();
+      if (!text) return;
+      await copyText(text);
+      flashCopied(btn);
     });
   }
+
+  const rawData = JSON.parse(document.getElementById('raw-markdown')?.textContent || '{}');
+
+  // Copy URL: canonical page URL built from current origin + report key.
+  const keyBtn = document.getElementById('copy-key-btn');
+  const reportKey = keyBtn?.dataset.reportKey;
+  wireCopy(document.getElementById('copy-url-btn'), () =>
+    reportKey ? `${location.origin}/deep-research/${reportKey}` : location.href
+  );
+
+  // Copy key: the report topic slug (used by CLI: publish / enhance / refresh).
+  wireCopy(keyBtn, () => reportKey);
+
+  // Copy Markdown body.
+  wireCopy(document.getElementById('copy-md-btn'), () => rawData.content);
 
   const downloadBtn = document.getElementById('download-md-btn');
   if (downloadBtn && rawData.content) {
