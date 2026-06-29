@@ -24,6 +24,18 @@
     "category": "productivity"
   },
   {
+    "name": "STUDY HACKER",
+    "url": "https://studyhacker.net",
+    "feed": "https://studyhacker.net/feed",
+    "category": "productivity"
+  },
+  {
+    "name": "Lifehacking.jp",
+    "url": "https://lifehacking.jp",
+    "feed": "https://lifehacking.jp/index.xml",
+    "category": "productivity"
+  },
+  {
     "name": "ライフハッカー日本版",
     "url": "https://www.lifehacker.jp",
     "feed": "https://www.lifehacker.jp/feed/index.xml",
@@ -33,6 +45,18 @@
     "name": "はてなブックマーク 暮らし",
     "url": "https://b.hatena.ne.jp/hotentry/life",
     "feed": "https://b.hatena.ne.jp/hotentry/life.rss",
+    "category": "lifestyle"
+  },
+  {
+    "name": "オレンジページnet",
+    "url": "https://www.orangepage.net",
+    "feed": "https://www.orangepage.net/feed",
+    "category": "lifestyle"
+  },
+  {
+    "name": "anan web",
+    "url": "https://ananweb.jp",
+    "feed": "https://api.ananweb.jp/feed",
     "category": "lifestyle"
   },
   {
@@ -48,9 +72,39 @@
     "category": "worklife"
   },
   {
+    "name": "ITmedia ビジネスオンライン",
+    "url": "https://www.itmedia.co.jp/business/",
+    "feed": "https://rss.itmedia.co.jp/rss/2.0/business.xml",
+    "category": "worklife"
+  },
+  {
+    "name": "Business Insider Japan",
+    "url": "https://www.businessinsider.jp",
+    "feed": "https://www.businessinsider.jp/feed/index.xml",
+    "category": "worklife"
+  },
+  {
+    "name": "Domani（ドマーニ）",
+    "url": "https://oggi.jp/domani",
+    "feed": "https://oggi.jp/domani/feed",
+    "category": "worklife"
+  },
+  {
     "name": "FQ JAPAN",
     "url": "https://fqmagazine.jp",
     "feed": "https://fqmagazine.jp/feed",
+    "category": "parenting"
+  },
+  {
+    "name": "東京すくすく",
+    "url": "https://sukusuku.tokyo-np.co.jp",
+    "feed": "https://sukusuku.tokyo-np.co.jp/feed/",
+    "category": "parenting"
+  },
+  {
+    "name": "ベネッセ教育情報サイト",
+    "url": "https://benesse.jp/contents/",
+    "feed": "https://benesse.jp/atom.xml",
     "category": "parenting"
   }
 ]
