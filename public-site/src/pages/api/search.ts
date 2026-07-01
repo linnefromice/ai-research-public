@@ -15,6 +15,8 @@ interface SearchHit {
   title: string | null;
   summary: string | null;
   tldr: string | null;
+  tags: string | null;
+  excerpt: string | null;
 }
 
 export const GET: APIRoute = async (context) => {
@@ -32,7 +34,11 @@ export const GET: APIRoute = async (context) => {
     const ftsQuery = q.replace(/"/g, ' ');
     const r = await guard.db
       .prepare(
-        `SELECT r.id, r.feature, r.date, r.title, r.summary, r.tldr
+        `SELECT r.id, r.feature, r.date, r.title, r.summary, r.tldr,
+                (SELECT GROUP_CONCAT(rt.tag, ',')
+                 FROM report_tags rt
+                 WHERE rt.report_id = r.id) AS tags,
+                SUBSTR(COALESCE(r.summary, r.content), 1, 600) AS excerpt
          FROM reports_fts
          JOIN reports r ON r.rowid = reports_fts.rowid
          WHERE reports_fts MATCH ? AND r.published = 1
