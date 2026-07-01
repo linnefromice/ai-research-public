@@ -90,8 +90,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         statusEl.textContent = results.length + ' results';
         resultsDiv.innerHTML = results.map(function (r) {
           var title = r.title || (r.feature + ' ' + r.date);
+          var href = r.feature === 'deep-research'
+            ? '/deep-research/' + encodeURIComponent(r.id.replace('deep-research/', '')) + '/'
+            : '/' + encodeURIComponent(r.feature) + '/' + encodeURIComponent(r.date) + '/';
           return (
-            '<a href="/' + encodeURIComponent(r.feature) + '/' + encodeURIComponent(r.date) + '/" ' +
+            '<a href="' + href + '" ' +
             'style="display:block;padding:0.75rem 1rem;background:var(--color-surface);border:1px solid var(--color-border);border-radius:8px;text-decoration:none;color:var(--color-text);">' +
             '<div style="font-weight:600;">' + escapeHtml(title) + '</div>' +
             '<div style="font-size:0.8rem;color:var(--color-text-muted);margin-top:0.25rem;">' +
