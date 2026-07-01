@@ -38,6 +38,50 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           .replace(/'/g, '&#39;');
       }
 
+      function stripMarkdown(s) {
+        if (!s) return '';
+        return String(s)
+          .replace(/^---[\s\S]*?---\s*/m, '')
+          .replace(/!\[[^\]]*\]\([^)]+\)/g, '')
+          .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+          .replace(/`([^`]+)`/g, '$1')
+          .replace(/\*\*([^*]+)\*\*/g, '$1')
+          .replace(/__([^_]+)__/g, '$1')
+          .replace(/#{1,6}\s+/gm, '')
+          .replace(/^>\s?/gm, '')
+          .replace(/^\s*[-*+]\s+/gm, '')
+          .replace(/^\s*\d+\.\s+/gm, '')
+          .replace(/\|[^\n]+\|/g, '')
+          .replace(/\n+/g, ' ')
+          .replace(/\s{2,}/g, ' ')
+          .trim();
+      }
+
+      function renderTags(tagsStr) {
+        if (!tagsStr) return '';
+        var tags = tagsStr.split(',').filter(Boolean);
+        if (!tags.length) return '';
+        var shown = tags.slice(0, 5);
+        var more = tags.length - shown.length;
+        var tagStyle = 'font-size:0.65rem;padding:0.1rem 0.35rem;background:var(--color-border);border-radius:3px;color:var(--color-text-muted);';
+        var html = '<div style="display:flex;flex-wrap:wrap;gap:0.25rem;margin-top:0.5rem;">';
+        html += shown.map(function (t) {
+          return '<span style="' + tagStyle + '">' + escapeHtml(t) + '</span>';
+        }).join('');
+        if (more > 0) {
+          html += '<span style="font-size:0.65rem;color:var(--color-text-muted);padding:0.1rem 0.15rem;">+' + more + '</span>';
+        }
+        html += '</div>';
+        return html;
+      }
+
+      function renderExcerpt(excerptStr) {
+        var text = stripMarkdown(excerptStr);
+        if (!text) return '';
+        if (text.length > 160) text = text.slice(0, 160) + '…';
+        return '<div style="margin-top:0.4rem;font-size:0.8rem;color:var(--color-text-muted);line-height:1.5;">' + escapeHtml(text) + '</div>';
+      }
+
       function render(results, q) {
         resultsDiv.innerHTML = '';
         errorEl.style.display = 'none';
@@ -52,7 +96,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             '<div style="font-weight:600;">' + escapeHtml(title) + '</div>' +
             '<div style="font-size:0.8rem;color:var(--color-text-muted);margin-top:0.25rem;">' +
               escapeHtml(r.feature) + ' · ' + escapeHtml(r.date) + '</div>' +
-            (r.tldr ? '<div style="margin-top:0.5rem;font-size:0.85rem;">' + escapeHtml(r.tldr) + '</div>' : '') +
+            renderExcerpt(r.excerpt) +
+            renderTags(r.tags) +
             '</a>'
           );
         }).join('');
