@@ -18,6 +18,18 @@
     "category": "markets"
   },
   {
+    "name": "Yahoo Finance",
+    "url": "https://finance.yahoo.com",
+    "feed": "https://finance.yahoo.com/news/rssindex",
+    "category": "markets"
+  },
+  {
+    "name": "Nasdaq Markets",
+    "url": "https://www.nasdaq.com/news-and-insights/markets",
+    "feed": "https://www.nasdaq.com/feed/rssoutbound?category=Markets",
+    "category": "markets"
+  },
+  {
     "name": "Seeking Alpha Economy",
     "url": "https://seekingalpha.com/market-news/economy",
     "feed": "https://seekingalpha.com/feed.xml",
@@ -42,6 +54,12 @@
     "category": "economy"
   },
   {
+    "name": "Liberty Street Economics",
+    "url": "https://libertystreeteconomics.newyorkfed.org",
+    "feed": "https://libertystreeteconomics.newyorkfed.org/feed/",
+    "category": "economy"
+  },
+  {
     "name": "CoinDesk",
     "url": "https://www.coindesk.com",
     "feed": "https://www.coindesk.com/arc/outboundfeeds/rss/",
@@ -60,6 +78,12 @@
     "category": "fintech"
   },
   {
+    "name": "Finextra",
+    "url": "https://www.finextra.com",
+    "feed": "https://www.finextra.com/rss/headlines.aspx",
+    "category": "fintech"
+  },
+  {
     "name": "The Big Picture",
     "url": "https://ritholtz.com",
     "feed": "https://ritholtz.com/feed/",
@@ -69,6 +93,12 @@
     "name": "Abnormal Returns",
     "url": "https://abnormalreturns.com",
     "feed": "https://abnormalreturns.com/feed/",
+    "category": "analysis"
+  },
+  {
+    "name": "A Wealth of Common Sense",
+    "url": "https://awealthofcommonsense.com",
+    "feed": "https://awealthofcommonsense.com/feed/",
     "category": "analysis"
   }
 ]
