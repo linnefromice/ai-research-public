@@ -36,12 +36,6 @@
     "category": "lifestyle"
   },
   {
-    "name": "みんなの仕事Lab (リクルートスタッフィング)",
-    "url": "https://www.r-staffing.co.jp/lab/",
-    "feed": "https://www.r-staffing.co.jp/lab/feed",
-    "category": "worklife"
-  },
-  {
     "name": "HR NOTE",
     "url": "https://hrnote.jp",
     "feed": "https://hrnote.jp/feed/",
@@ -52,5 +46,29 @@
     "url": "https://fqmagazine.jp",
     "feed": "https://fqmagazine.jp/feed",
     "category": "parenting"
+  },
+  {
+    "name": "STUDY HACKER こどもまなび☆ラボ",
+    "url": "https://kodomo-manabi-labo.net",
+    "feed": "https://kodomo-manabi-labo.net/feed",
+    "category": "parenting"
+  },
+  {
+    "name": "STUDY HACKER",
+    "url": "https://studyhacker.net",
+    "feed": "https://studyhacker.net/rss",
+    "category": "productivity"
+  },
+  {
+    "name": "サイボウズ式",
+    "url": "https://cybozushiki.cybozu.co.jp",
+    "feed": "https://cybozushiki.cybozu.co.jp/rss.xml",
+    "category": "worklife"
+  },
+  {
+    "name": "ELEMINIST",
+    "url": "https://eleminist.com",
+    "feed": "https://eleminist.com/rss/eleminist.xml",
+    "category": "lifestyle"
   }
 ]
