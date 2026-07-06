@@ -42,6 +42,18 @@
     "category": "news"
   },
   {
+    "name": "ZDNET",
+    "url": "https://www.zdnet.com",
+    "feed": "https://www.zdnet.com/news/rss.xml",
+    "category": "news"
+  },
+  {
+    "name": "ITmedia NEWS",
+    "url": "https://www.itmedia.co.jp/news",
+    "feed": "https://rss.itmedia.co.jp/rss/2.0/news_bursts.xml",
+    "category": "news"
+  },
+  {
     "name": "dev.to",
     "url": "https://dev.to",
     "feed": "https://dev.to/feed",
@@ -84,6 +96,12 @@
     "category": "blog"
   },
   {
+    "name": "freeCodeCamp News",
+    "url": "https://www.freecodecamp.org/news",
+    "feed": "https://www.freecodecamp.org/news/rss/",
+    "category": "blog"
+  },
+  {
     "name": "Cloudflare Blog",
     "url": "https://blog.cloudflare.com",
     "feed": "https://blog.cloudflare.com/rss/",
@@ -108,6 +126,18 @@
     "category": "enterprise"
   },
   {
+    "name": "Netflix Tech Blog",
+    "url": "https://netflixtechblog.com",
+    "feed": "https://netflixtechblog.com/feed",
+    "category": "enterprise"
+  },
+  {
+    "name": "Spotify Engineering",
+    "url": "https://engineering.atspotify.com",
+    "feed": "https://engineering.atspotify.com/feed",
+    "category": "enterprise"
+  },
+  {
     "name": "CNCF Blog",
     "url": "https://www.cncf.io/blog",
     "feed": "https://www.cncf.io/feed/",
@@ -117,6 +147,24 @@
     "name": "opensource.com",
     "url": "https://opensource.com",
     "feed": "https://opensource.com/feed",
+    "category": "oss"
+  },
+  {
+    "name": "Apache Software Foundation News",
+    "url": "https://news.apache.org",
+    "feed": "https://news.apache.org/feed",
+    "category": "oss"
+  },
+  {
+    "name": "The Changelog",
+    "url": "https://changelog.com",
+    "feed": "https://changelog.com/feed",
+    "category": "oss"
+  },
+  {
+    "name": "The New Stack",
+    "url": "https://thenewstack.io",
+    "feed": "https://thenewstack.io/feed",
     "category": "oss"
   }
 ]
