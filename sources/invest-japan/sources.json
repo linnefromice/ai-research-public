@@ -89,5 +89,26 @@
     "feed": "https://www.dir.co.jp/feed/japan.atom",
     "category": "analysis",
     "sessions": ["daily"]
+  },
+  {
+    "name": "ZUU online",
+    "url": "https://zuuonline.com",
+    "feed": "https://zuuonline.com/feed",
+    "category": "stocks",
+    "sessions": ["open", "mid", "close", "daily"]
+  },
+  {
+    "name": "外為どっとコム マネ育チャンネル",
+    "url": "https://www.gaitame.com/media/",
+    "feed": "https://www.gaitame.com/media/feed",
+    "category": "fx-jpy",
+    "sessions": ["open", "mid", "close", "daily"]
+  },
+  {
+    "name": "J-REIT.jp",
+    "url": "https://j-reit.jp",
+    "feed": null,
+    "category": "reit",
+    "sessions": ["daily"]
   }
 ]
