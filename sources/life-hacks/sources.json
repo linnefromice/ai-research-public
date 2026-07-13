@@ -52,5 +52,23 @@
     "url": "https://fqmagazine.jp",
     "feed": "https://fqmagazine.jp/feed",
     "category": "parenting"
+  },
+  {
+    "name": "こそだてハック",
+    "url": "https://192abc.com",
+    "feed": "https://192abc.com/feed",
+    "category": "parenting"
+  },
+  {
+    "name": "CHANTO WEB",
+    "url": "https://chanto.jp.net",
+    "feed": "https://chanto.jp.net/list/feed/rss",
+    "category": "worklife"
+  },
+  {
+    "name": "ELEMINIST",
+    "url": "https://eleminist.com",
+    "feed": "https://eleminist.com/rss/eleminist.xml",
+    "category": "lifestyle"
   }
 ]
