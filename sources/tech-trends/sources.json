@@ -84,6 +84,18 @@
     "category": "blog"
   },
   {
+    "name": "CSS-Tricks",
+    "url": "https://css-tricks.com",
+    "feed": "https://css-tricks.com/feed/",
+    "category": "blog"
+  },
+  {
+    "name": "Julia Evans",
+    "url": "https://jvns.ca",
+    "feed": "https://jvns.ca/atom.xml",
+    "category": "blog"
+  },
+  {
     "name": "Cloudflare Blog",
     "url": "https://blog.cloudflare.com",
     "feed": "https://blog.cloudflare.com/rss/",
@@ -108,6 +120,36 @@
     "category": "enterprise"
   },
   {
+    "name": "Microsoft DevBlogs",
+    "url": "https://devblogs.microsoft.com",
+    "feed": "https://devblogs.microsoft.com/feed/",
+    "category": "enterprise"
+  },
+  {
+    "name": "Stripe Blog",
+    "url": "https://stripe.com/blog",
+    "feed": "https://stripe.com/blog/feed.rss",
+    "category": "enterprise"
+  },
+  {
+    "name": "Spotify Engineering",
+    "url": "https://engineering.atspotify.com",
+    "feed": "https://engineering.atspotify.com/feed/",
+    "category": "enterprise"
+  },
+  {
+    "name": "JetBrains Blog",
+    "url": "https://blog.jetbrains.com",
+    "feed": "https://blog.jetbrains.com/feed/",
+    "category": "enterprise"
+  },
+  {
+    "name": "Docker Blog",
+    "url": "https://www.docker.com/blog",
+    "feed": "https://www.docker.com/blog/feed/",
+    "category": "enterprise"
+  },
+  {
     "name": "CNCF Blog",
     "url": "https://www.cncf.io/blog",
     "feed": "https://www.cncf.io/feed/",
@@ -117,6 +159,12 @@
     "name": "opensource.com",
     "url": "https://opensource.com",
     "feed": "https://opensource.com/feed",
+    "category": "oss"
+  },
+  {
+    "name": "Kubernetes Blog",
+    "url": "https://kubernetes.io/blog",
+    "feed": "https://kubernetes.io/feed.xml",
     "category": "oss"
   }
 ]
