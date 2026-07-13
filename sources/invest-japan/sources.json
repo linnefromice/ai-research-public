@@ -89,5 +89,26 @@
     "feed": "https://www.dir.co.jp/feed/japan.atom",
     "category": "analysis",
     "sessions": ["daily"]
+  },
+  {
+    "name": "外為どっとコム マネ育チャンネル",
+    "url": "https://www.gaitame.com/media/",
+    "feed": "https://www.gaitame.com/media/rss",
+    "category": "fx-jpy",
+    "sessions": ["open", "mid", "close", "daily"]
+  },
+  {
+    "name": "JPX マーケットニュース",
+    "url": "https://www.jpx.co.jp/rss/",
+    "feed": "https://www.jpx.co.jp/rss/markets_news.xml",
+    "category": "stocks",
+    "sessions": ["daily"]
+  },
+  {
+    "name": "みんかぶ",
+    "url": "https://minkabu.jp",
+    "feed": null,
+    "category": "stocks",
+    "sessions": ["daily"]
   }
 ]
