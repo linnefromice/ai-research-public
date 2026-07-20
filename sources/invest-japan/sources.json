@@ -7,6 +7,13 @@
     "sessions": ["open", "mid", "close", "daily"]
   },
   {
+    "name": "日本取引所グループ（JPX）マーケットニュース",
+    "url": "https://www.jpx.co.jp/rss/",
+    "feed": "https://www.jpx.co.jp/rss/markets_news.xml",
+    "category": "stocks",
+    "sessions": ["open", "mid", "close", "daily"]
+  },
+  {
     "name": "Yahoo!ファイナンス",
     "url": "https://finance.yahoo.co.jp",
     "feed": "https://news.yahoo.co.jp/rss/topics/business.xml",
@@ -75,6 +82,13 @@
     "feed": "https://www.oanda.jp/lab-education/feed/",
     "category": "fx-jpy",
     "sessions": ["daily"]
+  },
+  {
+    "name": "外為どっとコム総研",
+    "url": "https://gaitamesk.com/",
+    "feed": "https://gaitamesk.com/feed/",
+    "category": "fx-jpy",
+    "sessions": ["open", "mid", "close", "daily"]
   },
   {
     "name": "Investing.com Japan",
