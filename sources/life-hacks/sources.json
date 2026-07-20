@@ -52,5 +52,29 @@
     "url": "https://fqmagazine.jp",
     "feed": "https://fqmagazine.jp/feed",
     "category": "parenting"
+  },
+  {
+    "name": "STUDY HACKER",
+    "url": "https://studyhacker.net",
+    "feed": "https://studyhacker.net/feed",
+    "category": "productivity"
+  },
+  {
+    "name": "STUDY HACKER こどもまなび☆ラボ",
+    "url": "https://kodomo-manabi-labo.net",
+    "feed": "https://kodomo-manabi-labo.net/feed",
+    "category": "parenting"
+  },
+  {
+    "name": "サイボウズ式",
+    "url": "https://cybozushiki.cybozu.co.jp",
+    "feed": "https://cybozushiki.cybozu.co.jp/rss.xml",
+    "category": "worklife"
+  },
+  {
+    "name": "ROOMIE",
+    "url": "https://www.roomie.jp",
+    "feed": "https://www.roomie.jp/feed/",
+    "category": "lifestyle"
   }
 ]
