@@ -18,6 +18,12 @@
     "category": "markets"
   },
   {
+    "name": "FXStreet",
+    "url": "https://www.fxstreet.com",
+    "feed": "https://www.fxstreet.com/rss/news",
+    "category": "markets"
+  },
+  {
     "name": "Seeking Alpha Economy",
     "url": "https://seekingalpha.com/market-news/economy",
     "feed": "https://seekingalpha.com/feed.xml",
@@ -42,6 +48,12 @@
     "category": "economy"
   },
   {
+    "name": "Econbrowser",
+    "url": "https://econbrowser.com",
+    "feed": "https://www.econbrowser.com/feed",
+    "category": "economy"
+  },
+  {
     "name": "CoinDesk",
     "url": "https://www.coindesk.com",
     "feed": "https://www.coindesk.com/arc/outboundfeeds/rss/",
@@ -60,6 +72,12 @@
     "category": "fintech"
   },
   {
+    "name": "Finextra",
+    "url": "https://www.finextra.com",
+    "feed": "https://www.finextra.com/rss/headlines.aspx",
+    "category": "fintech"
+  },
+  {
     "name": "The Big Picture",
     "url": "https://ritholtz.com",
     "feed": "https://ritholtz.com/feed/",
@@ -69,6 +87,18 @@
     "name": "Abnormal Returns",
     "url": "https://abnormalreturns.com",
     "feed": "https://abnormalreturns.com/feed/",
+    "category": "analysis"
+  },
+  {
+    "name": "Naked Capitalism",
+    "url": "https://www.nakedcapitalism.com",
+    "feed": "https://www.nakedcapitalism.com/feed",
+    "category": "analysis"
+  },
+  {
+    "name": "MarketBeat",
+    "url": "https://www.marketbeat.com",
+    "feed": "https://www.marketbeat.com/feed/rss",
     "category": "analysis"
   }
 ]
